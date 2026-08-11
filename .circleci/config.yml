@@ -1,0 +1,74 @@
+version: 2.1
+
+executors:
+  # Testcontainers needs a real Docker daemon. The machine executor provides one with no
+  # setup_remote_docker dance and, critically, full localhost networking — which the Ollama
+  # container in the conformance suite relies on.
+  jvm-with-docker:
+    machine:
+      image: ubuntu-2204:current
+    environment:
+      MAVEN_OPTS: -Xmx3g
+      TESTCONTAINERS_RYUK_DISABLED: "true"
+
+commands:
+  restore-maven-cache:
+    description: >
+      Cache key is derived from every pom.xml in the tree rather than an enumerated list,
+      so adding a use case does not require editing this file.
+    steps:
+      - run:
+          name: Compute dependency cache key
+          command: find . -name pom.xml -type f | sort | xargs cat | md5sum > .maven-cache-key
+      - restore_cache:
+          keys:
+            - maven-v1-{{ checksum ".maven-cache-key" }}
+            - maven-v1-
+
+  save-maven-cache:
+    steps:
+      - save_cache:
+          key: maven-v1-{{ checksum ".maven-cache-key" }}
+          paths:
+            - ~/.m2/repository
+
+jobs:
+  build-and-test:
+    executor: jvm-with-docker
+    steps:
+      - checkout
+      - restore-maven-cache
+      - run:
+          name: Pre-pull the Ollama model
+          # Done once, outside the test timeout, so a cold model pull cannot be mistaken
+          # for a slow test. Kept in step with the ollama.model property in the root pom.
+          command: |
+            MODEL=$(sed -n 's|.*<ollama.model>\(.*\)</ollama.model>.*|\1|p' pom.xml)
+            IMAGE=$(sed -n 's|.*<ollama.image>\(.*\)</ollama.image>.*|\1|p' pom.xml)
+            echo "Warming ${IMAGE} with ${MODEL}"
+            docker pull "${IMAGE}"
+            docker run -d --name ollama-warm -p 11434:11434 "${IMAGE}"
+            timeout 300 bash -c 'until curl -sf http://localhost:11434/api/version; do sleep 3; done'
+            docker exec ollama-warm ollama pull "${MODEL}"
+            docker rm -f ollama-warm
+      - run:
+          name: Build and verify all modules
+          command: mvn -B -ntp verify
+      - save-maven-cache
+      - run:
+          name: Collect test reports
+          command: |
+            mkdir -p /tmp/test-results
+            find . -path "*/target/surefire-reports/*.xml" -exec cp {} /tmp/test-results/ \; || true
+            find . -path "*/target/failsafe-reports/*.xml" -exec cp {} /tmp/test-results/ \; || true
+          when: always
+      - store_test_results:
+          path: /tmp/test-results
+      - store_artifacts:
+          path: /tmp/test-results
+          destination: test-reports
+
+workflows:
+  ci:
+    jobs:
+      - build-and-test

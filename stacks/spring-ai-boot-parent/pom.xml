@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>fr.simplex-software.workshop</groupId>
+    <artifactId>stacks</artifactId>
+    <version>1.0.3</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+
+  <artifactId>spring-ai-boot-parent</artifactId>
+  <packaging>pom</packaging>
+  <name>Java AI Rosetta :: Stacks :: Spring AI on Spring Boot</name>
+  <description>
+    Parent for every Spring AI module.
+  </description>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${spring-boot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.ai</groupId>
+        <artifactId>spring-ai-bom</artifactId>
+        <version>${spring-ai.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.ai</groupId>
+      <artifactId>spring-ai-starter-model-ollama</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+      <!--
+        Mockito is excluded, not merely unused. CLAUDE.md mandates Testcontainers integration
+        tests over mock-based unit ones, and nothing here mocks anything - but mockito-core drags
+        in byte-buddy-agent, which attaches itself dynamically at runtime and makes every test JVM
+        print "A Java agent has been loaded dynamically... will be disallowed by default in a
+        future release". Dropping the dependency removes the cause rather than muting the symptom
+        with -XX:+EnableDynamicAgentLoading.
+      -->
+      <exclusions>
+        <exclusion>
+          <groupId>org.mockito</groupId>
+          <artifactId>mockito-core</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.mockito</groupId>
+          <artifactId>mockito-junit-jupiter</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <!--
+        Without this, the conformance test cannot find the application. repackage rewrites
+        target/*.jar into an executable jar whose classes live under BOOT-INF/classes, and
+        failsafe tests against that jar by default - so @SpringBootTest scans it and finds no
+        @SpringBootConfiguration. Pointing failsafe back at the plain output directory is the
+        standard fix. Surefire is unaffected, which is why unit tests hide the problem.
+      -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <configuration>
+          <classesDirectory>${project.build.outputDirectory}</classesDirectory>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>repackage</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <image>
+            <name>${project.groupId}/${project.artifactId}:${project.version}</name>
+          </image>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

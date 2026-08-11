@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>fr.simplex-software.workshop</groupId>
+    <artifactId>stacks</artifactId>
+    <version>1.0.3</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+
+  <artifactId>common-parent</artifactId>
+  <packaging>pom</packaging>
+  <name>Java AI Rosetta :: Stacks :: Common Parent</name>
+  <description>
+    Parent for every use case's NN-slug-common module.
+  </description>
+
+  <!--
+    JUnit, AssertJ and Testcontainers are inherited from the root POM at test scope - every
+    module in the project is verified the same way. What is specific to a common module is
+    below: the abstract conformance test lives in src/test/java and ships as a test-jar, so the
+    stack modules can extend it without test libraries leaking into their production artifacts.
+  -->
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>conformance-test-jar</id>
+            <goals>
+              <goal>test-jar</goal>
+            </goals>
+            <configuration>
+              <!--
+                The execution is inherited by the common modules, but it also runs here, where
+                there are no test classes - producing an empty tests jar attached to a POM-only
+                module. skipIfEmpty suppresses it there and changes nothing for a real common
+                module. A common module that somehow has no tests now produces no test-jar at
+                all, which fails loudly in whatever depends on it rather than shipping an
+                empty contract.
+              -->
+              <skipIfEmpty>true</skipIfEmpty>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

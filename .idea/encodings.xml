@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/stacks/common-parent/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/stacks/common-parent/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/stacks/langchain4j-boot-parent/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/stacks/langchain4j-boot-parent/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/stacks/langchain4j-quarkus-parent/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/stacks/langchain4j-quarkus-parent/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/stacks/spring-ai-boot-parent/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/stacks/spring-ai-boot-parent/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/stacks/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/stacks/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/use-cases/01-simple/01-simple-common/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/use-cases/01-simple/01-simple-common/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/use-cases/01-simple/01-simple-langchain4j-boot/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/use-cases/01-simple/01-simple-langchain4j-boot/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/use-cases/01-simple/01-simple-langchain4j-quarkus/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/use-cases/01-simple/01-simple-langchain4j-quarkus/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/use-cases/01-simple/01-simple-spring-ai-boot/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/use-cases/01-simple/01-simple-spring-ai-boot/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/use-cases/01-simple/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/use-cases/01-simple/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/use-cases/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/use-cases/src/main/resources" charset="UTF-8" />
+  </component>
+</project>

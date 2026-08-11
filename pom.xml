@@ -5,7 +5,219 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>fr.simplex-software.workshop</groupId>
-    <artifactId>claude-ai-spring-boot</artifactId>
-    <version>1.0.0</version>
+    <artifactId>java-ai-rosetta</artifactId>
+    <version>1.0.3</version>
+    <packaging>pom</packaging>
 
+    <name>Java AI Rosetta</name>
+    <description>
+        The same AI use case, implemented side by side with Spring AI on Spring Boot,
+        LangChain4j on Spring Boot, and LangChain4j on Quarkus - each proven equivalent
+        by a shared conformance test suite.
+    </description>
+
+    <!--
+      Aggregation is use-case-first; inheritance is stack-first. stacks/ holds parent POMs only
+      and must be built before use-cases/, whose leaf modules point at it via relativePath.
+    -->
+    <modules>
+        <module>stacks</module>
+        <module>use-cases</module>
+    </modules>
+
+    <properties>
+        <maven.compiler.release>21</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.version.required>3.9.0</maven.version.required>
+
+        <spring-boot.version>4.1.0</spring-boot.version>
+        <spring-ai.version>2.0.0</spring-ai.version>
+        <quarkus.version>3.38.1</quarkus.version>
+        <quarkus-langchain4j.version>1.12.2</quarkus-langchain4j.version>
+        <langchain4j.version>1.17.2</langchain4j.version>
+
+        <testcontainers.version>2.0.5</testcontainers.version>
+        <junit.version>6.1.3</junit.version>
+        <assertj.version>3.27.7</assertj.version>
+        <jakarta-validation.version>3.1.1</jakarta-validation.version>
+        <!--
+          The conformance suite's own JSON mapper, independent of what a stack uses: Boot 4 is on
+          Jackson 3 (tools.jackson), Quarkus on Jackson 2 (com.fasterxml). Different package roots,
+          so this coexists with either. 2.21.x matches the jackson-annotations Boot 4 still drags in.
+        -->
+        <jackson.version>2.21.4</jackson.version>
+        <rest-assured.version>6.0.1</rest-assured.version>
+
+        <ollama.image>ollama/ollama:latest</ollama.image>
+        <ollama.model>qwen2.5:0.5b</ollama.model>
+
+        <maven-compiler-plugin.version>3.15.0</maven-compiler-plugin.version>
+        <maven-surefire-plugin.version>3.5.6</maven-surefire-plugin.version>
+        <maven-failsafe-plugin.version>3.5.6</maven-failsafe-plugin.version>
+        <maven-enforcer-plugin.version>3.6.3</maven-enforcer-plugin.version>
+        <maven-jar-plugin.version>3.4.2</maven-jar-plugin.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.junit</groupId>
+                <artifactId>junit-bom</artifactId>
+                <version>${junit.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers-bom</artifactId>
+                <version>${testcontainers.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-core</artifactId>
+                <version>${assertj.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>jakarta.validation</groupId>
+                <artifactId>jakarta.validation-api</artifactId>
+                <version>${jakarta-validation.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.rest-assured</groupId>
+                <artifactId>rest-assured</artifactId>
+                <version>${rest-assured.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <!--
+      Every module in this project is verified the same way: JUnit + AssertJ against an Ollama
+      container. Declared once here rather than in each stack parent, where it would be four
+      identical copies. Stack-specific test tooling still belongs in the stack parent.
+    -->
+    <dependencies>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers-junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers-ollama</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- REST Assured serialises request bodies with whichever mapper it finds, and it only
+             detects Jackson 2. Boot 4 ships Jackson 3 under a different package root, so the
+             suite carries its own rather than depending on what the stack under test uses. -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven-surefire-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>${maven-failsafe-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>${maven-jar-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>io.quarkus</groupId>
+                    <artifactId>quarkus-maven-plugin</artifactId>
+                    <version>${quarkus.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!-- Hands the conformance suite the same model every stack is tested with. -->
+                    <systemPropertyVariables>
+                        <ollama.image>${ollama.image}</ollama.image>
+                        <ollama.model>${ollama.model}</ollama.model>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>${maven-enforcer-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>enforce-build-environment</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireMavenVersion>
+                                    <version>${maven.version.required}</version>
+                                </requireMavenVersion>
+                                <requireJavaVersion>
+                                    <version>[${maven.compiler.release},)</version>
+                                </requireJavaVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

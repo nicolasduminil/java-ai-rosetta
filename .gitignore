@@ -1,0 +1,21 @@
+target/
+.maven-cache-key
+
+# Gradle build state carried in by the _original sources. The sources themselves are kept
+# verbatim; their local build output is not part of what was provided.
+.gradle/
+build/
+
+# Quarkus
+.quarkus/
+
+# IDE
+*.iml
+.idea/shelf/
+.settings/
+.classpath
+.project
+.vscode/
+
+# OS
+.DS_Store
