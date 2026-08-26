@@ -6,10 +6,14 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="01-simple-langchain4j-quarkus" />
+        <module name="02-templates-langchain4j-boot" />
         <module name="01-simple-langchain4j-boot" />
         <module name="01-simple-spring-ai-boot" />
         <module name="01-simple-common" />
+        <module name="02-templates-langchain4j-quarkus" />
+        <module name="01-simple-langchain4j-quarkus" />
+        <module name="02-templates-spring-ai-boot" />
+        <module name="02-templates-common" />
       </profile>
     </annotationProcessing>
   </component>

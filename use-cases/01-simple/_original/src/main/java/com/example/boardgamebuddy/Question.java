@@ -1,4 +1,5 @@
 package com.example.boardgamebuddy;
 
-public record Question(String question) {
+public record Question(String question)
+{
 }

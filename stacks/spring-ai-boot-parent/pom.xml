@@ -7,16 +7,14 @@
   <parent>
     <groupId>fr.simplex-software.workshop</groupId>
     <artifactId>stacks</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
   <artifactId>spring-ai-boot-parent</artifactId>
   <packaging>pom</packaging>
   <name>Java AI Rosetta :: Stacks :: Spring AI on Spring Boot</name>
-  <description>
-    Parent for every Spring AI module.
-  </description>
+  <description>Parent for every Spring AI module.</description>
 
   <dependencyManagement>
     <dependencies>
@@ -50,14 +48,6 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
-      <!--
-        Mockito is excluded, not merely unused. CLAUDE.md mandates Testcontainers integration
-        tests over mock-based unit ones, and nothing here mocks anything - but mockito-core drags
-        in byte-buddy-agent, which attaches itself dynamically at runtime and makes every test JVM
-        print "A Java agent has been loaded dynamically... will be disallowed by default in a
-        future release". Dropping the dependency removes the cause rather than muting the symptom
-        with -XX:+EnableDynamicAgentLoading.
-      -->
       <exclusions>
         <exclusion>
           <groupId>org.mockito</groupId>
@@ -73,13 +63,6 @@
 
   <build>
     <plugins>
-      <!--
-        Without this, the conformance test cannot find the application. repackage rewrites
-        target/*.jar into an executable jar whose classes live under BOOT-INF/classes, and
-        failsafe tests against that jar by default - so @SpringBootTest scans it and finds no
-        @SpringBootConfiguration. Pointing failsafe back at the plain output directory is the
-        standard fix. Surefire is unaffected, which is why unit tests hide the problem.
-      -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-failsafe-plugin</artifactId>

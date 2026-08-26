@@ -18,35 +18,38 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 
 @EnableWireMock(
-    @ConfigureWireMock(baseUrlProperties = "openai.base.url")) 
+  @ConfigureWireMock(baseUrlProperties = "openai.base.url"))
 @SpringBootTest(
-    properties = "spring.ai.openai.base-url=${openai.base.url}") 
-public class SpringAiBoardGameServiceWireMockTests {
+  properties = "spring.ai.openai.base-url=${openai.base.url}")
+public class SpringAiBoardGameServiceWireMockTests
+{
 
-  @Value("classpath:/test-openai-response.json")  
+  @Value("classpath:/test-openai-response.json")
   Resource responseResource;
 
   @Autowired
   ChatClient.Builder chatClientBuilder;
 
   @BeforeEach
-  public void setup() throws IOException {
+  public void setup() throws IOException
+  {
     var cannedResponse =
-        responseResource.getContentAsString(Charset.defaultCharset());
+      responseResource.getContentAsString(Charset.defaultCharset());
     var mapper = new ObjectMapper();
     var responseNode = mapper.readTree(cannedResponse);
     WireMock.stubFor(WireMock.post("/v1/chat/completions")
-        .willReturn(ResponseDefinitionBuilder.okForJson(responseNode))); 
+      .willReturn(ResponseDefinitionBuilder.okForJson(responseNode)));
   }
 
   @Test
-  public void testAskQuestion() {
+  public void testAskQuestion()
+  {
     var boardGameService =
-        new SpringAiBoardGameService(chatClientBuilder);
+      new SpringAiBoardGameService(chatClientBuilder);
     var answer =
-        boardGameService.askQuestion(
-            new Question("What is the capital of France?")); 
+      boardGameService.askQuestion(
+        new Question("What is the capital of France?"));
     Assertions.assertThat(answer).isNotNull();
-    Assertions.assertThat(answer.answer()).isEqualTo("Paris");   
+    Assertions.assertThat(answer.answer()).isEqualTo("Paris");
   }
 }

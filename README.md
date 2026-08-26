@@ -73,7 +73,8 @@ is itself worth teaching, and because a later bump may resurrect it.
 │   └── langchain4j-quarkus-parent/
 └── use-cases/
     ├── README.md          # the module contract every use case follows
-    └── 01-simple/         # one directory per use case, added as examples arrive
+    ├── 01-simple/         # one endpoint: forward a question, return text
+    └── 02-templates/      # templated prompt + injected context + structured output
 ```
 
 **Aggregation is use-case-first; inheritance is stack-first.** A use case directory holds its four

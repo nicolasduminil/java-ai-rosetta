@@ -7,16 +7,14 @@
   <parent>
     <groupId>fr.simplex-software.workshop</groupId>
     <artifactId>stacks</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
   <artifactId>langchain4j-boot-parent</artifactId>
   <packaging>pom</packaging>
   <name>Java AI Rosetta :: Stacks :: LangChain4j on Spring Boot</name>
-  <description>
-    Parent for every NN-slug-langchain4j-boot module.
-  </description>
+  <description>Parent for every NN-slug-langchain4j-boot module.</description>
 
   <dependencyManagement>
     <dependencies>
@@ -42,17 +40,6 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
-    <!--
-      NOT langchain4j-ollama-spring-boot-starter. That starter (1.17.2-beta27) pulls
-      langchain4j-http-client-spring-restclient, which is compiled against
-      org.springframework.boot.http.client.ClientHttpRequestFactorySettings - a class that no
-      longer exists in Spring Boot 4. The context fails at bean creation with NoClassDefFoundError.
-
-      So this track takes the model directly and the JDK HTTP client instead of Spring's, and each
-      module declares its own ChatModel bean. That is a real finding about the two ecosystems, not
-      a workaround to hide: see the use-case README. Revisit when LangChain4j ships a Boot 4
-      starter, at which point the property names below are already the starter's own.
-    -->
     <dependency>
       <groupId>dev.langchain4j</groupId>
       <artifactId>langchain4j-ollama</artifactId>
@@ -65,7 +52,6 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
-      <!-- See spring-ai-boot-parent: unused Mockito is what triggers the dynamic-agent warning. -->
       <exclusions>
         <exclusion>
           <groupId>org.mockito</groupId>
@@ -81,7 +67,6 @@
 
   <build>
     <plugins>
-      <!-- See spring-ai-boot-parent: repackage hides the classes from failsafe's scanning. -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-failsafe-plugin</artifactId>

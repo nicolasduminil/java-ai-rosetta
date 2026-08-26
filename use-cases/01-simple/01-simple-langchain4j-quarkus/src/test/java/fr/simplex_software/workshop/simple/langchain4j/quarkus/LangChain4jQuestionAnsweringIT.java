@@ -7,11 +7,6 @@ import io.quarkus.test.junit.*;
 
 import java.net.*;
 
-/**
- * The third stack, held to the same contract. The assertions live entirely in
- * {@link AbstractQuestionAnsweringIT}; all this class does is start the application and say where
- * it is listening.
- */
 @QuarkusTest
 @WithTestResource(OllamaTestResource.class)
 class LangChain4jQuestionAnsweringIT extends AbstractQuestionAnsweringIT

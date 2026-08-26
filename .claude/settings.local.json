@@ -67,7 +67,13 @@
       "Bash(git -C /tmp/claude-1000/-home-nicolas-java-ai-rosetta/8bfae964-e5b2-44cf-87d9-b99c2c90cfdb/scratchpad/template status -sb)",
       "Bash(git -C /tmp/claude-1000/-home-nicolas-java-ai-rosetta/8bfae964-e5b2-44cf-87d9-b99c2c90cfdb/scratchpad/template --no-pager show --stat --oneline HEAD)",
       "Bash(docker rm *)",
-      "Bash(docker run *)"
+      "Bash(docker run *)",
+      "Bash(unzip -l dev/langchain4j/langchain4j-core/1.17.2/langchain4j-core-1.17.2.jar)",
+      "Bash(unzip -l dev/langchain4j/langchain4j/1.17.2/langchain4j-1.17.2.jar)",
+      "Bash(unzip -l io/quarkiverse/langchain4j/quarkus-langchain4j-core/1.12.2/quarkus-langchain4j-core-1.12.2.jar)",
+      "Bash(unzip -l org/springframework/ai/spring-ai-client-chat/2.0.0/spring-ai-client-chat-2.0.0.jar)",
+      "Bash(unzip -l org/springframework/ai/spring-ai-template-st/2.0.0/spring-ai-template-st-2.0.0.jar)",
+      "Bash(unzip -l org/springframework/ai/spring-ai-commons/2.0.0/spring-ai-commons-2.0.0.jar)"
     ]
   }
 }

@@ -1,0 +1,6 @@
+Aurora Labs is a fictional research company used only to exercise this example.
+
+- It was founded in 2019.
+- Its headquarters is in Reykjavik.
+- Its flagship product is a note-taking application called Lumen.
+- It employs 42 people.

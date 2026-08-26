@@ -7,7 +7,7 @@
   <parent>
     <groupId>fr.simplex-software.workshop</groupId>
     <artifactId>langchain4j-quarkus-parent</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
     <relativePath>../../../stacks/langchain4j-quarkus-parent/pom.xml</relativePath>
   </parent>
 
@@ -21,8 +21,6 @@
       <artifactId>01-simple-common</artifactId>
       <version>${project.version}</version>
     </dependency>
-    <!-- The Quarkus counterpart of spring-boot-starter-validation: same jakarta.validation
-         annotations on the shared DTO, a different provider behind them. -->
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-hibernate-validator</artifactId>

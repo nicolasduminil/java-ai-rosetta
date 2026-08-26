@@ -7,10 +7,6 @@ import org.springframework.test.context.*;
 
 import java.net.*;
 
-/**
- * Same contract, same assertions, different AI library. Only the two property names differ from
- * the Spring AI track's subclass.
- */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class LangChain4jQuestionAnsweringIT extends AbstractQuestionAnsweringIT
 {

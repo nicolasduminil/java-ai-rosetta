@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>fr.simplex-software.workshop</groupId>
+    <artifactId>use-cases</artifactId>
+    <version>1.0.4</version>
+  </parent>
+
+  <artifactId>02-templates</artifactId>
+  <packaging>pom</packaging>
+  <name>Java AI Rosetta :: 02 Templates</name>
+  <description>
+    A templated system prompt with optional injected context, returning structured output -
+    implemented on every stack.
+  </description>
+
+  <modules>
+    <module>02-templates-common</module>
+    <module>02-templates-spring-ai-boot</module>
+    <module>02-templates-langchain4j-boot</module>
+    <module>02-templates-langchain4j-quarkus</module>
+  </modules>
+
+</project>

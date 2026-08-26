@@ -1,17 +1,13 @@
 package fr.simplex_software.workshop.simple.conformance;
 
-import org.testcontainers.ollama.OllamaContainer;
-import org.testcontainers.utility.DockerImageName;
+import org.testcontainers.ollama.*;
+import org.testcontainers.utility.*;
 
 /**
- * The single Ollama container every conformance run talks to.
+ * This single Ollama container is used by all the tests.
  *
- * <p>Started lazily on first access and shared for the lifetime of the JVM, so a module pays the
- * model pull once no matter how many test classes extend {@link AbstractQuestionAnsweringIT}.
- *
- * <p>Image and model come from system properties set by the failsafe plugin out of the root POM,
- * so all three stacks are provably tested against the same model. The defaults only matter when
- * a test is launched straight from an IDE.
+ * <p>The container is started lazily on first access and shared for the lifetime of the JVM.
+ * So only one pull operation is done, whatever the number of the test classes is.
  */
 public final class OllamaTestSupport
 {

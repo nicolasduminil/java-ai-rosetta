@@ -1,4 +1,3 @@
-
 package com.example.boardgamebuddy;
 
 import org.assertj.core.api.Assertions;
@@ -15,81 +14,75 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class SpringAiBoardGameServiceTests {
+public class SpringAiBoardGameServiceTests
+{
 
   @Autowired
-  private BoardGameService boardGameService;  
+  private BoardGameService boardGameService;
 
   @Autowired
-  private ChatClient.Builder chatClientBuilder; 
+  private ChatClient.Builder chatClientBuilder;
 
   private RelevancyEvaluator relevancyEvaluator;
 
-  
-  
   private FactCheckingEvaluator factCheckingEvaluator;
 
-  
   @BeforeEach
-  public void setup() {
+  public void setup()
+  {
     this.relevancyEvaluator = new RelevancyEvaluator(chatClientBuilder);
-    
+
     this.factCheckingEvaluator = new FactCheckingEvaluator(
-        chatClientBuilder);
-    
+      chatClientBuilder);
   }
-  
 
   @Test
-  public void evaluateRelevancy() {
+  public void evaluateRelevancy()
+  {
     String userText = "Why is the sky blue?";
     Question question = new Question(userText);
-    Answer answer = boardGameService.askQuestion(question); 
+    Answer answer = boardGameService.askQuestion(question);
 
     EvaluationRequest evaluationRequest = new EvaluationRequest(
-        userText, answer.answer());
+      userText, answer.answer());
 
     EvaluationResponse response = relevancyEvaluator
-        .evaluate(evaluationRequest); 
+      .evaluate(evaluationRequest);
 
-    Assertions.assertThat(response.isPass())   
-        .withFailMessage("""
-          ========================================
-          The answer "%s"
-          is not considered relevant to the question
-          "%s".
-          ========================================
-          """, answer.answer(), userText)
-        .isTrue();
+    Assertions.assertThat(response.isPass())
+      .withFailMessage("""
+        ========================================
+        The answer "%s"
+        is not considered relevant to the question
+        "%s".
+        ========================================
+        """, answer.answer(), userText)
+      .isTrue();
   }
 
-  
-  
   @Test
-  public void evaluateFactualAccuracy() {
+  public void evaluateFactualAccuracy()
+  {
     var userText = "Why is the sky blue?";
     var question = new Question(userText);
     var answer = boardGameService.askQuestion(question);
 
     var evaluationRequest =
-            new EvaluationRequest(userText, answer.answer());
+      new EvaluationRequest(userText, answer.answer());
 
     var response =
-            factCheckingEvaluator.evaluate(evaluationRequest);
+      factCheckingEvaluator.evaluate(evaluationRequest);
 
     Assertions.assertThat(response.isPass())
-        .withFailMessage("""
-
-          ========================================
-          The answer "%s"
-          is not considered correct for the question
-          "%s".
-          ========================================
-          """, answer.answer(), userText)
-        .isTrue();
+      .withFailMessage("""
+        
+        ========================================
+        The answer "%s"
+        is not considered correct for the question
+        "%s".
+        ========================================
+        """, answer.answer(), userText)
+      .isTrue();
   }
-  
-
-
 }
 

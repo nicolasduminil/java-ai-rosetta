@@ -1,13 +1,11 @@
 package fr.simplex_software.workshop.simple.springai;
 
-import fr.simplex_software.workshop.simple.conformance.AbstractQuestionAnsweringIT;
-import fr.simplex_software.workshop.simple.conformance.OllamaTestSupport;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
+import fr.simplex_software.workshop.simple.conformance.*;
+import org.springframework.boot.test.context.*;
+import org.springframework.boot.test.web.server.*;
+import org.springframework.test.context.*;
 
-import java.net.URI;
+import java.net.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class SpringAiQuestionAnsweringIT extends AbstractQuestionAnsweringIT
@@ -20,8 +18,6 @@ class SpringAiQuestionAnsweringIT extends AbstractQuestionAnsweringIT
   static void ollamaProperties(DynamicPropertyRegistry registry)
   {
     registry.add("spring.ai.ollama.base-url", OllamaTestSupport::baseUrl);
-    // chat.model, not the deprecated chat.options.model, and the same spelling the application
-    // uses. Both resolve to the same value here, so a mismatch would have passed unnoticed.
     registry.add("spring.ai.ollama.chat.model", OllamaTestSupport::model);
   }
 
