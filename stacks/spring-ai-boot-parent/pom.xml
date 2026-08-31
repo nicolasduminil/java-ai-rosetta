@@ -7,7 +7,7 @@
   <parent>
     <groupId>fr.simplex-software.workshop</groupId>
     <artifactId>stacks</artifactId>
-    <version>1.0.4</version>
+    <version>1.0.5</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
@@ -59,6 +59,12 @@
         </exclusion>
       </exclusions>
     </dependency>
+    <dependency>
+      <groupId>fr.simplex-software.workshop</groupId>
+      <artifactId>test-support</artifactId>
+      <version>${project.version}</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>
@@ -68,6 +74,9 @@
         <artifactId>maven-failsafe-plugin</artifactId>
         <configuration>
           <classesDirectory>${project.build.outputDirectory}</classesDirectory>
+          <systemPropertyVariables>
+            <logging.level.org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver>ERROR</logging.level.org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver>
+          </systemPropertyVariables>
         </configuration>
       </plugin>
       <plugin>
@@ -81,6 +90,10 @@
           </execution>
         </executions>
         <configuration>
+          <!-- Classify the runnable (repackaged) jar as *-exec.jar so the plain classes jar stays the
+               main artifact. That lets modules depending on this application to
+               boot it in-process, while build-image still containerises the runnable jar. -->
+          <classifier>exec</classifier>
           <image>
             <name>${project.groupId}/${project.artifactId}:${project.version}</name>
           </image>

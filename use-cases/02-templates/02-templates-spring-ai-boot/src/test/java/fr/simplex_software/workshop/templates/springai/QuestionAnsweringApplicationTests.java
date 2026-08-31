@@ -1,5 +1,6 @@
 package fr.simplex_software.workshop.templates.springai;
 
+import fr.simplex_software.workshop.templates.api.*;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.test.context.*;
@@ -10,11 +11,11 @@ import static org.assertj.core.api.Assertions.*;
 class QuestionAnsweringApplicationTests
 {
   @Autowired
-  private AskController askController;
+  private QuestionAnsweringService questionAnsweringService;
 
   @Test
   void contextLoadsWithTheSpringAiService()
   {
-    assertThat(askController).isNotNull();
+    assertThat(questionAnsweringService).isInstanceOf(SpringAiQuestionAnsweringService.class);
   }
 }

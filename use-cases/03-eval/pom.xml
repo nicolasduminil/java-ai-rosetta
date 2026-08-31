@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>fr.simplex-software.workshop</groupId>
+    <artifactId>use-cases</artifactId>
+    <version>1.0.5</version>
+  </parent>
+
+  <artifactId>03-eval</artifactId>
+  <packaging>pom</packaging>
+  <name>Java AI Rosetta :: 03 Eval</name>
+  <description>
+    LLM-as-judge evaluation (relevancy and factual accuracy) of the answers produced by use case 02 -
+    implemented on every stack. Each stack module reuses its 02 application unchanged and only adds
+    the evaluation layer.
+  </description>
+
+  <modules>
+    <module>03-eval-common</module>
+    <module>03-eval-spring-ai-boot</module>
+    <module>03-eval-langchain4j-boot</module>
+    <module>03-eval-langchain4j-quarkus</module>
+  </modules>
+
+</project>

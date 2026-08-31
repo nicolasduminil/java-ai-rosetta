@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>fr.simplex-software.workshop</groupId>
+    <artifactId>langchain4j-boot-parent</artifactId>
+    <version>1.0.5</version>
+    <relativePath>../../../stacks/langchain4j-boot-parent/pom.xml</relativePath>
+  </parent>
+
+  <artifactId>03-eval-langchain4j-boot</artifactId>
+  <name>Java AI Rosetta :: 03 Eval :: LangChain4j on Spring Boot</name>
+  <description>
+    Evaluation of use case 02's LangChain4j (Spring Boot) answers.
+  </description>
+
+  <dependencies>
+    <dependency>
+      <groupId>fr.simplex-software.workshop</groupId>
+      <artifactId>02-templates-langchain4j-boot</artifactId>
+      <version>${project.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>fr.simplex-software.workshop</groupId>
+      <artifactId>03-eval-common</artifactId>
+      <version>${project.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>fr.simplex-software.workshop</groupId>
+      <artifactId>03-eval-common</artifactId>
+      <version>${project.version}</version>
+      <type>test-jar</type>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>fr.simplex-software.workshop</groupId>
+      <artifactId>test-support-langchain4j</artifactId>
+      <version>${project.version}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <skipIfEmpty>true</skipIfEmpty>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

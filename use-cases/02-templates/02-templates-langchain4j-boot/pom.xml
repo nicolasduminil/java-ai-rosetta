@@ -7,7 +7,7 @@
   <parent>
     <groupId>fr.simplex-software.workshop</groupId>
     <artifactId>langchain4j-boot-parent</artifactId>
-    <version>1.0.4</version>
+    <version>1.0.5</version>
     <relativePath>../../../stacks/langchain4j-boot-parent/pom.xml</relativePath>
   </parent>
 
@@ -21,8 +21,6 @@
       <artifactId>02-templates-common</artifactId>
       <version>${project.version}</version>
     </dependency>
-    <!-- AiServices (declarative prompts + structured output) live in the langchain4j aggregator,
-         not in langchain4j-ollama. Use-case-specific, so it sits in the leaf, not the stack parent. -->
     <dependency>
       <groupId>dev.langchain4j</groupId>
       <artifactId>langchain4j</artifactId>

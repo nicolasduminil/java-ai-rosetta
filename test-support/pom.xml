@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>fr.simplex-software.workshop</groupId>
+    <artifactId>java-ai-rosetta</artifactId>
+    <version>1.0.5</version>
+  </parent>
+
+  <artifactId>test-support</artifactId>
+  <name>Java AI Rosetta :: Test Support</name>
+  <description>
+    Shared conformance test infrastructure reused by every use case. Holds the single
+    Ollama Testcontainers helper so the container setup lives in one place rather than
+    being copied into each use case's common module.
+  </description>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>testcontainers-ollama</artifactId>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+
+</project>

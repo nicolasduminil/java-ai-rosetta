@@ -7,7 +7,7 @@
   <parent>
     <groupId>fr.simplex-software.workshop</groupId>
     <artifactId>spring-ai-boot-parent</artifactId>
-    <version>1.0.4</version>
+    <version>1.0.5</version>
     <relativePath>../../../stacks/spring-ai-boot-parent/pom.xml</relativePath>
   </parent>
 

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>fr.simplex-software.workshop</groupId>
+    <artifactId>java-ai-rosetta</artifactId>
+    <version>1.0.5</version>
+  </parent>
+
+  <artifactId>test-support-quarkus</artifactId>
+  <name>Java AI Rosetta :: Test Support :: Quarkus</name>
+  <description>
+    Shared Quarkus conformance test infrastructure. Holds the QuarkusTestResourceLifecycleManager
+    that wires the shared Ollama container (from test-support) into Quarkus configuration, so every
+    Quarkus use case reuses it instead of copying it. Kept separate from the framework-neutral
+    test-support so the Quarkus test API never reaches the Spring Boot modules' classpath.
+  </description>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>io.quarkus</groupId>
+        <artifactId>quarkus-bom</artifactId>
+        <version>${quarkus.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>fr.simplex-software.workshop</groupId>
+      <artifactId>test-support</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-test-common</artifactId>
+    </dependency>
+  </dependencies>
+
+</project>

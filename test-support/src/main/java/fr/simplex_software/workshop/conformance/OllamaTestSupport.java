@@ -1,4 +1,4 @@
-package fr.simplex_software.workshop.simple.conformance;
+package fr.simplex_software.workshop.conformance;
 
 import org.testcontainers.ollama.*;
 import org.testcontainers.utility.*;
@@ -13,8 +13,11 @@ public final class OllamaTestSupport
 {
   private static final String IMAGE = System.getProperty("ollama.image", "ollama/ollama:latest");
   private static final String MODEL = System.getProperty("ollama.model", "qwen2.5:0.5b");
+  private static final String JUDGE_MODEL = System.getProperty("ollama.judge.model", "qwen2.5:3b");
 
   private static final OllamaContainer OLLAMA = startWithModel();
+
+  private static boolean judgePulled;
 
   private OllamaTestSupport()
   {
@@ -30,20 +33,44 @@ public final class OllamaTestSupport
     return MODEL;
   }
 
+  /**
+   * The LLM-as-judge model, pulled on first access so only evaluation tests pay for it. Judging is
+   * harder than answering, so this is a larger model than {@link #model()} by default.
+   */
+  public static synchronized String judgeModel()
+  {
+    if (!judgePulled)
+    {
+      pull(JUDGE_MODEL);
+      judgePulled = true;
+    }
+    return JUDGE_MODEL;
+  }
+
   private static OllamaContainer startWithModel()
   {
     var ollama = new OllamaContainer(DockerImageName.parse(IMAGE));
     ollama.start();
+    pull(ollama, MODEL);
+    return ollama;
+  }
+
+  private static void pull(String model)
+  {
+    pull(OLLAMA, model);
+  }
+
+  private static void pull(OllamaContainer ollama, String model)
+  {
     try
     {
-      var pull = ollama.execInContainer("ollama", "pull", MODEL);
+      var pull = ollama.execInContainer("ollama", "pull", model);
       if (pull.getExitCode() != 0)
-        throw new IllegalStateException("Pulling model " + MODEL + " failed: " + pull.getStderr());
+        throw new IllegalStateException("Pulling model " + model + " failed: " + pull.getStderr());
     }
     catch (Exception e)
     {
-      throw new IllegalStateException("Could not pull model " + MODEL, e);
+      throw new IllegalStateException("Could not pull model " + model, e);
     }
-    return ollama;
   }
 }

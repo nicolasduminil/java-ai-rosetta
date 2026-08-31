@@ -10,10 +10,6 @@ import org.springframework.context.annotation.*;
 /**
  * Builds the {@link ChatModel} and the {@link Assistant} by hand, because LangChain4j's Spring Boot
  * starter is compiled against classes that no longer exist in Spring Boot 4 (see use case 01).
- *
- * <p>{@code RESPONSE_FORMAT_JSON_SCHEMA} makes the Ollama model honour the JSON schema that
- * {@code AiServices} derives from {@link fr.simplex_software.workshop.templates.api.Answer}, so even a
- * tiny model returns grammar-constrained, parseable structured output.
  */
 @Configuration
 public class ChatModelConfig

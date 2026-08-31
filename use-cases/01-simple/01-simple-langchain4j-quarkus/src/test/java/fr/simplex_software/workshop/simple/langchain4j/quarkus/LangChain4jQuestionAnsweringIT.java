@@ -1,5 +1,6 @@
 package fr.simplex_software.workshop.simple.langchain4j.quarkus;
 
+import fr.simplex_software.workshop.conformance.quarkus.*;
 import fr.simplex_software.workshop.simple.conformance.*;
 import io.quarkus.test.common.*;
 import io.quarkus.test.common.http.*;

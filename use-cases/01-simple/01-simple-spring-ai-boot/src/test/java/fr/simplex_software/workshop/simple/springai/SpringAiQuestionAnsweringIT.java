@@ -1,5 +1,6 @@
 package fr.simplex_software.workshop.simple.springai;
 
+import fr.simplex_software.workshop.conformance.*;
 import fr.simplex_software.workshop.simple.conformance.*;
 import org.springframework.boot.test.context.*;
 import org.springframework.boot.test.web.server.*;

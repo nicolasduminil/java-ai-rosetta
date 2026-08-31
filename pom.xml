@@ -6,7 +6,7 @@
 
     <groupId>fr.simplex-software.workshop</groupId>
     <artifactId>java-ai-rosetta</artifactId>
-    <version>1.0.4</version>
+    <version>1.0.5</version>
     <packaging>pom</packaging>
 
     <name>Java AI Rosetta</name>
@@ -18,6 +18,9 @@
 
     <modules>
         <module>stacks</module>
+        <module>test-support</module>
+        <module>test-support-quarkus</module>
+        <module>test-support-langchain4j</module>
         <module>use-cases</module>
     </modules>
 

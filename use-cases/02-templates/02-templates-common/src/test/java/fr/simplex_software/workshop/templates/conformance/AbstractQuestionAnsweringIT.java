@@ -10,14 +10,6 @@ import java.net.*;
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 
-/**
- * The contract every stack is held to. It exercises the three things use case 02 adds over 01:
- * a templated system prompt, an optional reference document folded into it, and structured output.
- *
- * <p>Assertions are semantic, never exact-string: LLM output is non-deterministic even at
- * temperature zero, so the positive cases pin a token any usable model produces rather than a
- * sentence, and pin the {@code topic} field only to prove the model populated the structure.
- */
 public abstract class AbstractQuestionAnsweringIT
 {
   protected abstract URI baseUri();

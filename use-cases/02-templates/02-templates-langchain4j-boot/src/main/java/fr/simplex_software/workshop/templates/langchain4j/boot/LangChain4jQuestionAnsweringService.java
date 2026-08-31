@@ -21,8 +21,8 @@ public class LangChain4jQuestionAnsweringService implements QuestionAnsweringSer
   @Override
   public Answer askQuestion(Question question)
   {
-    var reference = referenceService.referenceFor(question.topic());
-    Result<Answer> result = assistant.answer(question.topic(), reference, question.question());
+    Result<Answer> result =
+      assistant.answer(question.topic(), referenceService.referenceFor(question.topic()), question.question());
     LOG.info("Token usage: {}", result.tokenUsage());
     return result.content();
   }

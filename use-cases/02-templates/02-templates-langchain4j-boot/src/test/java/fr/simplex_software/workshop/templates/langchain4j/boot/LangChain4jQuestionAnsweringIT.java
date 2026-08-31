@@ -1,5 +1,6 @@
 package fr.simplex_software.workshop.templates.langchain4j.boot;
 
+import fr.simplex_software.workshop.conformance.*;
 import fr.simplex_software.workshop.templates.conformance.*;
 import org.springframework.boot.test.context.*;
 import org.springframework.boot.test.web.server.*;

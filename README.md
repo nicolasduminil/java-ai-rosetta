@@ -71,10 +71,15 @@ is itself worth teaching, and because a later bump may resurrect it.
 │   ├── spring-ai-boot-parent/
 │   ├── langchain4j-boot-parent/
 │   └── langchain4j-quarkus-parent/
+├── test-support/          # shared conformance infrastructure (the single Ollama Testcontainers helper)
+├── test-support-quarkus/  # the shared Quarkus test resource wiring that container into Quarkus config
+├── test-support-langchain4j/ # the shared hand-rolled LangChain4j evaluation judge (use case 03)
 └── use-cases/
     ├── README.md          # the module contract every use case follows
     ├── 01-simple/         # one endpoint: forward a question, return text
-    └── 02-templates/      # templated prompt + injected context + structured output
+    ├── 02-templates/      # templated prompt + injected context + structured output
+    └── 03-eval/           # LLM-as-judge evaluation (relevancy + factual accuracy) — four modules, each
+                           #   booting its 02 application unchanged and scoring its answers
 ```
 
 **Aggregation is use-case-first; inheritance is stack-first.** A use case directory holds its four
@@ -100,7 +105,10 @@ stacks, which keeps the comparison honest.
 
 Each use case defines **one abstract conformance test** in its `common/` module; every
 implementation extends it. Assertions are semantic, never exact-string — LLM output is
-non-deterministic even at temperature zero.
+non-deterministic even at temperature zero. The Testcontainers Ollama helper that stands up the
+shared model lives once in `test-support/` — the conformance *scenarios* stay per use case, since
+they encode what each use case must do, but the container plumbing is identical everywhere and is
+declared in a single place.
 
 ```shell
 mvn verify          # builds every module and runs the conformance suite

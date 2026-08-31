@@ -6,14 +6,25 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="02-templates-langchain4j-boot" />
         <module name="01-simple-langchain4j-boot" />
         <module name="01-simple-spring-ai-boot" />
         <module name="01-simple-common" />
         <module name="02-templates-langchain4j-quarkus" />
+        <module name="03-eval-langchain4j-boot" />
+        <module name="04-rag-classic-langchain4j-boot" />
+        <module name="04-rag-classic-common" />
+        <module name="04-rag-classic-langchain4j-quarkus" />
+        <module name="test-support-quarkus" />
+        <module name="03-eval-common" />
+        <module name="04-rag-classic-spring-ai-boot" />
+        <module name="02-templates-langchain4j-boot" />
+        <module name="test-support" />
+        <module name="03-eval-spring-ai-boot" />
         <module name="01-simple-langchain4j-quarkus" />
         <module name="02-templates-spring-ai-boot" />
         <module name="02-templates-common" />
+        <module name="test-support-langchain4j" />
+        <module name="03-eval-langchain4j-quarkus" />
       </profile>
     </annotationProcessing>
   </component>

@@ -27,13 +27,11 @@ public class SpringAiQuestionAnsweringService implements QuestionAnsweringServic
   @Override
   public Answer askQuestion(Question question)
   {
-    var reference = referenceService.referenceFor(question.topic());
-
     var responseEntity = chatClient.prompt()
       .system(system -> system
         .text(systemPromptTemplate)
         .param("topic", question.topic())
-        .param("reference", reference))
+        .param("reference", referenceService.referenceFor(question.topic())))
       .user(question.question())
       .call()
       .responseEntity(Answer.class);

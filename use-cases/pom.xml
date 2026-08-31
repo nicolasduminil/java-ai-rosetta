@@ -7,7 +7,7 @@
     <parent>
         <groupId>fr.simplex-software.workshop</groupId>
         <artifactId>java-ai-rosetta</artifactId>
-        <version>1.0.4</version>
+        <version>1.0.5</version>
     </parent>
 
     <artifactId>use-cases</artifactId>
@@ -16,6 +16,7 @@
     <modules>
         <module>01-simple</module>
       <module>02-templates</module>
+      <module>03-eval</module>
     </modules>
 
 </project>

@@ -1,6 +1,6 @@
-package fr.simplex_software.workshop.templates.langchain4j.quarkus;
+package fr.simplex_software.workshop.conformance.quarkus;
 
-import fr.simplex_software.workshop.templates.conformance.*;
+import fr.simplex_software.workshop.conformance.*;
 import io.quarkus.test.common.*;
 
 import java.util.*;
