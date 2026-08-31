@@ -14,10 +14,13 @@ public final class OllamaTestSupport
   private static final String IMAGE = System.getProperty("ollama.image", "ollama/ollama:latest");
   private static final String MODEL = System.getProperty("ollama.model", "qwen2.5:0.5b");
   private static final String JUDGE_MODEL = System.getProperty("ollama.judge.model", "qwen2.5:3b");
+  private static final String EMBEDDING_MODEL =
+    System.getProperty("ollama.embedding.model", "nomic-embed-text");
 
   private static final OllamaContainer OLLAMA = startWithModel();
 
   private static boolean judgePulled;
+  private static boolean embeddingPulled;
 
   private OllamaTestSupport()
   {
@@ -45,6 +48,20 @@ public final class OllamaTestSupport
       judgePulled = true;
     }
     return JUDGE_MODEL;
+  }
+
+  /**
+   * The embedding model, pulled on first access so only retrieval-augmented use cases pay for it.
+   * Answering models (see {@link #model()}) cannot embed, so RAG needs this dedicated model.
+   */
+  public static synchronized String embeddingModel()
+  {
+    if (!embeddingPulled)
+    {
+      pull(EMBEDDING_MODEL);
+      embeddingPulled = true;
+    }
+    return EMBEDDING_MODEL;
   }
 
   private static OllamaContainer startWithModel()

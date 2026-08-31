@@ -78,8 +78,10 @@ is itself worth teaching, and because a later bump may resurrect it.
     ├── README.md          # the module contract every use case follows
     ├── 01-simple/         # one endpoint: forward a question, return text
     ├── 02-templates/      # templated prompt + injected context + structured output
-    └── 03-eval/           # LLM-as-judge evaluation (relevancy + factual accuracy) — four modules, each
-                           #   booting its 02 application unchanged and scoring its answers
+    ├── 03-eval/           # LLM-as-judge evaluation (relevancy + factual accuracy) — four modules, each
+    │                      #   booting its 02 application unchanged and scoring its answers
+    └── 04-rag-classic/    # RAG over ingested PDFs, imperative retrieval — a Camel/Tika ingestion
+                           #   pipeline feeding a stack-native embed/store/retrieve into Qdrant
 ```
 
 **Aggregation is use-case-first; inheritance is stack-first.** A use case directory holds its four
