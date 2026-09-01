@@ -5,7 +5,7 @@ import dev.langchain4j.data.segment.*;
 import dev.langchain4j.model.chat.*;
 import dev.langchain4j.model.embedding.*;
 import dev.langchain4j.store.embedding.*;
-import fr.simplex_software.workshop.ragclassic.api.*;
+import fr.simplex_software.workshop.rag.api.*;
 import org.slf4j.*;
 import org.springframework.stereotype.*;
 

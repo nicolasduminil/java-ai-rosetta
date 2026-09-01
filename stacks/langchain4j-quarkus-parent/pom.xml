@@ -7,7 +7,7 @@
   <parent>
     <groupId>fr.simplex-software.workshop</groupId>
     <artifactId>stacks</artifactId>
-    <version>1.0.6</version>
+    <version>1.0.7</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
@@ -15,6 +15,12 @@
   <packaging>pom</packaging>
   <name>Java AI Rosetta :: Stacks :: LangChain4j on Quarkus</name>
   <description>Parent for every langchain4j quarkus module.</description>
+
+  <properties>
+    <!-- Quarkus LangChain4j binds AI-service method parameters by name, which requires javac to keep
+         parameter names. The Spring Boot parent enables this for the Boot stacks; set it here for Quarkus. -->
+    <maven.compiler.parameters>true</maven.compiler.parameters>
+  </properties>
 
   <dependencyManagement>
     <dependencies>

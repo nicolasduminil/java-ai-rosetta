@@ -1,6 +1,6 @@
 package fr.simplex_software.workshop.ragclassic.springai;
 
-import fr.simplex_software.workshop.ragclassic.api.*;
+import fr.simplex_software.workshop.rag.api.*;
 import org.slf4j.*;
 import org.springframework.ai.chat.client.*;
 import org.springframework.ai.document.*;

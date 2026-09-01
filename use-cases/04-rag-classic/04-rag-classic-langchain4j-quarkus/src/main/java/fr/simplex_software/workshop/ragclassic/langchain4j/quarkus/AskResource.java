@@ -1,6 +1,6 @@
 package fr.simplex_software.workshop.ragclassic.langchain4j.quarkus;
 
-import fr.simplex_software.workshop.ragclassic.api.*;
+import fr.simplex_software.workshop.rag.api.*;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;

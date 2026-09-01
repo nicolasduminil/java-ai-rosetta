@@ -36,10 +36,6 @@ public final class OllamaTestSupport
     return MODEL;
   }
 
-  /**
-   * The LLM-as-judge model, pulled on first access so only evaluation tests pay for it. Judging is
-   * harder than answering, so this is a larger model than {@link #model()} by default.
-   */
   public static synchronized String judgeModel()
   {
     if (!judgePulled)
@@ -50,10 +46,6 @@ public final class OllamaTestSupport
     return JUDGE_MODEL;
   }
 
-  /**
-   * The embedding model, pulled on first access so only retrieval-augmented use cases pay for it.
-   * Answering models (see {@link #model()}) cannot embed, so RAG needs this dedicated model.
-   */
   public static synchronized String embeddingModel()
   {
     if (!embeddingPulled)

@@ -1,7 +1,7 @@
 package fr.simplex_software.workshop.ragclassic.langchain4j.boot;
 
 import fr.simplex_software.workshop.conformance.*;
-import fr.simplex_software.workshop.ragclassic.conformance.*;
+import fr.simplex_software.workshop.rag.conformance.*;
 import org.springframework.boot.test.context.*;
 import org.springframework.boot.test.web.server.*;
 import org.springframework.test.context.*;

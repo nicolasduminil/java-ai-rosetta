@@ -7,7 +7,7 @@
   <parent>
     <groupId>fr.simplex-software.workshop</groupId>
     <artifactId>langchain4j-boot-parent</artifactId>
-    <version>1.0.6</version>
+    <version>1.0.7</version>
     <relativePath>../../../stacks/langchain4j-boot-parent/pom.xml</relativePath>
   </parent>
 
@@ -50,6 +50,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
+        <version>3.4.2</version>
         <configuration>
           <skipIfEmpty>true</skipIfEmpty>
         </configuration>
@@ -57,6 +58,14 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-install-plugin</artifactId>
+        <version>3.1.4</version>
         <configuration>
           <skip>true</skip>
         </configuration>

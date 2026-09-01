@@ -7,7 +7,7 @@
   <parent>
     <groupId>fr.simplex-software.workshop</groupId>
     <artifactId>use-cases</artifactId>
-    <version>1.0.6</version>
+    <version>1.0.7</version>
   </parent>
 
   <artifactId>04-rag-classic</artifactId>
@@ -18,7 +18,6 @@
   </description>
 
   <modules>
-    <module>04-rag-classic-common</module>
     <module>04-rag-classic-spring-ai-boot</module>
     <module>04-rag-classic-langchain4j-boot</module>
     <module>04-rag-classic-langchain4j-quarkus</module>

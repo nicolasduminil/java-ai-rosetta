@@ -10,7 +10,10 @@ RAG splits naturally into two independent parts, delivered as two sibling use ca
 | Part | Use case | Retrieval |
 |---|---|---|
 | **classic** (this one) | `04-rag-classic` | imperative — you embed the query, call `similaritySearch`/`search` yourself, and stuff the hits into the prompt |
-| **advisor** (later) | `04-rag-advisor` | declarative — the framework's retrieval advisor / augmentor does it under the hood |
+| **advisor** | `04-rag-advisor` | declarative — the framework's retrieval advisor / augmentor does it under the hood |
+
+Both use cases share one module, **`04-rag-common`** (the `Question`/`Answer` contract, the corpus PDF,
+and the conformance test), so the two differ only in their stack modules.
 
 ## Where it came from
 
@@ -87,14 +90,14 @@ chatModel.chat(SystemMessage.from(prompt.formatted(context)), UserMessage.from(q
 
 ```
 04-rag-classic/
-  ├── 04-rag-classic-common/              # Question/Answer contract, the corpus PDF, the conformance test (test-jar)
   ├── 04-rag-classic-spring-ai-boot/      # Spring AI: auto-created collection, VectorStore.add / similaritySearch
   ├── 04-rag-classic-langchain4j-boot/    # LangChain4j on Boot: pre-created collection, EmbeddingStoreIngestor
   ├── 04-rag-classic-langchain4j-quarkus/ # LangChain4j on Quarkus: same, with CDI + camel-quarkus-tika
   └── docker-compose.yml                  # Ollama + Qdrant, to run a stack by hand
 ```
 
-The corpus is a single generated PDF (`04-rag-classic-common/src/main/resources/corpus/`) describing a
+The contract, the corpus PDF and the conformance test live in the shared `04-rag-common` module. The
+corpus is a single generated PDF (`04-rag-common/src/main/resources/corpus/`) describing a
 fictional company, Aurora Labs. `AbstractRagQuestionAnsweringIT` asks for facts stated **only** in that
 PDF (its HQ city, its product name) and asserts the answer contains them — proof that retrieval fed the
 generation — plus input-validation probes. As in 03 the assertion targets the *capability* (a grounded
@@ -110,7 +113,7 @@ Answering runs on the small `qwen2.5:0.5b`; embedding needs a dedicated model, `
 
 | Track | State |
 |---|---|
-| `04-rag-classic-common` | done — contract, corpus PDF, conformance suite (test-jar) |
+| `04-rag-common` (shared) | done — contract, corpus PDF, conformance suite (test-jar) |
 | `04-rag-classic-spring-ai-boot` | done — auto-created collection, imperative `similaritySearch`, passes the suite |
 | `04-rag-classic-langchain4j-boot` | done — pre-created collection, imperative `search`, passes the suite |
 | `04-rag-classic-langchain4j-quarkus` | done — same on Quarkus (CDI, camel-quarkus-tika), passes the suite |

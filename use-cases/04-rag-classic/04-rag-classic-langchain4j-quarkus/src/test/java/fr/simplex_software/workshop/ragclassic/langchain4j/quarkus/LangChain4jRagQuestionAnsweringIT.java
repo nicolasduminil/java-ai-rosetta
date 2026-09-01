@@ -1,7 +1,7 @@
 package fr.simplex_software.workshop.ragclassic.langchain4j.quarkus;
 
 import fr.simplex_software.workshop.conformance.quarkus.*;
-import fr.simplex_software.workshop.ragclassic.conformance.*;
+import fr.simplex_software.workshop.rag.conformance.*;
 import io.quarkus.test.common.*;
 import io.quarkus.test.common.http.*;
 import io.quarkus.test.junit.*;

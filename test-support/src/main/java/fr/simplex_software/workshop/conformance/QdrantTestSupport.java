@@ -12,7 +12,7 @@ import org.testcontainers.utility.*;
  */
 public final class QdrantTestSupport
 {
-  private static final String IMAGE = System.getProperty("qdrant.image", "qdrant/qdrant");
+  private static final String IMAGE = System.getProperty("qdrant.image", "qdrant/qdrant:v1.17.0");
 
   private static final QdrantContainer QDRANT = start();
 

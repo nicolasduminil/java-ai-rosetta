@@ -7,7 +7,7 @@
   <parent>
     <groupId>fr.simplex-software.workshop</groupId>
     <artifactId>langchain4j-boot-parent</artifactId>
-    <version>1.0.6</version>
+    <version>1.0.7</version>
     <relativePath>../../../stacks/langchain4j-boot-parent/pom.xml</relativePath>
   </parent>
 
@@ -32,7 +32,7 @@
   <dependencies>
     <dependency>
       <groupId>fr.simplex-software.workshop</groupId>
-      <artifactId>04-rag-classic-common</artifactId>
+      <artifactId>04-rag-common</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
@@ -62,7 +62,7 @@
     </dependency>
     <dependency>
       <groupId>fr.simplex-software.workshop</groupId>
-      <artifactId>04-rag-classic-common</artifactId>
+      <artifactId>04-rag-common</artifactId>
       <version>${project.version}</version>
       <type>test-jar</type>
       <scope>test</scope>
