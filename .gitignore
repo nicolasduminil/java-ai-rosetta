@@ -19,3 +19,6 @@ build/
 
 # OS
 .DS_Store
+
+# LaTeX build output from the IDE (Texify-IDEA builds the book into ./out)
+/out/
