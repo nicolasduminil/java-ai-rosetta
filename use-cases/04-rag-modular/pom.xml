@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>fr.simplex-software.workshop</groupId>
+    <artifactId>use-cases</artifactId>
+    <version>1.0.8</version>
+  </parent>
+
+  <artifactId>04-rag-modular</artifactId>
+  <packaging>pom</packaging>
+  <name>Java AI Rosetta :: 04 RAG Modular</name>
+  <description>Modular RAG over ingested PDFs.</description>
+
+  <modules>
+    <module>04-rag-modular-common</module>
+    <module>04-rag-modular-spring-ai-boot</module>
+    <module>04-rag-modular-langchain4j-boot</module>
+    <module>04-rag-modular-langchain4j-quarkus</module>
+  </modules>
+
+</project>

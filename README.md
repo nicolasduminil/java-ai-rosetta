@@ -83,8 +83,11 @@ is itself worth teaching, and because a later bump may resurrect it.
     ├── 04-rag-common/     # shared RAG contract, corpus PDF and conformance test for the two ch.4 use cases
     ├── 04-rag-classic/    # RAG over ingested PDFs, imperative retrieval — a Camel/Tika ingestion
     │                      #   pipeline feeding a stack-native embed/store/retrieve into Qdrant
-    └── 04-rag-advisor/    # same RAG task, declarative retrieval — Spring AI QuestionAnswerAdvisor,
-                           #   LangChain4j AI Services with a ContentRetriever/RetrievalAugmentor
+    ├── 04-rag-advisor/    # same RAG task, declarative retrieval — Spring AI QuestionAnswerAdvisor,
+    │                      #   LangChain4j AI Services with a ContentRetriever/RetrievalAugmentor
+    └── 04-rag-modular/    # modular RAG: a composable pipeline retrieving from two sources and fusing
+                           #   the hits — LangChain4j DefaultQueryRouter+DefaultContentAggregator (RRF),
+                           #   Spring AI RetrievalAugmentationAdvisor + a hand-rolled multi-source retriever
 ```
 
 **Aggregation is use-case-first; inheritance is stack-first.** A use case directory holds its four

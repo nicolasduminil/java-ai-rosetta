@@ -1,0 +1,46 @@
+# Backing services for running any 04-rag-modular stack application by hand.
+# The applications themselves run from the host (their defaults point at localhost:11434 and
+# localhost:6334), so this file provides only the two services they depend on: Ollama and Qdrant.
+#
+# Usage:
+#   docker compose up -d
+#   docker compose exec ollama ollama pull qwen2.5:0.5b        # answering model
+#   docker compose exec ollama ollama pull nomic-embed-text    # embedding model
+#   then run a stack, e.g.:  mvn -pl use-cases/04-rag-modular/04-rag-modular-spring-ai-boot spring-boot:run
+#
+services:
+
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-data:/root/.ollama
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 10s
+      timeout: 5s
+      start_period: 20s
+      retries: 5
+    networks:
+      - rag
+    restart: unless-stopped
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    ports:
+      - "6333:6333"   # REST / dashboard
+      - "6334:6334"   # gRPC (used by the applications)
+    volumes:
+      - qdrant-data:/qdrant/storage
+    networks:
+      - rag
+    restart: unless-stopped
+
+volumes:
+  ollama-data:
+  qdrant-data:
+
+networks:
+  rag:
+    driver: bridge
