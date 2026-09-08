@@ -11,7 +11,7 @@ build/
 
 # IDE
 *.iml
-.idea/shelf/
+.idea/
 .settings/
 .classpath
 .project
