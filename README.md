@@ -80,14 +80,13 @@ is itself worth teaching, and because a later bump may resurrect it.
     ├── 02-templates/      # templated prompt + injected context + structured output
     ├── 03-eval/           # LLM-as-judge evaluation (relevancy + factual accuracy) — four modules, each
     │                      #   booting its 02 application unchanged and scoring its answers
-    ├── 04-rag-common/     # shared RAG contract, corpus PDF and conformance test for the two ch.4 use cases
-    ├── 04-rag-classic/    # RAG over ingested PDFs, imperative retrieval — a Camel/Tika ingestion
-    │                      #   pipeline feeding a stack-native embed/store/retrieve into Qdrant
-    ├── 04-rag-advisor/    # same RAG task, declarative retrieval — Spring AI QuestionAnswerAdvisor,
-    │                      #   LangChain4j AI Services with a ContentRetriever/RetrievalAugmentor
-    └── 04-rag-modular/    # modular RAG: a composable pipeline retrieving from two sources and fusing
-                           #   the hits — LangChain4j DefaultQueryRouter+DefaultContentAggregator (RRF),
-                           #   Spring AI RetrievalAugmentationAdvisor + a hand-rolled multi-source retriever
+    ├── 04-rag/            # retrieval-augmented generation (nested commons + nine stacks): classic
+    │                      #   imperative retrieval, advisor declarative retrieval, and modular
+    │                      #   multi-source retrieval + fusion — over a Camel/Tika ingestion into Qdrant
+    └── 05-memory/         # conversational memory (nested common + six stacks): kept in memory
+                           #   (Spring AI MessageChatMemoryAdvisor / LangChain4j ChatMemoryProvider) and
+                           #   persisted to Qdrant (Spring AI VectorStoreChatMemoryAdvisor / a hand-rolled
+                           #   LangChain4j ChatMemoryStore, since LangChain4j ships none)
 ```
 
 **Aggregation is use-case-first; inheritance is stack-first.** A use case directory holds its four

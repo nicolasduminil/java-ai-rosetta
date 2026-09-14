@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>fr.simplex-software.workshop</groupId>
+    <artifactId>use-cases</artifactId>
+    <version>1.0.9</version>
+  </parent>
+
+  <artifactId>05-memory</artifactId>
+  <packaging>pom</packaging>
+  <name>Java AI Rosetta :: 05 Memory</name>
+  <description>
+    Conversational memory: a /chat endpoint that remembers a conversation and keeps conversations
+    isolated, kept in memory (Spring AI MessageChatMemoryAdvisor / LangChain4j ChatMemoryProvider) and
+    persisted to Qdrant (Spring AI VectorStoreChatMemoryAdvisor / a hand-rolled LangChain4j ChatMemoryStore),
+    across Spring AI on Spring Boot, LangChain4j on Spring Boot, and LangChain4j on Quarkus.
+  </description>
+
+  <modules>
+    <module>05-memory-common</module>
+    <module>05-memory-inmemory-spring-ai-boot</module>
+    <module>05-memory-inmemory-langchain4j-boot</module>
+    <module>05-memory-inmemory-langchain4j-quarkus</module>
+    <module>05-memory-persistent-spring-ai-boot</module>
+    <module>05-memory-persistent-langchain4j-boot</module>
+    <module>05-memory-persistent-langchain4j-quarkus</module>
+  </modules>
+
+</project>

@@ -6,7 +6,7 @@
 
     <groupId>fr.simplex-software.workshop</groupId>
     <artifactId>java-ai-rosetta</artifactId>
-    <version>1.0.8</version>
+    <version>1.0.9</version>
     <packaging>pom</packaging>
 
     <name>Java AI Rosetta</name>
