@@ -12,6 +12,13 @@ import org.eclipse.microprofile.config.inject.*;
  * Builds the {@link Assistant} by hand with a {@code ChatMemoryProvider} whose memory windows persist to
  * Qdrant through the hand-rolled {@link QdrantChatMemoryStore}. The Ollama {@link ChatModel} is the one
  * Quarkus auto-configures; the {@code QdrantClient} is built here from the Qdrant host and port.
+ * <p>
+ * Why hand-built, and not a {@code @RegisterAiService} interface with a custom {@code ChatMemoryStore}
+ * bean (as the in-memory sibling uses auto-memory)? On Quarkus, auto-memory is tied to the AI service's
+ * CDI scope: the extension clears the service's chat memory when the bean is destroyed. That is the right
+ * default for a transient in-memory window, but against a durable Qdrant store it would erase the persisted
+ * conversation. Hand-building the AI service decouples the memory from the CDI bean lifecycle, so the
+ * durable rows outlive any bean.
  */
 @ApplicationScoped
 public class MemoryConfig
