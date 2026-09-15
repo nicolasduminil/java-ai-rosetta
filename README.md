@@ -83,10 +83,13 @@ is itself worth teaching, and because a later bump may resurrect it.
     ├── 04-rag/            # retrieval-augmented generation (nested commons + nine stacks): classic
     │                      #   imperative retrieval, advisor declarative retrieval, and modular
     │                      #   multi-source retrieval + fusion — over a Camel/Tika ingestion into Qdrant
-    └── 05-memory/         # conversational memory (nested common + six stacks): kept in memory
-                           #   (Spring AI MessageChatMemoryAdvisor / LangChain4j ChatMemoryProvider) and
-                           #   persisted to Qdrant (Spring AI VectorStoreChatMemoryAdvisor / a hand-rolled
-                           #   LangChain4j ChatMemoryStore, since LangChain4j ships none)
+    ├── 05-memory/         # conversational memory (nested common + six stacks): kept in memory
+    │                      #   (Spring AI MessageChatMemoryAdvisor / LangChain4j ChatMemoryProvider) and
+    │                      #   persisted to Qdrant (Spring AI VectorStoreChatMemoryAdvisor / a hand-rolled
+    │                      #   LangChain4j ChatMemoryStore, since LangChain4j ships none)
+    └── 06-tools/          # tool-driven generation (nested common + three stacks): an /ask endpoint whose
+                           #   assistant calls a catalog tool to answer — Spring AI @Tool + defaultTools,
+                           #   LangChain4j @Tool + AiServices.tools, Quarkus @RegisterAiService(tools = ...)
 ```
 
 **Aggregation is use-case-first; inheritance is stack-first.** A use case directory holds its four

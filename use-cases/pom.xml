@@ -2,23 +2,24 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+  <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>fr.simplex-software.workshop</groupId>
-        <artifactId>java-ai-rosetta</artifactId>
-        <version>1.0.9</version>
-    </parent>
+  <parent>
+    <groupId>fr.simplex-software.workshop</groupId>
+    <artifactId>java-ai-rosetta</artifactId>
+    <version>1.0.10</version>
+  </parent>
 
-    <artifactId>use-cases</artifactId>
-    <packaging>pom</packaging>
-    <name>Java AI Rosetta :: Use Cases</name>
-    <modules>
-        <module>01-simple</module>
-      <module>02-templates</module>
-      <module>03-eval</module>
-      <module>04-rag</module>
-      <module>05-memory</module>
-    </modules>
+  <artifactId>use-cases</artifactId>
+  <packaging>pom</packaging>
+  <name>Java AI Rosetta :: Use Cases</name>
+  <modules>
+    <module>01-simple</module>
+    <module>02-templates</module>
+    <module>03-eval</module>
+    <module>04-rag</module>
+    <module>05-memory</module>
+    <module>06-tools</module>
+  </modules>
 
 </project>

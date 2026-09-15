@@ -7,7 +7,7 @@
   <parent>
     <groupId>fr.simplex-software.workshop</groupId>
     <artifactId>stacks</artifactId>
-    <version>1.0.9</version>
+    <version>1.0.10</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
@@ -15,6 +15,13 @@
   <packaging>pom</packaging>
   <name>Java AI Rosetta :: Stacks :: Spring AI on Spring Boot</name>
   <description>Parent for every Spring AI module.</description>
+
+  <properties>
+    <!-- Keep method parameter names in the bytecode. Spring AI derives a tool's JSON-schema parameter
+         names from the reflected names; without this they compile to arg0, arg1, ... and tool calling
+         breaks. (The Quarkus parent sets the same flag for its own name-based AI-service binding.) -->
+    <maven.compiler.parameters>true</maven.compiler.parameters>
+  </properties>
 
   <dependencyManagement>
     <dependencies>

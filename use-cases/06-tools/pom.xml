@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>fr.simplex-software.workshop</groupId>
+    <artifactId>use-cases</artifactId>
+    <version>1.0.10</version>
+  </parent>
+
+  <artifactId>06-tools</artifactId>
+  <packaging>pom</packaging>
+  <name>Java AI Rosetta :: 06 Tools</name>
+  <description>
+    Tool-driven generation: an /ask endpoint whose assistant calls a tool (a catalog lookup) to answer a
+    question it cannot answer on its own, across Spring AI on Spring Boot (@Tool + defaultTools),
+    LangChain4j on Spring Boot (@Tool + AiServices.tools), and LangChain4j on Quarkus
+    (@RegisterAiService(tools = ...)).
+  </description>
+
+  <modules>
+    <module>06-tools-common</module>
+    <module>06-tools-spring-ai-boot</module>
+    <module>06-tools-langchain4j-boot</module>
+    <module>06-tools-langchain4j-quarkus</module>
+  </modules>
+
+</project>
