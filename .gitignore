@@ -22,3 +22,6 @@ build/
 
 # LaTeX build output from the IDE (Texify-IDEA builds the book into ./out)
 /out/
+
+# Upstream bug reproducer for quarkus-langchain4j MCP (not part of the book)
+mcp-quarkus-streamable-repro*

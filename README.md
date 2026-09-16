@@ -87,9 +87,12 @@ is itself worth teaching, and because a later bump may resurrect it.
     │                      #   (Spring AI MessageChatMemoryAdvisor / LangChain4j ChatMemoryProvider) and
     │                      #   persisted to Qdrant (Spring AI VectorStoreChatMemoryAdvisor / a hand-rolled
     │                      #   LangChain4j ChatMemoryStore, since LangChain4j ships none)
-    └── 06-tools/          # tool-driven generation (nested common + three stacks): an /ask endpoint whose
-                           #   assistant calls a catalog tool to answer — Spring AI @Tool + defaultTools,
-                           #   LangChain4j @Tool + AiServices.tools, Quarkus @RegisterAiService(tools = ...)
+    ├── 06-tools/          # tool-driven generation (nested common + three stacks): an /ask endpoint whose
+    │                      #   assistant calls a catalog tool to answer — Spring AI @Tool + defaultTools,
+    │                      #   LangChain4j @Tool + AiServices.tools, Quarkus @RegisterAiService(tools = ...)
+    └── 07-mcp/            # Model Context Protocol (nested common + a Spring AI MCP server + three clients):
+                           #   the catalog tool is now exposed by a separate MCP server over Streamable HTTP,
+                           #   and Spring AI / LangChain4j-Boot / LangChain4j-Quarkus clients discover & call it
 ```
 
 **Aggregation is use-case-first; inheritance is stack-first.** A use case directory holds its four
