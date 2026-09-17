@@ -90,9 +90,12 @@ is itself worth teaching, and because a later bump may resurrect it.
     ├── 06-tools/          # tool-driven generation (nested common + three stacks): an /ask endpoint whose
     │                      #   assistant calls a catalog tool to answer — Spring AI @Tool + defaultTools,
     │                      #   LangChain4j @Tool + AiServices.tools, Quarkus @RegisterAiService(tools = ...)
-    └── 07-mcp/            # Model Context Protocol (nested common + a Spring AI MCP server + three clients):
-                           #   the catalog tool is now exposed by a separate MCP server over Streamable HTTP,
-                           #   and Spring AI / LangChain4j-Boot / LangChain4j-Quarkus clients discover & call it
+    ├── 07-mcp/            # Model Context Protocol (nested common + a Spring AI MCP server + three clients):
+    │                      #   the catalog tool is now exposed by a separate MCP server over Streamable HTTP,
+    │                      #   and Spring AI / LangChain4j-Boot / LangChain4j-Quarkus clients discover & call it
+    └── 08-multimodal/     # audio & images via OpenAI (nested common + three stacks): transcribe, describe an
+                           #   image (vision) and generate an image on all three; speak (TTS) is Spring-AI-only,
+                           #   as LangChain4j ships no speech-synthesis model — the first OpenAI use case
 ```
 
 **Aggregation is use-case-first; inheritance is stack-first.** A use case directory holds its four

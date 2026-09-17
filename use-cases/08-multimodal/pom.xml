@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>fr.simplex-software.workshop</groupId>
+    <artifactId>use-cases</artifactId>
+    <version>1.0.12</version>
+  </parent>
+
+  <artifactId>08-multimodal</artifactId>
+  <packaging>pom</packaging>
+  <name>Java AI Rosetta :: 08 Multimodal</name>
+  <description>Audio and images via OpenAI.</description>
+
+  <modules>
+    <module>08-multimodal-common</module>
+    <module>08-multimodal-spring-ai-boot</module>
+    <module>08-multimodal-langchain4j-boot</module>
+    <module>08-multimodal-langchain4j-quarkus</module>
+  </modules>
+
+</project>
