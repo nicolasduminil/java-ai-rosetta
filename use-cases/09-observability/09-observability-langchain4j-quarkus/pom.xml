@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>fr.simplex-software.workshop</groupId>
+    <artifactId>langchain4j-quarkus-parent</artifactId>
+    <version>1.0.13</version>
+    <relativePath>../../../stacks/langchain4j-quarkus-parent/pom.xml</relativePath>
+  </parent>
+
+  <artifactId>09-observability-langchain4j-quarkus</artifactId>
+  <name>Java AI Rosetta :: 09 Observability :: LangChain4j on Quarkus</name>
+  <description>Observability with LangChain4j on Quarkus.</description>
+
+  <dependencies>
+    <dependency>
+      <groupId>fr.simplex-software.workshop</groupId>
+      <artifactId>09-observability-common</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-hibernate-validator</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkiverse.langchain4j</groupId>
+      <artifactId>quarkus-langchain4j-qdrant</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-micrometer-registry-prometheus</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>fr.simplex-software.workshop</groupId>
+      <artifactId>09-observability-common</artifactId>
+      <version>${project.version}</version>
+      <type>test-jar</type>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+</project>

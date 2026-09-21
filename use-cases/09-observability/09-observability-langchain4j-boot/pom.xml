@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>fr.simplex-software.workshop</groupId>
+    <artifactId>langchain4j-boot-parent</artifactId>
+    <version>1.0.13</version>
+    <relativePath>../../../stacks/langchain4j-boot-parent/pom.xml</relativePath>
+  </parent>
+
+  <artifactId>09-observability-langchain4j-boot</artifactId>
+  <name>Java AI Rosetta :: 09 Observability :: LangChain4j on Spring Boot</name>
+  <description>Observability with LangChain4j on Spring Boot.
+  </description>
+
+  <dependencies>
+    <dependency>
+      <groupId>fr.simplex-software.workshop</groupId>
+      <artifactId>09-observability-common</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>dev.langchain4j</groupId>
+      <artifactId>langchain4j</artifactId>
+    </dependency>
+    <!-- Autoconfigures the Ollama chat and embedding models from langchain4j.ollama.{chat,embedding}-model.*
+         and auto-attaches any ChatModelListener bean, so RagConfig only wires the Qdrant store (LangChain4j
+         ships no Qdrant Spring Boot starter). -->
+    <dependency>
+      <groupId>dev.langchain4j</groupId>
+      <artifactId>langchain4j-ollama-spring-boot4-starter</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>dev.langchain4j</groupId>
+      <artifactId>langchain4j-qdrant</artifactId>
+    </dependency>
+    <!-- LangChain4j serializes with Jackson 2 (com.fasterxml), but Spring Boot 4 ships only Jackson 3
+         (tools.jackson). Declare Jackson 2 databind so QdrantEmbeddingStore works when the app runs
+         standalone; without Camel (which brought it transitively in 04-rag) it is otherwise test-scope only. -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-validation</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.micrometer</groupId>
+      <artifactId>micrometer-registry-prometheus</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>fr.simplex-software.workshop</groupId>
+      <artifactId>09-observability-common</artifactId>
+      <version>${project.version}</version>
+      <type>test-jar</type>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+</project>

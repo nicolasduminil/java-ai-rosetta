@@ -1,0 +1,12 @@
+Aurora Labs company briefing.
+
+Aurora Labs is a research company headquartered in Reykjavik, Iceland. It was founded in 2019 and
+employs about 120 people across engineering, research and operations.
+
+The company's flagship product is called Lumen. Lumen is an analytics platform for renewable energy
+grids. It integrates with weather forecasting services to predict energy demand and to balance supply
+from wind and geothermal sources.
+
+Aurora Labs runs its own data centre in Reykjavik, powered entirely by geothermal energy. The Lumen
+platform is offered as a hosted service and is used by grid operators in several northern European
+countries.
