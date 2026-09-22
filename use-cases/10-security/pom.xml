@@ -13,8 +13,7 @@
   <artifactId>10-security</artifactId>
   <packaging>pom</packaging>
   <name>Java AI Rosetta :: 10 Security</name>
-  <description>Securing AI applications: authentication, per-user vector-store access control, guardrails
-    against prompt injection and leaking, tool authorization, and content moderation.
+  <description>Securing AI applications: authentication, access control, guardrails, tools and moderation.
   </description>
 
   <modules>

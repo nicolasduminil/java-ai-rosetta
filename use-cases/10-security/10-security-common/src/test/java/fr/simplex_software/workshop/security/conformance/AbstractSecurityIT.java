@@ -12,20 +12,16 @@ import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 
 /**
- * The shared conformance test drives the secured assistant over REST and asserts the five security
- * behaviours uniformly across the three stacks:
+ * The shared conformance test asserts the five security behaviours uniformly across the three stacks:
  * <ul>
  *   <li>authentication: a request without a valid JWT is rejected (401);</li>
- *   <li>vector-store access control: a user retrieves their own and public documents, never another
- *       user's (proved by the answer to a question whose answer lives only in another user's document);</li>
+ *   <li>vector-store access control: a user retrieves their own and public documents, never another user's;</li>
  *   <li>input guardrail: a prompt-injection attempt is refused (403);</li>
  *   <li>output guardrail: a request whose answer would leak the forbidden project codename is refused (403);</li>
- *   <li>tool authorization: an admin-only tool the assistant may call is denied to a non-admin (403) and
- *       allowed to an admin;</li>
+ *   <li>tool authorization: an admin-only tool is denied to a non-admin (403) and allowed to an admin;</li>
  *   <li>content moderation: toxic input is refused (403), gated behind an OpenAI key.</li>
  * </ul>
- * Every violation surfaces as HTTP 403 so the contract is the same whatever the stack enforces it with.
- * Subclasses supply only {@link #baseUri()} (and their Ollama and Qdrant Testcontainer wiring).
+ * Every violation surfaces as HTTP 403.
  */
 public abstract class AbstractSecurityIT
 {
