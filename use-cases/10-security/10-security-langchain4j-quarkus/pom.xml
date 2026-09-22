@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>fr.simplex-software.workshop</groupId>
+    <artifactId>langchain4j-quarkus-parent</artifactId>
+    <version>1.0.14</version>
+    <relativePath>../../../stacks/langchain4j-quarkus-parent/pom.xml</relativePath>
+  </parent>
+
+  <artifactId>10-security-langchain4j-quarkus</artifactId>
+  <name>Java AI Rosetta :: 10 Security :: LangChain4j on Quarkus</name>
+  <description>Securing a LangChain4j assistant on Quarkus: MP JWT, per-user vector-store filtering,
+    first-class input/output guardrails, and an authorized tool.</description>
+
+  <properties>
+    <ollama.model>qwen2.5:3b</ollama.model>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>fr.simplex-software.workshop</groupId>
+      <artifactId>10-security-common</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkiverse.langchain4j</groupId>
+      <artifactId>quarkus-langchain4j-qdrant</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-smallrye-jwt</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-hibernate-validator</artifactId>
+    </dependency>
+    <!-- Content moderation uses LangChain4j's OpenAiModerationModel directly (no local moderation model
+         exists); it is built only when OPENAI_API_KEY is set, so the stack stays local without a key. -->
+    <dependency>
+      <groupId>dev.langchain4j</groupId>
+      <artifactId>langchain4j-open-ai</artifactId>
+      <version>1.17.2</version>
+    </dependency>
+    <dependency>
+      <groupId>fr.simplex-software.workshop</groupId>
+      <artifactId>10-security-common</artifactId>
+      <version>${project.version}</version>
+      <type>test-jar</type>
+      <scope>test</scope>
+    </dependency>
+    <!-- The conformance test mints RS256 tokens with Nimbus; Quarkus MP JWT verifies with jose4j, so Nimbus
+         is not otherwise on the classpath and is added for the test only. -->
+    <dependency>
+      <groupId>com.nimbusds</groupId>
+      <artifactId>nimbus-jose-jwt</artifactId>
+      <version>10.3</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+</project>

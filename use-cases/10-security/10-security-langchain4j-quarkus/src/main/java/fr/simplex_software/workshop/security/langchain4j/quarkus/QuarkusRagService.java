@@ -1,0 +1,78 @@
+package fr.simplex_software.workshop.security.langchain4j.quarkus;
+
+import dev.langchain4j.data.segment.*;
+import dev.langchain4j.model.embedding.*;
+import dev.langchain4j.model.moderation.*;
+import dev.langchain4j.model.openai.*;
+import dev.langchain4j.service.*;
+import dev.langchain4j.store.embedding.*;
+import dev.langchain4j.store.embedding.filter.*;
+import fr.simplex_software.workshop.security.api.*;
+import jakarta.enterprise.context.*;
+import jakarta.inject.*;
+import org.eclipse.microprofile.config.inject.*;
+import org.eclipse.microprofile.jwt.*;
+
+import java.util.*;
+import java.util.stream.*;
+
+import static dev.langchain4j.store.embedding.filter.MetadataFilterBuilder.*;
+
+/**
+ * Retrieval is filtered by the authenticated caller (the JWT principal) with a metadata filter on the
+ * {@code owner} field, so the assistant only ever sees the caller's own documents plus the public ones.
+ */
+@ApplicationScoped
+public class QuarkusRagService implements QuestionAnsweringService
+{
+  private static final int MAX_RESULTS = 4;
+
+  private final Assistant assistant;
+  private final EmbeddingModel embeddingModel;
+  private final EmbeddingStore<TextSegment> embeddingStore;
+  private final JsonWebToken jwt;
+  private final ModerationModel moderationModel;
+
+  @Inject
+  public QuarkusRagService(Assistant assistant, EmbeddingModel embeddingModel,
+    EmbeddingStore<TextSegment> embeddingStore, JsonWebToken jwt,
+    @ConfigProperty(name = "openai.api-key") Optional<String> openAiApiKey)
+  {
+    this.assistant = assistant;
+    this.embeddingModel = embeddingModel;
+    this.embeddingStore = embeddingStore;
+    this.jwt = jwt;
+    this.moderationModel = openAiApiKey.filter(key -> !key.isBlank())
+      .map(key -> (ModerationModel) OpenAiModerationModel.builder()
+        .apiKey(key).modelName("omni-moderation-latest").build())
+      .orElse(null);
+  }
+
+  @Override
+  public Answer askQuestion(Question question)
+  {
+    moderateIfEnabled(question.question());
+    String context = retrieveContext(question.question(), jwt.getName());
+    return new Answer(assistant.answer(context, question.question()));
+  }
+
+  private void moderateIfEnabled(String text)
+  {
+    if (moderationModel == null)
+      return;
+    Moderation moderation = moderationModel.moderate(text).content();
+    if (moderation.flagged())
+      throw new ModerationException("input flagged by content moderation", moderation);
+  }
+
+  private String retrieveContext(String query, String user)
+  {
+    Filter acl = metadataKey("owner").isEqualTo(user).or(metadataKey("owner").isEqualTo("public"));
+    var matches = embeddingStore.search(EmbeddingSearchRequest.builder()
+      .queryEmbedding(embeddingModel.embed(query).content())
+      .maxResults(MAX_RESULTS)
+      .filter(acl)
+      .build()).matches();
+    return matches.stream().map(match -> match.embedded().text()).collect(Collectors.joining("\n\n"));
+  }
+}

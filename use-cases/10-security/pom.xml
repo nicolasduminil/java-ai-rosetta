@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>fr.simplex-software.workshop</groupId>
+    <artifactId>use-cases</artifactId>
+    <version>1.0.14</version>
+  </parent>
+
+  <artifactId>10-security</artifactId>
+  <packaging>pom</packaging>
+  <name>Java AI Rosetta :: 10 Security</name>
+  <description>Securing AI applications: authentication, per-user vector-store access control, guardrails
+    against prompt injection and leaking, tool authorization, and content moderation.
+  </description>
+
+  <modules>
+    <module>10-security-common</module>
+    <module>10-security-spring-ai-boot</module>
+    <module>10-security-langchain4j-boot</module>
+    <module>10-security-langchain4j-quarkus</module>
+  </modules>
+
+</project>

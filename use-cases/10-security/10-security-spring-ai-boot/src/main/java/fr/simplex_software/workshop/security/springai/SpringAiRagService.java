@@ -1,0 +1,84 @@
+package fr.simplex_software.workshop.security.springai;
+
+import fr.simplex_software.workshop.security.api.*;
+import org.springframework.ai.chat.client.*;
+import org.springframework.ai.document.*;
+import org.springframework.ai.moderation.*;
+import org.springframework.ai.vectorstore.*;
+import org.springframework.ai.vectorstore.filter.*;
+import org.springframework.beans.factory.*;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.core.io.*;
+import org.springframework.security.core.context.*;
+import org.springframework.stereotype.*;
+
+import java.util.stream.*;
+
+/**
+ * Retrieval is filtered by the authenticated caller: the similarity search only returns documents whose
+ * {@code owner} metadata is the current user or {@code public}, so one user never sees another's documents.
+ * The guardrail advisor and the audit-log tool are registered on the client as defaults.
+ */
+@Service
+public class SpringAiRagService implements QuestionAnsweringService
+{
+  private static final int TOP_K = 4;
+
+  private final ChatClient chatClient;
+  private final VectorStore vectorStore;
+  private final ObjectProvider<ModerationModel> moderationModels;
+
+  @Value("classpath:/prompts/ragSystemPrompt.st")
+  private Resource systemPromptTemplate;
+
+  public SpringAiRagService(ChatClient.Builder chatClientBuilder, VectorStore vectorStore,
+    SecurityGuardAdvisor securityGuardAdvisor, AuditLogTool auditLogTool,
+    ObjectProvider<ModerationModel> moderationModels)
+  {
+    this.chatClient = chatClientBuilder
+      .defaultAdvisors(securityGuardAdvisor)
+      .defaultTools(auditLogTool)
+      .build();
+    this.vectorStore = vectorStore;
+    this.moderationModels = moderationModels;
+  }
+
+  @Override
+  public Answer askQuestion(Question question)
+  {
+    moderateIfEnabled(question.question());
+    String user = currentUser();
+    return new Answer(chatClient.prompt()
+      .system(system -> system.text(systemPromptTemplate)
+        .param("context", retrieveContext(question.question(), user)))
+      .user(question.question())
+      .call()
+      .content());
+  }
+
+  private String retrieveContext(String query, String user)
+  {
+    var builder = new FilterExpressionBuilder();
+    var acl = builder.or(builder.eq("owner", user), builder.eq("owner", "public")).build();
+    var hits = vectorStore.similaritySearch(
+      SearchRequest.builder().query(query).topK(TOP_K).filterExpression(acl).build());
+    return hits.stream().map(Document::getText).collect(Collectors.joining("\n\n"));
+  }
+
+  private void moderateIfEnabled(String text)
+  {
+    ModerationModel moderationModel = moderationModels.getIfAvailable();
+    if (moderationModel == null)
+      return;
+    boolean flagged = moderationModel.call(new ModerationPrompt(text))
+      .getResult().getOutput().getResults().stream().anyMatch(ModerationResult::isFlagged);
+    if (flagged)
+      throw new ContentModerationException("input flagged by content moderation");
+  }
+
+  private String currentUser()
+  {
+    var authentication = SecurityContextHolder.getContext().getAuthentication();
+    return authentication != null ? authentication.getName() : "anonymous";
+  }
+}

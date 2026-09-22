@@ -1,0 +1,28 @@
+package fr.simplex_software.workshop.security.langchain4j.quarkus;
+
+import dev.langchain4j.data.message.*;
+import dev.langchain4j.guardrail.*;
+import jakarta.enterprise.context.*;
+
+import java.util.*;
+
+/**
+ * A first-class LangChain4j input guardrail as a CDI bean: it refuses obvious prompt-injection input before
+ * the model is called. A failure makes the AI service throw, which an exception mapper turns into HTTP 403.
+ */
+@ApplicationScoped
+public class InjectionGuardrail implements InputGuardrail
+{
+  private static final List<String> INJECTION_MARKERS = List.of(
+    "ignore all previous", "ignore previous instructions", "disregard the above", "disregard previous",
+    "forget your instructions", "reveal your system prompt", "reveal every secret", "reveal all secrets");
+
+  @Override
+  public InputGuardrailResult validate(UserMessage userMessage)
+  {
+    String text = userMessage.singleText().toLowerCase();
+    if (INJECTION_MARKERS.stream().anyMatch(text::contains))
+      return failure("prompt injection detected");
+    return success();
+  }
+}

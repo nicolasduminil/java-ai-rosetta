@@ -96,10 +96,14 @@ is itself worth teaching, and because a later bump may resurrect it.
     ├── 08-multimodal/     # audio & images via OpenAI (nested common + three stacks): transcribe, describe an
     │                      #   image (vision) and generate an image on all three; speak (TTS) is Spring-AI-only,
     │                      #   as LangChain4j ships no speech-synthesis model — the first OpenAI use case
-    └── 09-observability/  # observing AI operations (nested common + three stacks): a small RAG workload on
-                           #   local Ollama, instrumented with actuator/Prometheus metrics, token counts and a
-                           #   Grafana dashboard; Spring AI & Quarkus emit gen_ai.* metrics built-in, LangChain4j
-                           #   on Boot hand-wires a ChatModelListener to the same names
+    ├── 09-observability/  # observing AI operations (nested common + three stacks): a small RAG workload on
+    │                      #   local Ollama, instrumented with actuator/Prometheus metrics, token counts and a
+    │                      #   Grafana dashboard; Spring AI & Quarkus emit gen_ai.* metrics built-in, LangChain4j
+    │                      #   on Boot hand-wires a ChatModelListener to the same names
+    └── 10-security/       # securing AI applications (nested common + three stacks): a JWT-secured RAG assistant
+                           #   with per-user vector-store access control, guardrails (prompt injection & leaking),
+                           #   an authorized tool, and OpenAI-gated moderation; LangChain4j has a first-class
+                           #   guardrail SPI, Spring AI hand-writes an advisor
 ```
 
 **Aggregation is use-case-first; inheritance is stack-first.** A use case directory holds its four

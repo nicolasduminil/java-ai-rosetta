@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>fr.simplex-software.workshop</groupId>
+    <artifactId>common-parent</artifactId>
+    <version>1.0.14</version>
+    <relativePath>../../../stacks/common-parent/pom.xml</relativePath>
+  </parent>
+
+  <artifactId>10-security-common</artifactId>
+  <name>Java AI Rosetta :: 10 Security :: Common</name>
+  <description>The shared question-answering contract, the owner-tagged corpus, the JWT verification key,
+    and the conformance test (which mints signed test tokens).</description>
+
+  <dependencies>
+    <dependency>
+      <groupId>jakarta.validation</groupId>
+      <artifactId>jakarta.validation-api</artifactId>
+    </dependency>
+    <!-- Mints RS256 JWTs in the conformance test (signed with the test-only private key). The apps verify
+         them with the shipped public key. Nimbus is self-contained (no MicroProfile Config or JSON-P
+         provider needed) and is already on both Spring stacks through the OAuth2 resource server; its
+         version is pinned here because the common module has no BOM to manage it. -->
+    <dependency>
+      <groupId>com.nimbusds</groupId>
+      <artifactId>nimbus-jose-jwt</artifactId>
+      <version>10.3</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+</project>

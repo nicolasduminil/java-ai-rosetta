@@ -1,0 +1,52 @@
+# Backing services for use case 10 (securing AI applications).
+#
+# The three applications run from the host on fixed ports:
+#   spring-ai on 8080, langchain4j-boot on 8081, langchain4j-quarkus on 8082.
+# They need Qdrant (the vector store) and Ollama (the local model, qwen2.5:3b + nomic-embed-text).
+#
+# Usage, if you already run Ollama natively on localhost:11434 (the apps' default):
+#   docker compose up -d                                  # qdrant only
+#   ollama pull qwen2.5:3b && ollama pull nomic-embed-text
+# Usage, if you do NOT run Ollama locally (start it in Compose too):
+#   docker compose --profile with-ollama up -d
+#   docker compose exec ollama ollama pull qwen2.5:3b
+#   docker compose exec ollama ollama pull nomic-embed-text
+services:
+
+  # Optional: only started with `--profile with-ollama`. If you already run Ollama natively on
+  # localhost:11434 (which the apps default to), leave it out so `docker compose up` does not clash on 11434.
+  ollama:
+    image: ollama/ollama:latest
+    profiles: ["with-ollama"]
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-data:/root/.ollama
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 10s
+      timeout: 5s
+      start_period: 20s
+      retries: 5
+    networks:
+      - sec
+    restart: unless-stopped
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    ports:
+      - "6333:6333"   # REST / dashboard
+      - "6334:6334"   # gRPC (used by the applications)
+    volumes:
+      - qdrant-data:/qdrant/storage
+    networks:
+      - sec
+    restart: unless-stopped
+
+volumes:
+  ollama-data:
+  qdrant-data:
+
+networks:
+  sec:
+    driver: bridge
