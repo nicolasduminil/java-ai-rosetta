@@ -37,7 +37,7 @@ The corpus is three owner-tagged files: `public.txt` (Reykjavik, Lumen, codename
 | Roles from token | `groups` -> `ROLE_` via `JwtAuthenticationConverter` | same | `groups` -> roles (MP JWT) |
 | Vector-store ACL | `FilterExpressionBuilder` owner filter | `metadataKey("owner")` filter | `metadataKey("owner")` filter |
 | Guardrails (injection + leak) | **hand-written `CallAdvisor`** (only `SafeGuardAdvisor` blocklist is built in) | **`@InputGuardrails`/`@OutputGuardrails` SPI** | **`@InputGuardrails`/`@OutputGuardrails` SPI** |
-| Tool authorization | `@PreAuthorize` on `@Tool` | imperative check (CGLIB proxy hides `@Tool`) + rethrowing tool-error handler | imperative check (`@RolesAllowed` is bypassed) + qualified rethrowing tool-error handler |
+| Tool authorization | `@PreAuthorize` on `@Tool` | imperative check in the tool (CGLIB proxy hides `@Tool`) + rethrowing `toolExecutionErrorHandler` | `@ToolInputGuardrails` guardrail checking `SecurityIdentity` |
 | Content moderation (OpenAI-gated) | Spring AI `OpenAiModerationModel` | LangChain4j `OpenAiModerationModel` | LangChain4j `OpenAiModerationModel` |
 | Every violation | HTTP 403 | HTTP 403 | HTTP 403 |
 
@@ -53,16 +53,19 @@ The corpus is three owner-tagged files: `public.txt` (Reykjavik, Lumen, codename
 - **Guardrails are the sharp asymmetry.** LangChain4j has a first-class input/output guardrail SPI shared by
   Boot and Quarkus; Spring AI has only the built-in `SafeGuardAdvisor` (a sensitive-word blocklist), so the
   injection and leak checks are a hand-written `CallAdvisor`.
-- **Tool authorization is the deepest one, and declarative method security silently fails on both LangChain4j
-  stacks.** On Boot a `@PreAuthorize` on a `@Tool` makes Spring wrap the bean in a CGLIB proxy whose methods
-  no longer carry `@Tool` (the tool is not found); on Quarkus a `@RolesAllowed` on the `@Tool` is simply not
-  enforced (the tool executor bypasses the CDI security interceptor). On both, the role is checked
-  imperatively inside the tool. And every stack swallows a tool exception by default (feeds it back to the
-  model, so a denied call still answers 200), so each needs a different switch to make a denial a 403: Spring
-  AI a `DefaultToolExecutionExceptionProcessor` with `alwaysThrow(true)`; LangChain4j-Boot a rethrowing
-  `toolExecutionErrorHandler`; LangChain4j-Quarkus a rethrowing `ToolExecutionErrorHandler` bean carrying the
-  extension's `@DefaultToolExecutionErrorHandler` qualifier. Spring AI, by contrast, tolerates a
-  `@PreAuthorize` `@Tool`.
+- **Tool authorization is the deepest one, and each stack has a different right answer.** Quarkus provides a
+  first-class mechanism for exactly this: a tool input guardrail. `SecurityToolGuardrail implements
+  ToolInputGuardrail` injects the `SecurityIdentity`, checks the role, and returns a `fatal(...)` result to
+  hard-block a non-admin call; it is attached with `@ToolInputGuardrails(...)` on the tool method. (A
+  `@RolesAllowed` on the tool method is not the mechanism here and is not enforced by the tool executor; a
+  non-`fatal` `failure(...)` would be reported to the model and let it answer 200, so the denial uses
+  `fatal`.) Plain LangChain4j on Boot has no tool-guardrail equivalent (the core library only has
+  input/output AI-service guardrails), so there the role is checked imperatively inside the tool, and the AI
+  service is told to propagate the resulting exception with a rethrowing `toolExecutionErrorHandler` (its
+  default, like Spring AI's, otherwise feeds a tool error back to the model and answers 200). Also on Boot a
+  `@PreAuthorize` on a `@Tool` cannot be used at all: Spring wraps the bean in a CGLIB proxy whose methods no
+  longer carry `@Tool`, so the tool is not found. Spring AI, by contrast, tolerates a `@PreAuthorize` `@Tool`
+  and just needs a `DefaultToolExecutionExceptionProcessor` with `alwaysThrow(true)` so the denial propagates.
 - **Moderation forces a cloud call.** No stack ships a local moderation model, so moderation uses OpenAI
   (Spring AI's `OpenAiModerationModel`, LangChain4j's on the other two). It is active only when
   `OPENAI_API_KEY` is set; without a key the model is absent and moderation is skipped, so the rest of the
