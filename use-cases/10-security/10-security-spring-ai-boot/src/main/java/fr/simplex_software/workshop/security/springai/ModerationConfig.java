@@ -9,9 +9,7 @@ import org.springframework.boot.autoconfigure.condition.*;
 import org.springframework.context.annotation.*;
 
 /**
- * Registers Spring AI's OpenAI moderation model, but only when an {@code OPENAI_API_KEY} is present. Without
- * a key the bean is absent and the assistant skips moderation, so the stack stays local and offline. There
- * is no local moderation model in any stack, which is the honest finding: moderation forces a cloud call.
+ * Registers Spring AI's OpenAI moderation model, but only when an {@code OPENAI_API_KEY} is present.
  */
 @Configuration
 public class ModerationConfig

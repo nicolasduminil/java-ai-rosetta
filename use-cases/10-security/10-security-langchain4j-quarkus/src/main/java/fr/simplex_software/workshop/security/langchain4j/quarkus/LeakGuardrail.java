@@ -5,7 +5,7 @@ import dev.langchain4j.guardrail.*;
 import jakarta.enterprise.context.*;
 
 /**
- * A first-class LangChain4j output guardrail as a CDI bean: it refuses any answer that would leak the
+ * A LangChain4j output guardrail as a CDI bean: it refuses any answer that would leak the
  * forbidden project codename, using {@code fatal} so the refusal is immediate.
  */
 @ApplicationScoped

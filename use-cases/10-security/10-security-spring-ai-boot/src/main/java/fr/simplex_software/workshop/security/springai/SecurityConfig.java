@@ -29,12 +29,12 @@ public class SecurityConfig
   @Bean
   SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception
   {
-    http
+    return http
       .csrf(csrf -> csrf.disable())
       .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
       .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-      .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())));
-    return http.build();
+      .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())))
+      .build();
   }
 
   private JwtAuthenticationConverter jwtAuthenticationConverter()
@@ -48,16 +48,14 @@ public class SecurityConfig
   }
 
   /**
-   * Verifies the token with the shared public key and, like the Quarkus stack, validates the issuer (in
-   * public-key mode Spring would otherwise check only the signature and expiry).
+   * Verifies the token with the shared public key.
    */
   @Bean
   JwtDecoder jwtDecoder(
     @Value("${spring.security.oauth2.resourceserver.jwt.public-key-location}") Resource publicKey)
     throws Exception
   {
-    RSAPublicKey rsaPublicKey = RsaKeyConverters.x509().convert(publicKey.getInputStream());
-    var jwtDecoder = NimbusJwtDecoder.withPublicKey(rsaPublicKey).build();
+    var jwtDecoder = NimbusJwtDecoder.withPublicKey(RsaKeyConverters.x509().convert(publicKey.getInputStream())).build();
     jwtDecoder.setJwtValidator(JwtValidators.createDefaultWithIssuer("https://rosetta.security.test"));
     return jwtDecoder;
   }

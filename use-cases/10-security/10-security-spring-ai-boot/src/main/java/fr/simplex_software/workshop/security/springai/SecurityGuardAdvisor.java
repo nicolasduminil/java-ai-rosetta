@@ -7,10 +7,9 @@ import org.springframework.stereotype.*;
 import java.util.*;
 
 /**
- * Spring AI has no first-class input/output guardrail SPI (only the built-in {@code SafeGuardAdvisor}, a
- * sensitive-word blocklist), so the guardrails are this hand-written advisor. It runs around the model call:
- * before, it refuses obvious prompt-injection input; after, it refuses any answer that would leak the
- * forbidden project codename. Either refusal throws, which the controller advice turns into HTTP 403.
+ * Spring AI advisor that runs around the model call: before, it refuses obvious prompt-injection input;
+ * after, it refuses any answer that would leak the forbidden project codename.
+ * Either refusal throws, which the controller advice turns into HTTP 403.
  */
 @Component
 public class SecurityGuardAdvisor implements CallAdvisor
@@ -35,8 +34,7 @@ public class SecurityGuardAdvisor implements CallAdvisor
   @Override
   public ChatClientResponse adviseCall(ChatClientRequest request, CallAdvisorChain chain)
   {
-    String userText = request.prompt().getUserMessage().getText().toLowerCase();
-    if (INJECTION_MARKERS.stream().anyMatch(userText::contains))
+    if (INJECTION_MARKERS.stream().anyMatch(request.prompt().getUserMessage().getText().toLowerCase()::contains))
       throw new GuardrailViolationException("input guardrail: prompt injection detected");
 
     ChatClientResponse response = chain.nextCall(request);

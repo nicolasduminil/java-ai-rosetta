@@ -8,6 +8,7 @@ import dev.langchain4j.service.*;
 import dev.langchain4j.store.embedding.*;
 import dev.langchain4j.store.embedding.filter.*;
 import fr.simplex_software.workshop.security.api.*;
+import io.quarkiverse.langchain4j.jaxrsclient.*;
 import jakarta.enterprise.context.*;
 import jakarta.inject.*;
 import org.eclipse.microprofile.config.inject.*;
@@ -42,8 +43,12 @@ public class QuarkusRagService implements QuestionAnsweringService
     this.embeddingModel = embeddingModel;
     this.embeddingStore = embeddingStore;
     this.jwt = jwt;
+    // The HTTP client is chosen explicitly: both the JDK and the Quarkus JAX-RS langchain4j client
+    // factories are on the classpath, so an unspecified builder fails with "multiple HTTP clients found".
+    // The JAX-RS client is the Quarkus-managed one (Vert.x, native-image aware).
     this.moderationModel = openAiApiKey.filter(key -> !key.isBlank())
       .map(key -> (ModerationModel) OpenAiModerationModel.builder()
+        .httpClientBuilder(new JaxRsHttpClientBuilder())
         .apiKey(key).modelName("omni-moderation-latest").build())
       .orElse(null);
   }
@@ -52,27 +57,29 @@ public class QuarkusRagService implements QuestionAnsweringService
   public Answer askQuestion(Question question)
   {
     moderateIfEnabled(question.question());
-    String context = retrieveContext(question.question(), jwt.getName());
-    return new Answer(assistant.answer(context, question.question()));
+    return new Answer(assistant.answer(retrieveContext(question.question(),
+      jwt.getName()), question.question()));
   }
 
   private void moderateIfEnabled(String text)
   {
-    if (moderationModel == null)
-      return;
-    Moderation moderation = moderationModel.moderate(text).content();
-    if (moderation.flagged())
-      throw new ModerationException("input flagged by content moderation", moderation);
+    if (moderationModel != null)
+    {
+      Moderation moderation = moderationModel.moderate(text).content();
+      if (moderation.flagged())
+        throw new ModerationException("input flagged by content moderation", moderation);
+    }
   }
 
   private String retrieveContext(String query, String user)
   {
-    Filter acl = metadataKey("owner").isEqualTo(user).or(metadataKey("owner").isEqualTo("public"));
-    var matches = embeddingStore.search(EmbeddingSearchRequest.builder()
+    return embeddingStore.search(EmbeddingSearchRequest.builder()
       .queryEmbedding(embeddingModel.embed(query).content())
       .maxResults(MAX_RESULTS)
-      .filter(acl)
-      .build()).matches();
-    return matches.stream().map(match -> match.embedded().text()).collect(Collectors.joining("\n\n"));
+      .filter(metadataKey("owner").isEqualTo(user).or(metadataKey("owner").isEqualTo("public")))
+      .build()).matches()
+      .stream()
+      .map(match ->
+        match.embedded().text()).collect(Collectors.joining("\n\n"));
   }
 }

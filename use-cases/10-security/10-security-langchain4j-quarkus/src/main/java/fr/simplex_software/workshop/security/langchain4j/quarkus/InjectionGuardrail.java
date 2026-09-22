@@ -7,7 +7,7 @@ import jakarta.enterprise.context.*;
 import java.util.*;
 
 /**
- * A first-class LangChain4j input guardrail as a CDI bean: it refuses obvious prompt-injection input before
+ * A LangChain4j input guardrail as a CDI bean: it refuses obvious prompt-injection input before
  * the model is called. A failure makes the AI service throw, which an exception mapper turns into HTTP 403.
  */
 @ApplicationScoped
@@ -20,8 +20,7 @@ public class InjectionGuardrail implements InputGuardrail
   @Override
   public InputGuardrailResult validate(UserMessage userMessage)
   {
-    String text = userMessage.singleText().toLowerCase();
-    if (INJECTION_MARKERS.stream().anyMatch(text::contains))
+    if (INJECTION_MARKERS.stream().anyMatch(userMessage.singleText().toLowerCase()::contains))
       return failure("prompt injection detected");
     return success();
   }

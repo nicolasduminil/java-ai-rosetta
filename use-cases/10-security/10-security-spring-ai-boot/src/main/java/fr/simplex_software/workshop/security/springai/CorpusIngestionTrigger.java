@@ -29,9 +29,7 @@ public class CorpusIngestionTrigger
   public void ingestCorpus() throws IOException
   {
     for (String owner : OWNERS)
-    {
-      var resource = new ClassPathResource("corpus/" + owner + ".txt");
-      loader.load(resource.getContentAsString(StandardCharsets.UTF_8), owner);
-    }
+      loader.load(new ClassPathResource("corpus/" + owner + ".txt")
+        .getContentAsString(StandardCharsets.UTF_8), owner);
   }
 }

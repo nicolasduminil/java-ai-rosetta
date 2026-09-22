@@ -13,9 +13,8 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.context.annotation.*;
 
 /**
- * Wires the Qdrant vector store and builds the assistant. The guardrails and the tool are attached to the
- * AI service programmatically, which is where LangChain4j differs sharply from Spring AI: input and output
- * guardrails are a first-class part of the service, not something hand-written around the call.
+ * Wires the Qdrant vector store and builds the assistant.
+ * The guardrails and the tool are attached to the AI service programmatically.
  */
 @Configuration
 public class RagConfig
@@ -50,12 +49,8 @@ public class RagConfig
     return AiServices.builder(Assistant.class)
       .chatModel(chatModel)
       .tools(auditLogTool)
-      // By default LangChain4j compensates a tool error (feeds it back to the model, so a denied call still
-      // answers 200). Rethrow it instead so the access-denied exception propagates to become HTTP 403.
       .toolExecutionErrorHandler((error, context) ->
       {
-        if (error instanceof RuntimeException runtimeException)
-          throw runtimeException;
         throw new RuntimeException(error);
       })
       .inputGuardrails(injectionGuardrail)

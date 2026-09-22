@@ -6,6 +6,7 @@ import org.springframework.core.io.*;
 import org.springframework.security.config.annotation.method.configuration.*;
 import org.springframework.security.config.annotation.web.builders.*;
 import org.springframework.security.config.annotation.web.configuration.*;
+import org.springframework.security.config.annotation.web.configurers.*;
 import org.springframework.security.config.http.*;
 import org.springframework.security.converter.*;
 import org.springframework.security.oauth2.jwt.*;
@@ -25,14 +26,14 @@ import java.security.interfaces.*;
 public class SecurityConfig
 {
   @Bean
-  SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception
+  SecurityFilterChain securityFilterChain(HttpSecurity http)
   {
-    http
-      .csrf(csrf -> csrf.disable())
+    return http
+      .csrf(AbstractHttpConfigurer::disable)
       .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
       .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-      .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())));
-    return http.build();
+      .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())))
+      .build();
   }
 
   private JwtAuthenticationConverter jwtAuthenticationConverter()
@@ -46,7 +47,7 @@ public class SecurityConfig
   }
 
   /**
-   * Verifies the token with the shared public key and, like the Quarkus stack, validates the issuer (in
+   * Verifies the token with the shared public key and validates the issuer (in
    * public-key mode Spring would otherwise check only the signature and expiry).
    */
   @Bean
@@ -54,8 +55,8 @@ public class SecurityConfig
     @Value("${spring.security.oauth2.resourceserver.jwt.public-key-location}") Resource publicKey)
     throws Exception
   {
-    RSAPublicKey rsaPublicKey = RsaKeyConverters.x509().convert(publicKey.getInputStream());
-    var jwtDecoder = NimbusJwtDecoder.withPublicKey(rsaPublicKey).build();
+    var jwtDecoder = NimbusJwtDecoder.withPublicKey(RsaKeyConverters.x509()
+      .convert(publicKey.getInputStream())).build();
     jwtDecoder.setJwtValidator(JwtValidators.createDefaultWithIssuer("https://rosetta.security.test"));
     return jwtDecoder;
   }

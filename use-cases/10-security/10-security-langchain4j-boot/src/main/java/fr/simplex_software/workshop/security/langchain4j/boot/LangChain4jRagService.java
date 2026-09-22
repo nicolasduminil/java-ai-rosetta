@@ -43,29 +43,31 @@ public class LangChain4jRagService implements QuestionAnsweringService
   public Answer askQuestion(Question question)
   {
     moderateIfEnabled(question.question());
-    String context = retrieveContext(question.question(), currentUser());
-    return new Answer(assistant.answer(context, question.question()));
+    return new Answer(assistant.answer(retrieveContext(question.question(),
+      currentUser()), question.question()));
   }
 
   private void moderateIfEnabled(String text)
   {
     ModerationModel moderationModel = moderationModels.getIfAvailable();
-    if (moderationModel == null)
-      return;
-    Moderation moderation = moderationModel.moderate(text).content();
-    if (moderation.flagged())
-      throw new ModerationException("input flagged by content moderation", moderation);
+    if (moderationModel != null)
+    {
+      Moderation moderation = moderationModel.moderate(text).content();
+      if (moderation.flagged())
+        throw new ModerationException("input flagged by content moderation", moderation);
+    }
   }
 
   private String retrieveContext(String query, String user)
   {
-    Filter acl = metadataKey("owner").isEqualTo(user).or(metadataKey("owner").isEqualTo("public"));
-    var matches = embeddingStore.search(EmbeddingSearchRequest.builder()
+    return embeddingStore.search(EmbeddingSearchRequest.builder()
       .queryEmbedding(embeddingModel.embed(query).content())
       .maxResults(MAX_RESULTS)
-      .filter(acl)
-      .build()).matches();
-    return matches.stream().map(match -> match.embedded().text()).collect(Collectors.joining("\n\n"));
+      .filter(metadataKey("owner").isEqualTo(user).or(metadataKey("owner").isEqualTo("public")))
+      .build())
+      .matches().stream()
+      .map(match ->
+        match.embedded().text()).collect(Collectors.joining("\n\n"));
   }
 
   private String currentUser()

@@ -7,17 +7,15 @@
   <parent>
     <groupId>fr.simplex-software.workshop</groupId>
     <artifactId>spring-ai-boot-parent</artifactId>
-    <version>1.0.14</version>
+    <version>1.0.15</version>
     <relativePath>../../../stacks/spring-ai-boot-parent/pom.xml</relativePath>
   </parent>
 
   <artifactId>10-security-spring-ai-boot</artifactId>
   <name>Java AI Rosetta :: 10 Security :: Spring AI on Spring Boot</name>
-  <description>Securing a Spring AI assistant: JWT resource server, per-user vector-store filtering,
-    a hand-written guardrail advisor, and an authorized tool.</description>
+  <description>Securing a Spring AI assistant.</description>
 
   <properties>
-    <!-- Tool calling and reliable refusal need a capable model; qwen2.5:0.5b cannot emit tool calls. -->
     <ollama.model>qwen2.5:3b</ollama.model>
   </properties>
 
@@ -43,9 +41,6 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
     </dependency>
-    <!-- Content moderation uses Spring AI's OpenAiModerationModel (there is no local moderation model). It
-         needs the OpenAI SDK's HTTP client, which spring-ai-openai does not pull on its own. Active only when
-         OPENAI_API_KEY is set, so the stack stays local without a key. -->
     <dependency>
       <groupId>org.springframework.ai</groupId>
       <artifactId>spring-ai-openai</artifactId>
@@ -55,6 +50,14 @@
       <artifactId>openai-java-client-okhttp</artifactId>
       <version>4.39.1</version>
     </dependency>
+    <!-- The OpenAI SDK (moderation) needs Jackson 2 databind at runtime, but Spring Boot 4.1 ships Jackson 3
+         (tools.jackson.core), a different coordinate, and the only compile path to jackson-databind 2.x lands
+         at test scope, so it is absent from the fat jar. Declare it explicitly so the runnable jar has it.
+         Version is managed by the Boot BOM (2.21.4), matching the Jackson 2 core/annotations already present. -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+    </dependency>
     <dependency>
       <groupId>fr.simplex-software.workshop</groupId>
       <artifactId>10-security-common</artifactId>
@@ -62,8 +65,6 @@
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
-    <!-- The conformance test (from the common test-jar) reads the PEM signing key with KeyUtils; test-scope
-         deps do not travel with a test-jar, so smallrye-jwt-common is declared again here. -->
     <dependency>
       <groupId>io.smallrye</groupId>
       <artifactId>smallrye-jwt-common</artifactId>

@@ -32,8 +32,8 @@ public class SpringAiRagService implements QuestionAnsweringService
   private Resource systemPromptTemplate;
 
   public SpringAiRagService(ChatClient.Builder chatClientBuilder, VectorStore vectorStore,
-    SecurityGuardAdvisor securityGuardAdvisor, AuditLogTool auditLogTool,
-    ObjectProvider<ModerationModel> moderationModels)
+                            SecurityGuardAdvisor securityGuardAdvisor, AuditLogTool auditLogTool,
+                            ObjectProvider<ModerationModel> moderationModels)
   {
     this.chatClient = chatClientBuilder
       .defaultAdvisors(securityGuardAdvisor)
@@ -47,10 +47,9 @@ public class SpringAiRagService implements QuestionAnsweringService
   public Answer askQuestion(Question question)
   {
     moderateIfEnabled(question.question());
-    String user = currentUser();
     return new Answer(chatClient.prompt()
       .system(system -> system.text(systemPromptTemplate)
-        .param("context", retrieveContext(question.question(), user)))
+        .param("context", retrieveContext(question.question(), currentUser())))
       .user(question.question())
       .call()
       .content());
@@ -59,21 +58,20 @@ public class SpringAiRagService implements QuestionAnsweringService
   private String retrieveContext(String query, String user)
   {
     var builder = new FilterExpressionBuilder();
-    var acl = builder.or(builder.eq("owner", user), builder.eq("owner", "public")).build();
-    var hits = vectorStore.similaritySearch(
-      SearchRequest.builder().query(query).topK(TOP_K).filterExpression(acl).build());
-    return hits.stream().map(Document::getText).collect(Collectors.joining("\n\n"));
+    return vectorStore.similaritySearch(
+        SearchRequest.builder().query(query).topK(TOP_K)
+          .filterExpression(builder.or(builder.eq("owner", user),
+            builder.eq("owner", "public")).build()).build())
+      .stream().map(Document::getText).collect(Collectors.joining("\n\n"));
   }
 
   private void moderateIfEnabled(String text)
   {
     ModerationModel moderationModel = moderationModels.getIfAvailable();
-    if (moderationModel == null)
-      return;
-    boolean flagged = moderationModel.call(new ModerationPrompt(text))
-      .getResult().getOutput().getResults().stream().anyMatch(ModerationResult::isFlagged);
-    if (flagged)
-      throw new ContentModerationException("input flagged by content moderation");
+    if (moderationModel != null)
+      if (moderationModel.call(new ModerationPrompt(text))
+        .getResult().getOutput().getResults().stream().anyMatch(ModerationResult::isFlagged))
+        throw new ContentModerationException("input flagged by content moderation");
   }
 
   private String currentUser()

@@ -7,14 +7,13 @@
   <parent>
     <groupId>fr.simplex-software.workshop</groupId>
     <artifactId>langchain4j-quarkus-parent</artifactId>
-    <version>1.0.14</version>
+    <version>1.0.15</version>
     <relativePath>../../../stacks/langchain4j-quarkus-parent/pom.xml</relativePath>
   </parent>
 
   <artifactId>10-security-langchain4j-quarkus</artifactId>
   <name>Java AI Rosetta :: 10 Security :: LangChain4j on Quarkus</name>
-  <description>Securing a LangChain4j assistant on Quarkus: MP JWT, per-user vector-store filtering,
-    first-class input/output guardrails, and an authorized tool.</description>
+  <description>Securing a LangChain4j assistant on Quarkus.</description>
 
   <properties>
     <ollama.model>qwen2.5:3b</ollama.model>
@@ -38,8 +37,6 @@
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-hibernate-validator</artifactId>
     </dependency>
-    <!-- Content moderation uses LangChain4j's OpenAiModerationModel directly (no local moderation model
-         exists); it is built only when OPENAI_API_KEY is set, so the stack stays local without a key. -->
     <dependency>
       <groupId>dev.langchain4j</groupId>
       <artifactId>langchain4j-open-ai</artifactId>
@@ -52,8 +49,6 @@
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
-    <!-- The conformance test mints RS256 tokens with Nimbus; Quarkus MP JWT verifies with jose4j, so Nimbus
-         is not otherwise on the classpath and is added for the test only. -->
     <dependency>
       <groupId>com.nimbusds</groupId>
       <artifactId>nimbus-jose-jwt</artifactId>

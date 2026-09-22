@@ -2,10 +2,6 @@ package fr.simplex_software.workshop.security.langchain4j.boot;
 
 import dev.langchain4j.service.*;
 
-/**
- * The AI service. The retrieved, access-controlled context is passed in as a parameter; the guardrails and
- * the audit-log tool are attached programmatically when the service is built (see {@link RagConfig}).
- */
 public interface Assistant
 {
   @SystemMessage("""

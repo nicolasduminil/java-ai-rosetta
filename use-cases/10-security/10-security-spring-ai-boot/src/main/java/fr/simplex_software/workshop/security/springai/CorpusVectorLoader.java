@@ -24,7 +24,6 @@ public class CorpusVectorLoader
 
   public void load(String text, String owner)
   {
-    var chunks = splitter.apply(List.of(new Document(text, Map.of("owner", owner))));
-    vectorStore.add(chunks);
+    vectorStore.add(splitter.apply(List.of(new Document(text, Map.of("owner", owner)))));
   }
 }
