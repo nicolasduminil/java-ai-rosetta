@@ -7,7 +7,7 @@
   <parent>
     <groupId>fr.simplex-software.workshop</groupId>
     <artifactId>java-ai-rosetta</artifactId>
-    <version>1.0.15</version>
+    <version>1.0.16</version>
   </parent>
 
   <artifactId>use-cases</artifactId>
@@ -24,6 +24,7 @@
     <module>08-multimodal</module>
     <module>09-observability</module>
     <module>10-security</module>
+    <module>11-generative</module>
   </modules>
 
 </project>
