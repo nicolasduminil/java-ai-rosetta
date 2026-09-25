@@ -13,8 +13,7 @@
   <artifactId>12-agents</artifactId>
   <packaging>pom</packaging>
   <name>Java AI Rosetta :: 12 Agents</name>
-  <description>Agentic workflow patterns, prompt chaining, routing, parallelization and self-planning
-  </description>
+  <description>Agentic workflow patterns, prompt chaining, routing, parallelization and self-planning</description>
 
   <modules>
     <module>12-agents-common</module>

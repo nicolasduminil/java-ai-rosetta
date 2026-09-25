@@ -8,10 +8,6 @@ import dev.langchain4j.store.embedding.*;
 import org.slf4j.*;
 import org.springframework.stereotype.*;
 
-/**
- * Splits the Tika-extracted text and ingests it, tagging every segment with its {@code source} so the
- * modular pipeline's per-source retrievers can query each source independently.
- */
 @Component
 public class CorpusVectorLoader
 {

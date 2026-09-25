@@ -15,13 +15,6 @@ import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.context.annotation.*;
 
-/**
- * Builds the embedding and vector-store beans by hand. The chat {@link ChatModel} is autoconfigured by the
- * {@code langchain4j-ollama-spring-boot4-starter}; the embedding model, store and retriever are wired here.
- *
- * <p>Unlike Spring AI's Qdrant starter, {@link QdrantEmbeddingStore} does not create the collection,
- * so this stack pre-creates it from the embedding model's dimension.
- */
 @Configuration
 public class RagConfig
 {
@@ -33,8 +26,6 @@ public class RagConfig
     @Value("${langchain4j.ollama.base-url}") String baseUrl,
     @Value("${langchain4j.ollama.embedding-model.model-name}") String modelName)
   {
-    // The Boot-4 starter puts a second HTTP client (spring-restclient) on the classpath next to the
-    // parent's jdk client, so this hand-wired model must pick one explicitly to avoid an SPI conflict.
     return OllamaEmbeddingModel.builder()
       .httpClientBuilder(new JdkHttpClientBuilder())
       .baseUrl(baseUrl).modelName(modelName).build();

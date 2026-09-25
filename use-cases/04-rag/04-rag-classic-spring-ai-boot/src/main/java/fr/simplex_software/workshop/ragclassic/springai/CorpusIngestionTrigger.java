@@ -9,9 +9,6 @@ import org.springframework.stereotype.*;
 
 import java.io.*;
 
-/**
- * Feeds the bundled corpus PDF into the ingestion pipeline once the application is ready.
- */
 @Component
 public class CorpusIngestionTrigger
 {

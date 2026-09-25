@@ -3,10 +3,6 @@ package fr.simplex_software.workshop.ragadvisor.langchain4j.boot;
 import fr.simplex_software.workshop.rag.api.*;
 import org.springframework.stereotype.*;
 
-/**
- * Delegates to the {@link Assistant} AI Service, whose {@code ContentRetriever} performs retrieval and
- * context injection declaratively.
- */
 @Service
 public class LangChain4jRagService implements QuestionAnsweringService
 {

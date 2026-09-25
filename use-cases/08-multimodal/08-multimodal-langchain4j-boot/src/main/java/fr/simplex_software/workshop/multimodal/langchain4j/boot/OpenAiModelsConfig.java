@@ -6,18 +6,11 @@ import dev.langchain4j.model.openai.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.context.annotation.*;
 
-/**
- * Hand-wires the three OpenAI models LangChain4j offers for this use case. There is no speech-synthesis
- * model as LangChain4j doesn't support any.
- */
 @Configuration
 public class OpenAiModelsConfig
 {
   static
   {
-    // The langchain4j-boot parent carries the Ollama starter's spring-restclient alongside the jdk client.
-    // These OpenAI models resolve the SPI ambiguity through the client-selection system property langchain4j
-    // reads at model-build time (the transcription model's builder cannot pick a client on its own).
     System.setProperty("langchain4j.http.clientBuilderFactory",
       "dev.langchain4j.http.client.jdk.JdkHttpClientBuilderFactory");
   }

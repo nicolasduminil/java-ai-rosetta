@@ -9,11 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
-/**
- * Inspects the vector store. Spring AI exposes no actuator endpoint for a store, so the count comes from the
- * underlying Qdrant client (unwrapped via {@code getNativeClient()}) and the search view uses the
- * {@link VectorStore} API directly.
- */
 @RestController
 @RequestMapping("/vectorstore")
 public class VectorStoreController

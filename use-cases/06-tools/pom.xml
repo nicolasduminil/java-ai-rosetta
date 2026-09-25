@@ -13,11 +13,7 @@
   <artifactId>06-tools</artifactId>
   <packaging>pom</packaging>
   <name>Java AI Rosetta :: 06 Tools</name>
-  <description>
-    Tool-driven generation: an /ask endpoint whose assistant calls a tool (a catalog lookup) to answer a
-    question it cannot answer on its own, across Spring AI on Spring Boot (@Tool + defaultTools),
-    LangChain4j on Spring Boot (@Tool + AiServices.tools), and LangChain4j on Quarkus
-    (@RegisterAiService(tools = ...)).
+  <description>Tool-driven generation.
   </description>
 
   <modules>

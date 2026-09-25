@@ -14,9 +14,6 @@ import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * The shared conformance test drives the four multimodal capabilities over REST.
- */
 public abstract class AbstractMultimodalIT
 {
   private static final String KEY = "OPENAI_API_KEY";

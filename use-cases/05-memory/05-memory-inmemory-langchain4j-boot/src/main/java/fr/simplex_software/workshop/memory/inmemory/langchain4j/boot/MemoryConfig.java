@@ -5,11 +5,6 @@ import dev.langchain4j.model.chat.*;
 import dev.langchain4j.service.*;
 import org.springframework.context.annotation.*;
 
-/**
- * Builds the {@link Assistant} with a {@code ChatMemoryProvider} having one {@link MessageWindowChatMemory}
- * per conversation id, kept in memory (the default {@code InMemoryChatMemoryStore}). The {@link ChatModel} is
- * autoconfigured by the {@code langchain4j-ollama-spring-boot4-starter}.
- */
 @Configuration
 public class MemoryConfig
 {

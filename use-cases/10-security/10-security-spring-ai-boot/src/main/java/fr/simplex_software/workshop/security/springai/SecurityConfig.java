@@ -15,12 +15,6 @@ import org.springframework.security.web.*;
 
 import java.security.interfaces.*;
 
-/**
- * A JWT bearer resource server. Every request must carry a token signed by the shared key; the {@code groups}
- * claim becomes {@code ROLE_}-prefixed authorities so method security ({@code @PreAuthorize}) can guard the
- * admin tool. The tool-execution exception processor is set to rethrow, so a denied tool call surfaces as an
- * error the controller turns into HTTP 403 rather than being swallowed and fed back to the model.
- */
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity

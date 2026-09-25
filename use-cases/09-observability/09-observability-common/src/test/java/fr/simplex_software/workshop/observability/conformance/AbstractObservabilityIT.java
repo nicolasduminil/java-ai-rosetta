@@ -10,15 +10,6 @@ import java.net.*;
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 
-/**
- * The shared conformance test drives the observability workload over REST. It proves the RAG workload runs
- * (a corpus fact is retrieved and answered), that the vector store was populated, and that a token-usage
- * metric is exposed at the stack's Prometheus endpoint after a model call. The metric name is the
- * OpenTelemetry GenAI convention {@code gen_ai.client.token.usage} on all three stacks: Spring AI and
- * Quarkus-LangChain4j emit it built-in, and the LangChain4j-on-Boot stack hand-wires a meter of the same
- * name, so this single assertion is uniform. The scrape path differs (Boot {@code /actuator/prometheus},
- * Quarkus {@code /q/metrics}) and is supplied by the subclass.
- */
 public abstract class AbstractObservabilityIT
 {
   protected abstract URI baseUri();

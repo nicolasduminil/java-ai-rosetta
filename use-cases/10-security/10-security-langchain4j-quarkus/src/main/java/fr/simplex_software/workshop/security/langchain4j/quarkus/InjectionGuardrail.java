@@ -6,10 +6,6 @@ import jakarta.enterprise.context.*;
 
 import java.util.*;
 
-/**
- * A LangChain4j input guardrail as a CDI bean: it refuses obvious prompt-injection input before
- * the model is called. A failure makes the AI service throw, which an exception mapper turns into HTTP 403.
- */
 @ApplicationScoped
 public class InjectionGuardrail implements InputGuardrail
 {

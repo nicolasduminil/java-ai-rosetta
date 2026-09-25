@@ -7,12 +7,6 @@ import org.springframework.ai.chat.memory.*;
 import org.springframework.ai.vectorstore.*;
 import org.springframework.stereotype.*;
 
-/**
- * Persistent conversational memory the Spring AI way: a {@link VectorStoreChatMemoryAdvisor} stores each
- * turn as a document in the {@link VectorStore} (Qdrant) and, on the next call, retrieves the most
- * relevant earlier turns of the same conversation by similarity. The conversation is selected per call by
- * the {@link ChatMemory#CONVERSATION_ID} advisor parameter.
- */
 @Service
 public class SpringAiConversationService implements ConversationService
 {

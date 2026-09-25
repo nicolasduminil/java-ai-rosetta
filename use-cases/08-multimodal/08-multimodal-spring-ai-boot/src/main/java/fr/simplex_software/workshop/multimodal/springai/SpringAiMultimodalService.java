@@ -13,11 +13,6 @@ import org.springframework.util.*;
 
 import java.util.*;
 
-/**
- * All four modalities the Spring AI way, each through its own OpenAI model bean autoconfigured by
- * {@code spring-ai-starter-model-openai}. This is the only stack that implements {@link #speak}: Spring AI
- * is the only one of the three that ships a text-to-speech model.
- */
 @Service
 public class SpringAiMultimodalService implements MultimodalService
 {

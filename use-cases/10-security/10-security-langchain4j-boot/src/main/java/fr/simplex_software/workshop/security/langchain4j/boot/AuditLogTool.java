@@ -5,11 +5,6 @@ import org.springframework.security.access.*;
 import org.springframework.security.core.context.*;
 import org.springframework.stereotype.*;
 
-/**
- * A tool the assistant may call, restricted to administrators.
- * The authorization is enforced imperatively here, reading the security context.
- * A non-admin call throws an exception which the controller advice turns into HTTP 403.
- */
 @Component
 public class AuditLogTool
 {

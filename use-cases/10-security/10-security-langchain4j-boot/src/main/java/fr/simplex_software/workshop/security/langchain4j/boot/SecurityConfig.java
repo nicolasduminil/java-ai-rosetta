@@ -15,11 +15,6 @@ import org.springframework.security.web.*;
 
 import java.security.interfaces.*;
 
-/**
- * A JWT bearer resource server, identical in intent to the Spring AI stack: every request needs a token
- * signed by the shared key, and the {@code groups} claim becomes {@code ROLE_} authorities so
- * {@code @PreAuthorize} can guard the admin tool.
- */
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity

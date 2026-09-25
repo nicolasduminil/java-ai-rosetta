@@ -11,11 +11,6 @@ import org.springframework.stereotype.*;
 
 import java.util.stream.*;
 
-/**
- * Embed the question, run a similarity search against Qdrant, then stuff the retrieved chunks into the
- * prompt by hand before calling the chat model. Every call here drives a Spring AI chat observation (token
- * usage, duration) and a vector-store observation, which the actuator turns into meters with no extra code.
- */
 @Service
 public class SpringAiRagService implements QuestionAnsweringService
 {

@@ -7,11 +7,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
-/**
- * Maps every security violation to HTTP 403 so the contract is uniform across the stacks: a guardrail
- * violation, a denied tool call (which Spring AI wraps in a {@link ToolExecutionException}), or a bare
- * access-denied all become 403. Validation and malformed-body errors keep Spring Boot's default 400.
- */
 @RestControllerAdvice
 public class GlobalExceptionHandler
 {

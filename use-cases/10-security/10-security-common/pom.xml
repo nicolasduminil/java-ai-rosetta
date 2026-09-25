@@ -13,8 +13,6 @@
 
   <artifactId>10-security-common</artifactId>
   <name>Java AI Rosetta :: 10 Security :: Common</name>
-  <description>The shared question-answering contract, the owner-tagged corpus, the JWT verification key,
-    and the conformance test (which mints signed test tokens).</description>
 
   <dependencies>
     <dependency>

@@ -13,10 +13,7 @@
   <artifactId>03-eval</artifactId>
   <packaging>pom</packaging>
   <name>Java AI Rosetta :: 03 Eval</name>
-  <description>
-    LLM-as-judge evaluation (relevancy and factual accuracy) of the answers produced by use case 02 -
-    implemented on every stack. Each stack module reuses its 02 application unchanged and only adds
-    the evaluation layer.
+  <description>LLM-as-judge evaluation relevancy and factual accuracy.
   </description>
 
   <modules>

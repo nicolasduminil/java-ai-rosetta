@@ -13,9 +13,7 @@
   <artifactId>02-templates</artifactId>
   <packaging>pom</packaging>
   <name>Java AI Rosetta :: 02 Templates</name>
-  <description>
-    A templated system prompt with optional injected context, returning structured output -
-    implemented on every stack.
+  <description>A templated system prompt with optional injected context.
   </description>
 
   <modules>

@@ -8,10 +8,6 @@ import dev.langchain4j.store.embedding.*;
 import org.slf4j.*;
 import org.springframework.stereotype.*;
 
-/**
- * Split the Tika-extracted text and ingest it.
- * Embeds each segment with the {@link EmbeddingModel} and stores it in Qdrant.
- */
 @Component
 public class CorpusVectorLoader
 {

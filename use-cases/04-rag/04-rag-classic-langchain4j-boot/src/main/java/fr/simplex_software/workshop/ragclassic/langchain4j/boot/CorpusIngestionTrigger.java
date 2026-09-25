@@ -9,10 +9,6 @@ import org.springframework.stereotype.*;
 
 import java.io.*;
 
-/**
- * Feeds the bundled corpus PDF into the ingestion pipeline once the application is ready, so the corpus
- * is stored before the first request and before the conformance test queries.
- */
 @Component
 public class CorpusIngestionTrigger
 {

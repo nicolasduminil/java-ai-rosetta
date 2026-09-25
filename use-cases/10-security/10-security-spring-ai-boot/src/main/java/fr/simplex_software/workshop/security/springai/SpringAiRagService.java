@@ -14,11 +14,6 @@ import org.springframework.stereotype.*;
 
 import java.util.stream.*;
 
-/**
- * Retrieval is filtered by the authenticated caller: the similarity search only returns documents whose
- * {@code owner} metadata is the current user or {@code public}, so one user never sees another's documents.
- * The guardrail advisor and the audit-log tool are registered on the client as defaults.
- */
 @Service
 public class SpringAiRagService implements QuestionAnsweringService
 {

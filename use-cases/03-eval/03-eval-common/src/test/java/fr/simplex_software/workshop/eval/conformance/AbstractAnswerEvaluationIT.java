@@ -14,15 +14,6 @@ import static io.restassured.RestAssured.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.DynamicTest.*;
 
-/**
- * The model evaluates its own answers by sending POST requests having probes
- * in their body over HTTP, and the returned answer is
- * scored for relevancy and factual accuracy through the stack's
- * {@link AnswerEvaluator}.
- *
- * <p>The verdict's correctness is deliberately not asserted because the current LLM
- * isn't reliable enough for relevance and factual accuracy.
- */
 public abstract class AbstractAnswerEvaluationIT
 {
   private static final Logger LOG = LoggerFactory.getLogger(AbstractAnswerEvaluationIT.class);

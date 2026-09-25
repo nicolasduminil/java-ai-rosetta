@@ -8,9 +8,6 @@ import org.springframework.stereotype.*;
 
 import java.util.*;
 
-/**
- * Split the Tika-extracted text into chunks and store them.
- */
 @Component
 public class CorpusVectorLoader
 {

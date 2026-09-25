@@ -5,11 +5,6 @@ import io.quarkus.test.common.*;
 
 import java.util.*;
 
-/**
- * Feeds the shared Qdrant container's host and port to the hand-rolled ChatMemoryStore under the plain
- * {@code chat-memory.qdrant.*} keys the application reads (not the {@code quarkus.langchain4j.qdrant.*}
- * keys, which belong to the Qdrant extension this stack does not use).
- */
 public class QdrantMemoryTestResource implements QuarkusTestResourceLifecycleManager
 {
   @Override

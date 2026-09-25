@@ -7,10 +7,6 @@ import org.springframework.stereotype.*;
 
 import java.util.*;
 
-/**
- * Ingests a document tagged with its owner. The {@code owner} metadata rides through the splitter onto every
- * chunk and becomes the Qdrant payload field the retrieval filter keys on.
- */
 @Component
 public class CorpusVectorLoader
 {

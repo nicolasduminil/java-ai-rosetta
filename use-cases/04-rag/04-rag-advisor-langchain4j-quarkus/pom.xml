@@ -13,8 +13,7 @@
 
   <artifactId>04-rag-advisor-langchain4j-quarkus</artifactId>
   <name>Java AI Rosetta :: 04 RAG Advisor :: LangChain4j on Quarkus</name>
-  <description>
-    RAG advisor implemented with LangChain4j on Quarkus - declarative retrieval via @RegisterAiService and a produced ContentRetriever bean.
+  <description>RAG advisor implemented with LangChain4j on Quarkus.
   </description>
 
   <dependencyManagement>

@@ -13,12 +13,6 @@ import java.net.*;
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 
-/**
- * The shared test pins the two properties that define tool-driven generation. It POSTs to {@code /ask}
- * and asserts that the assistant calls the catalog tool and returns its result. Running it for two
- * different item codes also proves the model routes the argument it extracts from the question: a stub
- * that ignored the argument and returned a constant would pass one code but fail the other.
- */
 public abstract class AbstractToolCallingIT
 {
   protected abstract URI baseUri();

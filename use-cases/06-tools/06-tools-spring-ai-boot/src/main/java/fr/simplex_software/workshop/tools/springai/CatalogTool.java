@@ -4,9 +4,6 @@ import fr.simplex_software.workshop.tools.catalog.*;
 import org.springframework.ai.tool.annotation.*;
 import org.springframework.stereotype.*;
 
-/**
- * The catalog tool, the Spring AI way: a bean whose {@code @Tool}-annotated method the model may call.
- */
 @Component
 public class CatalogTool
 {

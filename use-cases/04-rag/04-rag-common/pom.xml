@@ -13,7 +13,6 @@
 
   <artifactId>04-rag-common</artifactId>
   <name>Java AI Rosetta :: 04 RAG :: Common</name>
-  <description>Neutral RAG contract, corpus fixture and conformance test shared by the classic and advisor use cases.</description>
 
   <dependencies>
     <dependency>

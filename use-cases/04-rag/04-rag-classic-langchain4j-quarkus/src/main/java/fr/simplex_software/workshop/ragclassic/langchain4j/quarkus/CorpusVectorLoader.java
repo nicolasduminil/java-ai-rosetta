@@ -9,10 +9,6 @@ import jakarta.enterprise.context.*;
 import jakarta.inject.*;
 import org.slf4j.*;
 
-/**
- * Split the Tika-extracted text and ingest it.
- * Embeds each segment with the {@link EmbeddingModel} and stores it in Qdrant.
- */
 @ApplicationScoped
 public class CorpusVectorLoader
 {

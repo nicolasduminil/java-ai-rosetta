@@ -6,9 +6,6 @@ import jakarta.ws.rs.ext.*;
 
 import java.util.*;
 
-/**
- * A failed input or output guardrail throws a {@link GuardrailException}; map it to HTTP 403.
- */
 @Provider
 public class GuardrailExceptionMapper implements ExceptionMapper<GuardrailException>
 {

@@ -13,9 +13,7 @@
 
   <artifactId>01-simple-spring-ai-boot</artifactId>
   <name>Java AI Rosetta :: 01 Simple :: Spring AI on Spring Boot</name>
-  <description>
-    Use case 01 implemented with Spring AI on Spring Boot.
-  </description>
+  <description>Use case 01 implemented with Spring AI on Spring Boot.</description>
 
   <dependencies>
     <dependency>

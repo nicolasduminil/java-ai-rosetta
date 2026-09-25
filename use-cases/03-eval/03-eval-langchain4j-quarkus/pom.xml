@@ -13,9 +13,7 @@
 
   <artifactId>03-eval-langchain4j-quarkus</artifactId>
   <name>Java AI Rosetta :: 03 Eval :: LangChain4j on Quarkus</name>
-  <description>
-    Evaluation of use case 02's LangChain4j (Quarkus) answers.
-  </description>
+  <description>Evaluation of use case 02's LangChain4j (Quarkus) answers.</description>
 
   <dependencies>
     <dependency>

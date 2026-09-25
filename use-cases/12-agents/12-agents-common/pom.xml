@@ -13,7 +13,6 @@
 
   <artifactId>12-agents-common</artifactId>
   <name>Java AI Rosetta :: 12 Agents :: Common</name>
-  <description>Shared request/response types, the agent service contract and the conformance test.</description>
 
   <dependencies>
     <dependency>

@@ -6,11 +6,6 @@ import org.springframework.ai.chat.client.advisor.*;
 import org.springframework.ai.chat.memory.*;
 import org.springframework.stereotype.*;
 
-/**
- * In-memory conversational memory the Spring AI way: a {@link MessageChatMemoryAdvisor} attaches
- * and injects a {@link ChatClient}. The window is kept in memory ({@link InMemoryChatMemoryRepository}).
- * The conversation is selected per call by the {@link ChatMemory#CONVERSATION_ID} advisor parameter.
- */
 @Service
 public class SpringAiConversationService implements ConversationService
 {

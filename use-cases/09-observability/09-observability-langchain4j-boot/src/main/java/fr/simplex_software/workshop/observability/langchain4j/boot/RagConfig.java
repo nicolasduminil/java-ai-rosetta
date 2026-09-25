@@ -10,9 +10,6 @@ import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.context.annotation.*;
 
-/**
- * Wires the Qdrant vector store.
- */
 @Configuration
 public class RagConfig
 {

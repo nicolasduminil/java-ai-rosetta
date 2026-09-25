@@ -12,10 +12,6 @@ import org.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.context.annotation.*;
 
-/**
- * Wires the Qdrant vector store and builds the assistant.
- * The guardrails and the tool are attached to the AI service programmatically.
- */
 @Configuration
 public class RagConfig
 {

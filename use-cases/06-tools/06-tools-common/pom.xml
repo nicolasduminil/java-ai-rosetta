@@ -13,7 +13,6 @@
 
   <artifactId>06-tools-common</artifactId>
   <name>Java AI Rosetta :: 06 Tools :: Common</name>
-  <description>Neutral tool-calling contract, the shared catalog data, and the conformance test.</description>
 
   <dependencies>
     <dependency>

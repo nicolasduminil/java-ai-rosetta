@@ -13,12 +13,7 @@
   <artifactId>04-rag</artifactId>
   <packaging>pom</packaging>
   <name>Java AI Rosetta :: 04 RAG</name>
-  <description>
-    Retrieval-augmented generation, three flavours (classic imperative retrieval, advisor declarative
-    retrieval, modular multi-source retrieval + fusion) across Spring AI on Spring Boot, LangChain4j on
-    Spring Boot, and LangChain4j on Quarkus. The classic and advisor flavours share 04-rag-common; the
-    modular flavour has its own 04-rag-modular-common (a two-source corpus and probe).
-  </description>
+  <description>Retrieval-augmented generation, three flavours.</description>
 
   <modules>
     <module>04-rag-common</module>

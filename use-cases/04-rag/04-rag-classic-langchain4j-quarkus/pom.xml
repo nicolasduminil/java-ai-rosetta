@@ -13,9 +13,7 @@
 
   <artifactId>04-rag-classic-langchain4j-quarkus</artifactId>
   <name>Java AI Rosetta :: 04 RAG Classic :: LangChain4j on Quarkus</name>
-  <description>
-    RAG classic implemented with LangChain4j on Quarkus.
-  </description>
+  <description>RAG classic implemented with LangChain4j on Quarkus.</description>
 
   <dependencyManagement>
     <dependencies>

@@ -13,9 +13,7 @@
 
   <artifactId>04-rag-classic-langchain4j-boot</artifactId>
   <name>Java AI Rosetta :: 04 RAG Classic :: LangChain4j on Spring Boot</name>
-  <description>
-    RAG classic implemented with LangChain4j on Spring Boot.
-  </description>
+  <description>RAG classic implemented with LangChain4j on Spring Boot.</description>
 
   <dependencyManagement>
     <dependencies>

@@ -15,10 +15,6 @@ import java.net.http.*;
 import java.time.*;
 import java.util.*;
 
-/**
- * The three modalities Quarkus LangChain4j supports, each reached as an injected model bean configured
- * under {@code quarkus.langchain4j.openai.*}.
- */
 @ApplicationScoped
 public class QuarkusMultimodalService implements MultimodalService
 {

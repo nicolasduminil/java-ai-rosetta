@@ -4,9 +4,6 @@ import dev.langchain4j.agent.tool.*;
 import fr.simplex_software.workshop.tools.catalog.*;
 import org.springframework.stereotype.*;
 
-/**
- * The catalog tool, the LangChain4j way: a bean whose {@code @Tool}-annotated method the model may call.
- */
 @Component
 public class CatalogTool
 {

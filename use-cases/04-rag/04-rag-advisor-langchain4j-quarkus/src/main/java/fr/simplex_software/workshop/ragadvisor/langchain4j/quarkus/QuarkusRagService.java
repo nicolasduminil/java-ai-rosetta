@@ -4,10 +4,6 @@ import fr.simplex_software.workshop.rag.api.*;
 import jakarta.enterprise.context.*;
 import jakarta.inject.*;
 
-/**
- * Delegates to the {@link Assistant} AI Service, whose {@code ContentRetriever} performs
- * retrieval and context injection declaratively.
- */
 @ApplicationScoped
 public class QuarkusRagService implements QuestionAnsweringService
 {

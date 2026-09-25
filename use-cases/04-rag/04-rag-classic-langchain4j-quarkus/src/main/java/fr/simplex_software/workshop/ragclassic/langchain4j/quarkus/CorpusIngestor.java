@@ -13,10 +13,6 @@ import org.slf4j.*;
 
 import java.io.*;
 
-/**
- * At startup, pre-creates the Qdrant collection and then feeds the bundled corpus
- * PDF into the ingestion pipeline.
- */
 @ApplicationScoped
 public class CorpusIngestor
 {

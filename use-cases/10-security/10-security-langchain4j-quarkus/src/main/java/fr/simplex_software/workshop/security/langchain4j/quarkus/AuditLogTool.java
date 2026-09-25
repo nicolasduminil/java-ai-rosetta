@@ -4,11 +4,6 @@ import dev.langchain4j.agent.tool.*;
 import io.quarkiverse.langchain4j.guardrails.*;
 import jakarta.enterprise.context.*;
 
-/**
- * A tool the assistant may call, restricted to administrators. Authorization is enforced by a tool input
- * guardrail ({@link SecurityToolGuardrail}).
- * A non-admin call is blocked before the method runs and surfaces as HTTP 403.
- */
 @ApplicationScoped
 public class AuditLogTool
 {

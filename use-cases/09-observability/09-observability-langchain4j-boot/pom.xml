@@ -26,16 +26,10 @@
       <groupId>dev.langchain4j</groupId>
       <artifactId>langchain4j</artifactId>
     </dependency>
-    <!-- Autoconfigures the Ollama chat and embedding models from langchain4j.ollama.{chat,embedding}-model.*
-         and auto-attaches any ChatModelListener bean, so RagConfig only wires the Qdrant store (LangChain4j
-         ships no Qdrant Spring Boot starter). -->
     <dependency>
       <groupId>dev.langchain4j</groupId>
       <artifactId>langchain4j-qdrant</artifactId>
     </dependency>
-    <!-- LangChain4j serializes with Jackson 2 (com.fasterxml), but Spring Boot 4 ships only Jackson 3
-         (tools.jackson). Declare Jackson 2 databind so QdrantEmbeddingStore works when the app runs
-         standalone; without Camel (which brought it transitively in 04-rag) it is otherwise test-scope only. -->
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>

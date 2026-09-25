@@ -8,10 +8,6 @@ import dev.langchain4j.store.embedding.*;
 import jakarta.enterprise.context.*;
 import jakarta.inject.*;
 
-/**
- * Ingests a document tagged with its owner. The {@code owner} metadata rides through the splitter onto every
- * segment and becomes the Qdrant payload field the retrieval filter keys on.
- */
 @ApplicationScoped
 public class CorpusVectorLoader
 {

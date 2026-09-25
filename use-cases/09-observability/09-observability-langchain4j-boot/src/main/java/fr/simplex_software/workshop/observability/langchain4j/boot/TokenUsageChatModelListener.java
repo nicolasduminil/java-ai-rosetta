@@ -7,13 +7,6 @@ import org.springframework.stereotype.*;
 
 import java.util.concurrent.*;
 
-/**
- * LangChain4j core ships no Micrometer or OpenTelemetry instrumentation, so this hand-written listener
- * records the metrics that Spring AI and Quarkus-LangChain4j emit built-in. It records the OpenTelemetry
- * GenAI convention meters, a {@code gen_ai.client.token.usage} counter (tagged input/output/total) and a
- * {@code gen_ai.client.operation} timer, into the injected {@link MeterRegistry}. The start time is stashed
- * in the listener context's shared attribute map on request and read back on response.
- */
 @Component
 public class TokenUsageChatModelListener implements ChatModelListener
 {

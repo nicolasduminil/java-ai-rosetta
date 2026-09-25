@@ -8,12 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
-/**
- * Maps every security violation to HTTP 403. LangChain4j throws a {@link GuardrailException} (input or
- * output) when a guardrail fails, the service throws a {@link ModerationException} when the moderation model
- * flags the input, and a denied tool call surfaces as an {@link AccessDeniedException}. Validation and
- * malformed-body errors keep Spring Boot's default 400.
- */
 @RestControllerAdvice
 public class GlobalExceptionHandler
 {

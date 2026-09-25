@@ -8,9 +8,6 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.autoconfigure.condition.*;
 import org.springframework.context.annotation.*;
 
-/**
- * Registers Spring AI's OpenAI moderation model, but only when an {@code OPENAI_API_KEY} is present.
- */
 @Configuration
 public class ModerationConfig
 {

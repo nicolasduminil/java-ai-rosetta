@@ -13,9 +13,7 @@
 
   <artifactId>03-eval-spring-ai-boot</artifactId>
   <name>Java AI Rosetta :: 03 Eval :: Spring AI on Spring Boot</name>
-  <description>
-    Evaluation of use case 02's Spring AI answers.
-  </description>
+  <description>Evaluation of use case 02's Spring AI answers.</description>
 
   <dependencies>
     <dependency>

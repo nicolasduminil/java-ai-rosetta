@@ -15,11 +15,6 @@ import java.util.stream.*;
 
 import static dev.langchain4j.store.embedding.filter.MetadataFilterBuilder.*;
 
-/**
- * Retrieval is filtered by the authenticated caller with a metadata filter on the {@code owner} field, so
- * the assistant only ever sees the caller's own documents plus the public ones. The retrieved context is
- * handed to the guardrailed, tool-equipped assistant.
- */
 @Service
 public class LangChain4jRagService implements QuestionAnsweringService
 {

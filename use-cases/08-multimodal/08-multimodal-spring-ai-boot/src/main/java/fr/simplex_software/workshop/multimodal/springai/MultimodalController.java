@@ -8,11 +8,6 @@ import org.springframework.web.multipart.*;
 
 import java.io.*;
 
-/**
- * The four multimodal endpoints. Audio and image uploads come in as multipart; the generated image and
- * synthesised audio go out as raw bytes with their media type. {@code /speak} exists only here, because
- * Spring AI is the only stack with a text-to-speech model.
- */
 @RestController
 public class MultimodalController
 {

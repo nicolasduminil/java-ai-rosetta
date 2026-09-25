@@ -9,9 +9,6 @@ import org.springframework.stereotype.*;
 
 import java.io.*;
 
-/**
- * Feeds the two bundled corpus PDFs into the ingestion pipeline, tagging each with its {@code source}.
- */
 @Component
 public class CorpusIngestionTrigger
 {

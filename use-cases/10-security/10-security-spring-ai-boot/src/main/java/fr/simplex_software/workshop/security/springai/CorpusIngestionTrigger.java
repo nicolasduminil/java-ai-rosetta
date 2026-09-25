@@ -9,10 +9,6 @@ import java.io.*;
 import java.nio.charset.*;
 import java.util.List;
 
-/**
- * On startup, ingest the three owner-tagged corpus files. The file name is the owner: {@code public.txt} is
- * readable by everyone, {@code alice.txt} and {@code bob.txt} only by their owner.
- */
 @Component
 public class CorpusIngestionTrigger
 {

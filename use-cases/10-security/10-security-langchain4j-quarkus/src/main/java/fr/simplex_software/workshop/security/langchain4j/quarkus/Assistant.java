@@ -4,10 +4,6 @@ import dev.langchain4j.service.*;
 import dev.langchain4j.service.guardrail.*;
 import io.quarkiverse.langchain4j.*;
 
-/**
- * The declarative Quarkus AI service. The guardrails and the tool are declared on the service itself.
- * The Quarkus extension wires them in.
- */
 @RegisterAiService(tools = AuditLogTool.class)
 public interface Assistant
 {

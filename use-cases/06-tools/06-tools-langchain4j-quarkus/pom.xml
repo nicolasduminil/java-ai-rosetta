@@ -13,7 +13,7 @@
 
   <artifactId>06-tools-langchain4j-quarkus</artifactId>
   <name>Java AI Rosetta :: 06 Tools :: LangChain4j on Quarkus</name>
-  <description>Tool-driven generation with LangChain4j on Quarkus - @RegisterAiService(tools = ...) declares the tool.</description>
+  <description>Tool-driven generation with LangChain4j on Quarkus.</description>
 
   <dependencies>
     <dependency>

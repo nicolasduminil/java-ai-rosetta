@@ -13,13 +13,6 @@ import static io.qdrant.client.PointIdFactory.id;
 import static io.qdrant.client.ValueFactory.value;
 import static io.qdrant.client.VectorsFactory.vectors;
 
-/**
- * A persistent {@link ChatMemoryStore} backed by Qdrant. LangChain4j 1.17.2 ships no persistent store,
- * only {@code InMemoryChatMemoryStore}), so each conversation's message window is
- * stored as a single Qdrant point keyed by the memory id and its serialized messages held in the point
- * payload. Qdrant is used purely as durable storage here, the one-dimension vector is a placeholder,
- * never searched.
- */
 public class QdrantChatMemoryStore implements ChatMemoryStore
 {
   private static final String MESSAGES_KEY = "messages";

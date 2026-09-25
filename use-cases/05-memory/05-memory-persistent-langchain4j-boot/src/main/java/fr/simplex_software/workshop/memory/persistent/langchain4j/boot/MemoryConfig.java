@@ -8,11 +8,6 @@ import io.qdrant.client.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.context.annotation.*;
 
-/**
- * Wires the {@link QdrantClient}, the persistent {@link QdrantChatMemoryStore}, and the {@link Assistant}
- * whose {@code ChatMemoryProvider} keeps one window per conversation id in that Qdrant-backed store. The
- * {@link ChatModel} is autoconfigured by the {@code langchain4j-ollama-spring-boot4-starter}.
- */
 @Configuration
 public class MemoryConfig
 {

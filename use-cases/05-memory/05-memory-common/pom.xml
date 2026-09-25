@@ -13,7 +13,6 @@
 
   <artifactId>05-memory-common</artifactId>
   <name>Java AI Rosetta :: 05 Memory :: Common</name>
-  <description>Neutral conversational-memory contract and conformance test shared by the in-memory and persistent use cases.</description>
 
   <dependencies>
     <dependency>

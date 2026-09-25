@@ -13,7 +13,7 @@
 
   <artifactId>05-memory-inmemory-langchain4j-quarkus</artifactId>
   <name>Java AI Rosetta :: 05 Memory In-Memory :: LangChain4j on Quarkus</name>
-  <description>In-memory conversational memory with LangChain4j on Quarkus - @RegisterAiService auto-wires the memory.</description>
+  <description>In-memory conversational memory with LangChain4j on Quarkus</description>
 
   <dependencies>
     <dependency>

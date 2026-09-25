@@ -6,10 +6,6 @@ import jakarta.ws.rs.ext.*;
 
 import java.util.*;
 
-/**
- * A failed tool input guardrail (here, an unauthorized tool call) throws a {@link ToolGuardrailException};
- * map it to HTTP 403 so the contract matches the other stacks.
- */
 @Provider
 public class ToolGuardrailExceptionMapper implements ExceptionMapper<ToolGuardrailException>
 {

@@ -6,11 +6,6 @@ import org.springframework.stereotype.*;
 
 import java.util.*;
 
-/**
- * A LangChain4j input guardrail: it inspects the incoming user message and refuses obvious
- * prompt-injection attempts before the model is called. A failure result makes the AI service throw an
- * {@link InputGuardrailException}, which the controller advice turns into HTTP 403.
- */
 @Component
 public class InjectionGuardrail implements InputGuardrail
 {

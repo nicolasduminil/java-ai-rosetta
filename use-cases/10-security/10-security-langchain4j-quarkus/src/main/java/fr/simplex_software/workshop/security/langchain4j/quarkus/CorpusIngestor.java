@@ -14,10 +14,6 @@ import java.io.*;
 import java.nio.charset.*;
 import java.util.List;
 
-/**
- * On startup, create the collection if needed and ingest the three owner-tagged corpus files (the file name
- * is the owner).
- */
 @ApplicationScoped
 public class CorpusIngestor
 {

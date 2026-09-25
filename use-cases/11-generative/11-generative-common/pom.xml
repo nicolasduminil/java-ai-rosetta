@@ -13,7 +13,6 @@
 
   <artifactId>11-generative-common</artifactId>
   <name>Java AI Rosetta :: 11 Generative :: Common</name>
-  <description>Shared request/response types, the service contract and the conformance test every stack is held to.</description>
 
   <dependencies>
     <dependency>

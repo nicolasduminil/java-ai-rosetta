@@ -50,10 +50,6 @@
       <artifactId>openai-java-client-okhttp</artifactId>
       <version>4.39.1</version>
     </dependency>
-    <!-- The OpenAI SDK (moderation) needs Jackson 2 databind at runtime, but Spring Boot 4.1 ships Jackson 3
-         (tools.jackson.core), a different coordinate, and the only compile path to jackson-databind 2.x lands
-         at test scope, so it is absent from the fat jar. Declare it explicitly so the runnable jar has it.
-         Version is managed by the Boot BOM (2.21.4), matching the Jackson 2 core/annotations already present. -->
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>

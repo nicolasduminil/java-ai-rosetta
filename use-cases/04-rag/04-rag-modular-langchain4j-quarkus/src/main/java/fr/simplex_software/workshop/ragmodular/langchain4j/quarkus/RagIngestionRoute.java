@@ -4,10 +4,6 @@ import jakarta.enterprise.context.*;
 import jakarta.inject.*;
 import org.apache.camel.builder.*;
 
-/**
- * Tika extracts the document to plain text,
- * then the stack-native loader splits, embeds and stores it.
- */
 @ApplicationScoped
 public class RagIngestionRoute extends RouteBuilder
 {

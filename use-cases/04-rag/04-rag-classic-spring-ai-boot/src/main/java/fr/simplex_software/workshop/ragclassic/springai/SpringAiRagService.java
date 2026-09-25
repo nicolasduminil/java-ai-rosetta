@@ -11,10 +11,6 @@ import org.springframework.stereotype.*;
 
 import java.util.stream.*;
 
-/**
- * Embed the question, run a similarity search against Qdrant, then stuff the
- * retrieved chunks into the prompt by hand before calling the chat model.
- */
 @Service
 public class SpringAiRagService implements QuestionAnsweringService
 {

@@ -5,9 +5,6 @@ import org.springframework.ai.chat.client.*;
 import org.springframework.ai.tool.*;
 import org.springframework.stereotype.*;
 
-/**
- * The MCP client, the Spring AI way.
- */
 @Service
 public class SpringAiMcpAskService implements AskService
 {

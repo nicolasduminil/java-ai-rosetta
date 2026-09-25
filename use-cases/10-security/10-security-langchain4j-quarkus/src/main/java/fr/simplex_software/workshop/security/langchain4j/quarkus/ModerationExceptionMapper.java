@@ -6,9 +6,6 @@ import jakarta.ws.rs.ext.*;
 
 import java.util.*;
 
-/**
- * When the moderation model flags the input, the service throws a {@link ModerationException}; map it to 403.
- */
 @Provider
 public class ModerationExceptionMapper implements ExceptionMapper<ModerationException>
 {

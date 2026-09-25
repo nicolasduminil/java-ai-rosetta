@@ -6,8 +6,6 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.*;
 
-// Not jakarta.validation.*: it declares a Path type that collides with jakarta.ws.rs.Path.
-
 @Path("/ask")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)

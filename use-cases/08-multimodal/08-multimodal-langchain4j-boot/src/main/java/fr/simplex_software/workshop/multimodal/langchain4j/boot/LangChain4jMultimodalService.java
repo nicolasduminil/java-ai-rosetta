@@ -15,11 +15,6 @@ import java.net.http.*;
 import java.time.*;
 import java.util.*;
 
-/**
- * The three modalities LangChain4j supports, each on a hand-wired OpenAI model. LangChain4j's image model
- * exposes no {@code response_format} option, so dall-e-2 returns an URL; the generated image is downloaded
- * to PNG bytes (base64 is honoured too, for models that return it).
- */
 @Service
 public class LangChain4jMultimodalService implements MultimodalService
 {

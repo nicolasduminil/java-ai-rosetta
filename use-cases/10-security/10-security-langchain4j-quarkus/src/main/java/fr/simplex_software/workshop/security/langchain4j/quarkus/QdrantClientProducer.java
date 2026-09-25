@@ -5,9 +5,6 @@ import jakarta.enterprise.context.*;
 import jakarta.enterprise.inject.*;
 import org.eclipse.microprofile.config.inject.*;
 
-/**
- * Produces a Qdrant client for collection creation and ingestion.
- */
 @ApplicationScoped
 public class QdrantClientProducer
 {

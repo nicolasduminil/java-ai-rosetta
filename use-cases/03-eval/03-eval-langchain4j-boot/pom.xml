@@ -13,9 +13,7 @@
 
   <artifactId>03-eval-langchain4j-boot</artifactId>
   <name>Java AI Rosetta :: 03 Eval :: LangChain4j on Spring Boot</name>
-  <description>
-    Evaluation of use case 02's LangChain4j (Spring Boot) answers.
-  </description>
+  <description>Evaluation of use case 02's LangChain4j (Spring Boot) answers.</description>
 
   <dependencies>
     <dependency>

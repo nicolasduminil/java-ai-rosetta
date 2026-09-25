@@ -9,9 +9,6 @@ import jakarta.enterprise.context.*;
 import jakarta.inject.*;
 import org.slf4j.*;
 
-/**
- * Splits the Tika-extracted text and ingests it, tagging every segment with its {@code source}.
- */
 @ApplicationScoped
 public class CorpusVectorLoader
 {

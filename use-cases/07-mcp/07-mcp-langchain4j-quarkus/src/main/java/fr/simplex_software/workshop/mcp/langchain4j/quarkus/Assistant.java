@@ -4,9 +4,6 @@ import dev.langchain4j.service.*;
 import io.quarkiverse.langchain4j.*;
 import io.quarkiverse.langchain4j.mcp.runtime.*;
 
-/**
- * The declarative Quarkus AI service.
- */
 @RegisterAiService
 public interface Assistant
 {

@@ -12,10 +12,6 @@ import org.slf4j.*;
 
 import java.util.stream.*;
 
-/**
- * Embed the question, search the Qdrant store by hand, then build
- * the prompt from the retrieved segments before calling the chat model.
- */
 @ApplicationScoped
 public class QuarkusRagService implements QuestionAnsweringService
 {

@@ -13,7 +13,6 @@
 
   <artifactId>08-multimodal-common</artifactId>
   <name>Java AI Rosetta :: 08 Multimodal :: Common</name>
-  <description>Neutral multimodal contract, the shared audio/image fixtures, and the conformance test.</description>
 
   <dependencies>
     <dependency>

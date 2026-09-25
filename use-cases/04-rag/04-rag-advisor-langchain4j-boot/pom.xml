@@ -13,9 +13,7 @@
 
   <artifactId>04-rag-advisor-langchain4j-boot</artifactId>
   <name>Java AI Rosetta :: 04 RAG Advisor :: LangChain4j on Spring Boot</name>
-  <description>
-    RAG advisor implemented with LangChain4j on Spring Boot.
-  </description>
+  <description>RAG advisor implemented with LangChain4j on Spring Boot.</description>
 
   <dependencyManagement>
     <dependencies>

@@ -13,10 +13,7 @@
 
   <artifactId>04-rag-advisor-spring-ai-boot</artifactId>
   <name>Java AI Rosetta :: 04 RAG Advisor :: Spring AI on Spring Boot</name>
-  <description>
-    RAG advisor implemented with Spring AI on Spring Boot - Camel/Tika ingestion into Qdrant, declarative QuestionAnswerAdvisor
-    retrieval.
-  </description>
+  <description>RAG advisor implemented with Spring AI on Spring Boot.</description>
 
   <dependencyManagement>
     <dependencies>
@@ -44,8 +41,6 @@
       <groupId>org.springframework.ai</groupId>
       <artifactId>spring-ai-starter-vector-store-qdrant</artifactId>
     </dependency>
-    <!-- QuestionAnswerAdvisor lives here; it is not pulled in transitively by the chat client
-         or the Qdrant starter, so the declarative-RAG advisor requires this module explicitly. -->
     <dependency>
       <groupId>org.springframework.ai</groupId>
       <artifactId>spring-ai-vector-store-advisor</artifactId>
@@ -58,8 +53,6 @@
       <groupId>org.apache.camel.springboot</groupId>
       <artifactId>camel-tika-starter</artifactId>
     </dependency>
-    <!-- camel-tika bundles only the html and text parser modules; add the PDF parser so Tika can
-         extract our corpus. Version matches the tika-core that camel-tika 4.22.0 resolves. -->
     <dependency>
       <groupId>org.apache.tika</groupId>
       <artifactId>tika-parser-pdf-module</artifactId>

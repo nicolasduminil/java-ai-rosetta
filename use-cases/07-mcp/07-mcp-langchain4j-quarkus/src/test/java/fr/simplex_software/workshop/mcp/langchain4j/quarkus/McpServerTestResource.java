@@ -5,10 +5,6 @@ import io.quarkus.test.common.*;
 
 import java.util.*;
 
-/**
- * Starts the MCP server (as a subprocess) before the Quarkus app and points the MCP client's runtime URL at
- * it. The server runs on a random port, so its {@code /mcp} endpoint is only known once it is up.
- */
 public class McpServerTestResource implements QuarkusTestResourceLifecycleManager
 {
   private McpServerProcess server;

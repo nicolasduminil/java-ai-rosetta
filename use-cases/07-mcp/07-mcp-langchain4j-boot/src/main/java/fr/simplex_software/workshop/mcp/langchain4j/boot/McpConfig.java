@@ -9,12 +9,6 @@ import dev.langchain4j.service.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.context.annotation.*;
 
-/**
- * Wires the MCP client the LangChain4j way. A {@link StreamableHttpMcpTransport} connects to the server's
- * {@code /mcp} endpoint; a {@link DefaultMcpClient} speaks the protocol over it; and an {@link McpToolProvider}
- * turns the server's tools into a {@link dev.langchain4j.service.tool.ToolProvider} that the AI service consults.
- * The {@link ChatModel} is auto-configured by the Spring Boot 4 Ollama starter.
- */
 @Configuration
 public class McpConfig
 {
