@@ -7,7 +7,7 @@
   <parent>
     <groupId>fr.simplex-software.workshop</groupId>
     <artifactId>stacks</artifactId>
-    <version>1.0.18</version>
+    <version>1.0.19</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
@@ -47,10 +47,18 @@
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
     <dependency>
+      <!-- LangChain4j's dedicated Spring Boot 4 starter, shared by every langchain4j-boot module (mirrors
+           how spring-ai-boot-parent provides spring-ai-starter-model-ollama). It autoconfigures the
+           OllamaChatModel from langchain4j.ollama.chat-model.* and brings langchain4j-ollama transitively.
+           Its autoconfig is conditional (@ConditionalOnProperty / @ConditionalOnMissingBean), so a stack that
+           sets no ollama properties or defines its own ChatModel (e.g. the OpenAI use case 08) is unaffected.
+           Beta line, version managed by langchain4j-bom; the classic *-spring-boot-starter targets Boot 3. -->
       <groupId>dev.langchain4j</groupId>
-      <artifactId>langchain4j-ollama</artifactId>
+      <artifactId>langchain4j-ollama-spring-boot4-starter</artifactId>
     </dependency>
     <dependency>
+      <!-- The JDK HTTP client is kept explicitly: hand-wired models (04's embedding, 08's OpenAI models)
+           pin it via new JdkHttpClientBuilder() to avoid the SPI ambiguity with the starter's spring-restclient. -->
       <groupId>dev.langchain4j</groupId>
       <artifactId>langchain4j-http-client-jdk</artifactId>
     </dependency>

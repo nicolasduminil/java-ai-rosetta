@@ -7,7 +7,7 @@
   <parent>
     <groupId>fr.simplex-software.workshop</groupId>
     <artifactId>langchain4j-boot-parent</artifactId>
-    <version>1.0.18</version>
+    <version>1.0.19</version>
     <relativePath>../../../stacks/langchain4j-boot-parent/pom.xml</relativePath>
   </parent>
 
@@ -15,20 +15,11 @@
   <name>Java AI Rosetta :: 01 Simple :: LangChain4j on Spring Boot</name>
   <description>Use case 01 implemented with LangChain4j on Spring Boot.</description>
 
-  <!-- Deliberately identical to 01-simple-spring-ai-boot's dependency list. Same runtime, same
-       web stack, same validation: the AI library is the only variable between the two. -->
   <dependencies>
     <dependency>
       <groupId>fr.simplex-software.workshop</groupId>
       <artifactId>01-simple-common</artifactId>
       <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <!-- LangChain4j's dedicated Spring Boot 4 starter: it autoconfigures the OllamaChatModel from
-           langchain4j.ollama.chat-model.*, so this stack no longer hand-wires it. Beta line, version
-           managed by langchain4j-bom. The classic *-spring-boot-starter targets Spring Boot 3. -->
-      <groupId>dev.langchain4j</groupId>
-      <artifactId>langchain4j-ollama-spring-boot4-starter</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>

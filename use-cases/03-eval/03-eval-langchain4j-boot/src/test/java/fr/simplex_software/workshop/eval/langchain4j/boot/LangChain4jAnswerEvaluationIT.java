@@ -15,6 +15,14 @@ import java.net.*;
   webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class LangChain4jAnswerEvaluationIT extends AbstractAnswerEvaluationIT
 {
+  static
+  {
+    // The langchain4j-boot parent now carries the Ollama starter's spring-restclient alongside the jdk
+    // client; the shared judge helper builds its model without picking one, so select jdk for this test JVM.
+    System.setProperty("langchain4j.http.clientBuilderFactory",
+      "dev.langchain4j.http.client.jdk.JdkHttpClientBuilderFactory");
+  }
+
   @LocalServerPort
   private int port;
 

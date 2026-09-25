@@ -7,7 +7,7 @@
   <parent>
     <groupId>fr.simplex-software.workshop</groupId>
     <artifactId>langchain4j-boot-parent</artifactId>
-    <version>1.0.18</version>
+    <version>1.0.19</version>
     <relativePath>../../../stacks/langchain4j-boot-parent/pom.xml</relativePath>
   </parent>
 
@@ -29,10 +29,6 @@
     <!-- Autoconfigures the Ollama chat and embedding models from langchain4j.ollama.{chat,embedding}-model.*
          and auto-attaches any ChatModelListener bean, so RagConfig only wires the Qdrant store (LangChain4j
          ships no Qdrant Spring Boot starter). -->
-    <dependency>
-      <groupId>dev.langchain4j</groupId>
-      <artifactId>langchain4j-ollama-spring-boot4-starter</artifactId>
-    </dependency>
     <dependency>
       <groupId>dev.langchain4j</groupId>
       <artifactId>langchain4j-qdrant</artifactId>

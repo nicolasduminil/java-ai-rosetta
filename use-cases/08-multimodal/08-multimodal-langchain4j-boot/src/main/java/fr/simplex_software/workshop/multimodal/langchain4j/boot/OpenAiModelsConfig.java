@@ -13,6 +13,15 @@ import org.springframework.context.annotation.*;
 @Configuration
 public class OpenAiModelsConfig
 {
+  static
+  {
+    // The langchain4j-boot parent carries the Ollama starter's spring-restclient alongside the jdk client.
+    // These OpenAI models resolve the SPI ambiguity through the client-selection system property langchain4j
+    // reads at model-build time (the transcription model's builder cannot pick a client on its own).
+    System.setProperty("langchain4j.http.clientBuilderFactory",
+      "dev.langchain4j.http.client.jdk.JdkHttpClientBuilderFactory");
+  }
+
   @Bean
   ChatModel chatModel(@Value("${openai.api-key}") String apiKey)
   {

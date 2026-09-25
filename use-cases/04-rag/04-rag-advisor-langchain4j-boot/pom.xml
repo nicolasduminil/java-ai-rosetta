@@ -7,7 +7,7 @@
   <parent>
     <groupId>fr.simplex-software.workshop</groupId>
     <artifactId>langchain4j-boot-parent</artifactId>
-    <version>1.0.18</version>
+    <version>1.0.19</version>
     <relativePath>../../../stacks/langchain4j-boot-parent/pom.xml</relativePath>
   </parent>
 
@@ -42,13 +42,6 @@
     <dependency>
       <groupId>dev.langchain4j</groupId>
       <artifactId>langchain4j-qdrant</artifactId>
-    </dependency>
-    <dependency>
-      <!-- LangChain4j's dedicated Spring Boot 4 starter: it autoconfigures the OllamaChatModel from
-           langchain4j.ollama.chat-model.*, so this stack no longer hand-wires it. The embedding model and
-           vector store stay hand-wired (the starter covers the chat model only). Beta line, managed by the bom. -->
-      <groupId>dev.langchain4j</groupId>
-      <artifactId>langchain4j-ollama-spring-boot4-starter</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
