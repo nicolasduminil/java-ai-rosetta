@@ -18,6 +18,7 @@ class LangChain4jRagQuestionAnsweringIT extends AbstractRagQuestionAnsweringIT
   static void ragProperties(DynamicPropertyRegistry registry)
   {
     registry.add("langchain4j.ollama.base-url", OllamaTestSupport::baseUrl);
+    registry.add("langchain4j.ollama.chat-model.base-url", OllamaTestSupport::baseUrl);
     registry.add("langchain4j.ollama.chat-model.model-name", OllamaTestSupport::model);
     registry.add("langchain4j.ollama.embedding-model.model-name", OllamaTestSupport::embeddingModel);
     registry.add("langchain4j.qdrant.host", QdrantTestSupport::host);

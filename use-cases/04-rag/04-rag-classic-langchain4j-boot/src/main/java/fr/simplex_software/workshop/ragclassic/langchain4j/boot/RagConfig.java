@@ -1,7 +1,7 @@
 package fr.simplex_software.workshop.ragclassic.langchain4j.boot;
 
 import dev.langchain4j.data.segment.*;
-import dev.langchain4j.model.chat.*;
+import dev.langchain4j.http.client.jdk.*;
 import dev.langchain4j.model.embedding.*;
 import dev.langchain4j.model.ollama.*;
 import dev.langchain4j.store.embedding.*;
@@ -13,8 +13,8 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.context.annotation.*;
 
 /**
- * Builds the LangChain4j model, embedding and vector-store beans by hand (its Spring Boot starter is
- * incompatible with Spring Boot 4).
+ * Builds the embedding and vector-store beans by hand. The chat model is autoconfigured by the
+ * {@code langchain4j-ollama-spring-boot4-starter}; only the embedding model and store are wired here.
  *
  * <p>Unlike Spring AI's Qdrant starter, {@link QdrantEmbeddingStore} does not create the collection,
  * so this stack pre-creates it from the embedding model's dimension.
@@ -29,20 +29,11 @@ public class RagConfig
     @Value("${langchain4j.ollama.base-url}") String baseUrl,
     @Value("${langchain4j.ollama.embedding-model.model-name}") String modelName)
   {
-    return OllamaEmbeddingModel.builder().baseUrl(baseUrl).modelName(modelName).build();
-  }
-
-  @Bean
-  ChatModel chatModel(
-    @Value("${langchain4j.ollama.base-url}") String baseUrl,
-    @Value("${langchain4j.ollama.chat-model.model-name}") String modelName,
-    @Value("${langchain4j.ollama.chat-model.temperature}") Double temperature)
-  {
-    return OllamaChatModel.builder()
-      .baseUrl(baseUrl)
-      .modelName(modelName)
-      .temperature(temperature)
-      .build();
+    // The Boot-4 starter puts a second HTTP client (spring-restclient) on the classpath next to the
+    // parent's jdk client, so this hand-wired model must pick one explicitly to avoid an SPI conflict.
+    return OllamaEmbeddingModel.builder()
+      .httpClientBuilder(new JdkHttpClientBuilder())
+      .baseUrl(baseUrl).modelName(modelName).build();
   }
 
   @Bean

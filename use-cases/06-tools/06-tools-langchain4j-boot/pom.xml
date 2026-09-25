@@ -7,7 +7,7 @@
   <parent>
     <groupId>fr.simplex-software.workshop</groupId>
     <artifactId>langchain4j-boot-parent</artifactId>
-    <version>1.0.17</version>
+    <version>1.0.18</version>
     <relativePath>../../../stacks/langchain4j-boot-parent/pom.xml</relativePath>
   </parent>
 
@@ -29,8 +29,7 @@
       <!-- LangChain4j's dedicated Spring Boot 4 starter (the classic langchain4j-ollama-spring-boot-starter
            targets Spring Boot 3 and does not work here). It autoconfigures the OllamaChatModel from
            langchain4j.ollama.chat-model.*, so this stack does not hand-wire it. Currently a beta line
-           (version managed by langchain4j-bom); the other langchain4j-boot stacks still hand-wire until it
-           goes stable. -->
+           (version managed by langchain4j-bom). -->
       <groupId>dev.langchain4j</groupId>
       <artifactId>langchain4j-ollama-spring-boot4-starter</artifactId>
     </dependency>

@@ -17,7 +17,7 @@ class LangChain4jConversationMemoryIT extends AbstractConversationalMemoryIT
   @DynamicPropertySource
   static void properties(DynamicPropertyRegistry registry)
   {
-    registry.add("langchain4j.ollama.base-url", OllamaTestSupport::baseUrl);
+    registry.add("langchain4j.ollama.chat-model.base-url", OllamaTestSupport::baseUrl);
     registry.add("langchain4j.ollama.chat-model.model-name", OllamaTestSupport::model);
     registry.add("langchain4j.qdrant.host", QdrantTestSupport::host);
     registry.add("langchain4j.qdrant.port", QdrantTestSupport::grpcPort);

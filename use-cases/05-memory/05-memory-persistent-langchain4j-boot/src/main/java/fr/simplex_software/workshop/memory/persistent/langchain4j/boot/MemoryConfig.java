@@ -2,7 +2,6 @@ package fr.simplex_software.workshop.memory.persistent.langchain4j.boot;
 
 import dev.langchain4j.memory.chat.*;
 import dev.langchain4j.model.chat.*;
-import dev.langchain4j.model.ollama.*;
 import dev.langchain4j.service.*;
 import dev.langchain4j.store.memory.chat.*;
 import io.qdrant.client.*;
@@ -10,27 +9,14 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.context.annotation.*;
 
 /**
- * Wires the {@link ChatModel}, the {@link QdrantClient}, the persistent {@link QdrantChatMemoryStore},
- * and the {@link Assistant} whose {@code ChatMemoryProvider} keeps one window per conversation id in that
- * Qdrant-backed store.
+ * Wires the {@link QdrantClient}, the persistent {@link QdrantChatMemoryStore}, and the {@link Assistant}
+ * whose {@code ChatMemoryProvider} keeps one window per conversation id in that Qdrant-backed store. The
+ * {@link ChatModel} is autoconfigured by the {@code langchain4j-ollama-spring-boot4-starter}.
  */
 @Configuration
 public class MemoryConfig
 {
   private static final int MAX_MESSAGES = 20;
-
-  @Bean
-  ChatModel chatModel(
-    @Value("${langchain4j.ollama.base-url}") String baseUrl,
-    @Value("${langchain4j.ollama.chat-model.model-name}") String modelName,
-    @Value("${langchain4j.ollama.chat-model.temperature}") Double temperature)
-  {
-    return OllamaChatModel.builder()
-      .baseUrl(baseUrl)
-      .modelName(modelName)
-      .temperature(temperature)
-      .build();
-  }
 
   @Bean
   QdrantClient qdrantClient(
