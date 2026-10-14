@@ -25,3 +25,9 @@ build/
 
 # Upstream bug reproducer for quarkus-langchain4j MCP (not part of the book)
 mcp-quarkus-streamable-repro*
+
+# Internal, not for the public code companion (kept in the private repo only)
+.claude/settings.local.json
+agent-skills/
+book/proposal/
+Java AI in Action*Manning Proposal.pdf
