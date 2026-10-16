@@ -6,11 +6,6 @@ import dev.langchain4j.model.ollama.*;
 import dev.langchain4j.service.*;
 import fr.simplex_software.workshop.eval.api.*;
 
-/**
- * Adapts the LangChain4j {@link Judge} to the neutral {@link AnswerEvaluator}. The judge model is
- * built by hand (rather than through the framework) so it runs on the larger judge model, with
- * grammar-constrained JSON so the tiny-to-modest judge still returns a parseable verdict.
- */
 public final class LangChain4jAnswerEvaluator implements AnswerEvaluator
 {
   private final Judge judge;
