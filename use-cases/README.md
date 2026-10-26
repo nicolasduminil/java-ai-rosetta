@@ -24,7 +24,7 @@ reaches a ratified 1.0 (it is at `1.0.0-M1`, draft, as of August 2026).
 
 The use-case slug is repeated in every module name because Maven rejects a reactor containing two
 projects with the same `groupId:artifactId:version` — without the prefix, use case 01 and use case
-02 would both contribute a `spring-ai-boot`. Repeating it also keeps `CLAUDE.md`'s "artifactId
+02 would both contribute a `spring-ai-boot`. Repeating it also keeps the project's "artifactId
 equals directory name" rule literally true, and gives the IDE unique module names.
 
 ## Aggregation vs. inheritance
@@ -70,7 +70,7 @@ It must **never** hold AI wiring, model configuration, prompt construction, or a
 differs between Spring AI and LangChain4j. Those differences are the entire point of the
 project — sharing them would hide exactly what a reader came to see.
 
-This deliberately narrows the "maximize code sharing" rule in the root `CLAUDE.md`.
+This deliberately narrows the project's "maximize code sharing" convention.
 
 ## The conformance contract
 

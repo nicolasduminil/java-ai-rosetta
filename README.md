@@ -150,6 +150,6 @@ at 1.0 final.
 
 ## Conventions
 
-Project-wide rules are in [`CLAUDE.md`](CLAUDE.md): group ID `fr.simplex-software.workshop`,
+Project-wide conventions: group ID `fr.simplex-software.workshop`,
 Maven multi-module with a parent POM, Testcontainers integration tests over mocks, no Lombok,
 semantic versioning with a PATCH bump per generated version.
