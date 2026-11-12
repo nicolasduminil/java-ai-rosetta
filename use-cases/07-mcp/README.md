@@ -65,7 +65,8 @@ The **Quarkus** MCP client (`quarkus-langchain4j 1.12.2`) **hangs** against a *s
 SSE parser does not accept the spec-valid no-space field form (`data:{json}`) that real servers — Spring AI's
 stateful server included — emit. Adding a space (`data: {json}`) makes it work, and LangChain4j's own
 transport handles both. A minimal standalone reproducer for that bug lives at the repo root
-(`mcp-quarkus-streamable-repro/`, gitignored) and is being filed upstream. Stateless sidesteps it (plain-JSON
+(`mcp-quarkus-streamable-repro/`, gitignored) was reported upstream, and the defect is fixed by
+quarkus-langchain4j pull request 2872 (see [`ERRATA.md`](../../ERRATA.md), entry D3). Stateless sidesteps it (plain-JSON
 responses) and is uniform across all three clients.
 
 ## Running it

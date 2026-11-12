@@ -133,30 +133,21 @@ public class LangChain4jQuestionAnsweringService implements QuestionAnsweringSer
 }
 ```
 
-But this track needs a class the other two do not — see *The starter that isn't there* below:
+The model itself is configured through properties only. The `langchain4j-ollama-spring-boot4-starter`,
+declared once in `langchain4j-boot-parent`, builds the `ChatModel` bean from them, in the same manner as the
+Spring AI starter builds its `ChatClient.Builder`:
 
-```java
-@Configuration
-public class ChatModelConfig
-{
-  @Bean
-  ChatModel ollamaChatModel(
-    @Value("${langchain4j.ollama.chat-model.base-url}") String baseUrl,
-    @Value("${langchain4j.ollama.chat-model.model-name}") String modelName,
-    @Value("${langchain4j.ollama.chat-model.temperature}") Double temperature)
-  {
-    var builder = OllamaChatModel.builder();
-    builder.baseUrl(baseUrl).modelName(modelName).temperature(temperature);
-    return builder.build();
-  }
-}
+```properties
+langchain4j.ollama.chat-model.base-url=${ollama.base-url:http://localhost:11434}
+langchain4j.ollama.chat-model.model-name=${ollama.model:qwen2.5:0.5b}
+langchain4j.ollama.chat-model.temperature=0.0
 ```
 
 ### LangChain4j on Quarkus
 
 The service body is character-for-character the same as the Boot one; only the scope annotation
-changes, `@ApplicationScoped` for `@Service`. And here the model *is* auto-configured, so there is
-no `ChatModelConfig` — this is the smallest of the three modules:
+changes, `@ApplicationScoped` for `@Service`. The extension configures the model from properties, as the
+starter does on Spring Boot, and this module is the smallest of the three:
 
 ```java
 @ApplicationScoped
@@ -222,14 +213,14 @@ is what actually ships.
 
 | | `_original` | spring-ai-boot | langchain4j-boot | langchain4j-quarkus |
 |---|---|---|---|---|
-| Production Java (LOC) | 59 | 48 | 66 | **39** |
+| Production Java (LOC) | 59 | 48 | 47 | **39** |
 | …of which the AI service class | 19 | 21 | 18 | 18 |
-| …of which wiring the model | 0 | 0 | **19** | 0 |
-| Files in `src/main/java` | 7 | 3 | 4 | **2** |
+| …of which wiring the model | 0 | 0 | 0 | 0 |
+| Files in `src/main/java` | 7 | 3 | 3 | **2** |
 | Dependencies declared in the build file | 5 | 3 | 3 | 3 |
-| Resolved runtime jars | — | 106 | **45** | 142 |
+| Resolved runtime jars | — | 106 | **49** | 142 |
 | Conformance glue (LOC) | n/a | 25 | 23 | 36 |
-| Startup, median (JVM mode) | — | 1.74 s | 2.69 s | **0.66 s** |
+| Startup, median (JVM mode) | — | 1.74 s | pending (see below) | **0.66 s** |
 | Native image | n/a | not attempted | not attempted | profile present, not attempted |
 
 The shared `01-simple-common` module adds 14 lines of production Java (the two records and the
@@ -243,8 +234,8 @@ start and model pull happen *inside* the measured startup. Those numbers are mea
 comparison and are not the ones above.
 
 **Read the jar counts with care.** Quarkus splits its runtime into many small artifacts, so 142
-jars is not 3× the weight of 45. The comparison worth making is Spring AI's 106 against
-LangChain4j's 45 on the *same* runtime: Spring AI brings a JSON-schema generator, a tokenizer and
+jars is not 3× the weight of 49. The comparison worth making is Spring AI's 106 against
+LangChain4j's 49 on the *same* runtime: Spring AI brings a JSON-schema generator, a tokenizer and
 Reactor along with it, and this use case touches none of them.
 
 **Conformance glue is 36 lines on Quarkus** rather than ~24, because the shared container is fed in
@@ -253,28 +244,22 @@ through a `QuarkusTestResourceLifecycleManager` (18 lines) instead of a one-line
 
 ## Where they genuinely diverge
 
-### The starter that isn't there
+### Choosing the Spring Boot 4 starter
 
-**LangChain4j has no Spring Boot 4 starter, and this is the headline finding of use case 01.**
-
-`langchain4j-ollama-spring-boot-starter:1.17.2-beta27` pulls
-`langchain4j-http-client-spring-restclient`, compiled against
-`org.springframework.boot.http.client.ClientHttpRequestFactorySettings` — a class Spring Boot 4
-removed. The application does not fail to compile; it fails at bean creation, at runtime:
+LangChain4j publishes two Ollama starters for Spring Boot. The classic `langchain4j-ollama-spring-boot-starter`
+targets Spring Boot 3. It pulls `langchain4j-http-client-spring-restclient`, which is compiled against
+`org.springframework.boot.http.client.ClientHttpRequestFactorySettings`, a class that Spring Boot 4 removed.
+An application built with it compiles and then fails at bean creation:
 
 ```
 NoClassDefFoundError: org/springframework/boot/http/client/ClientHttpRequestFactorySettings
   at dev.langchain4j.http.client.spring.restclient.SpringRestClient.<init>
 ```
 
-The fix is to skip the starter: take `langchain4j-ollama` plus `langchain4j-http-client-jdk` and
-declare the `ChatModel` bean yourself. That is the 19-line `ChatModelConfig` in the metrics table —
-the only hand-written wiring in any of the three tracks. Note the direction of the asymmetry:
-**Spring AI runs on Spring Boot 4 out of the box; LangChain4j needs help on Spring's own runtime,
-while its Quarkus extension auto-configures cleanly.**
-
-The property names in `ChatModelConfig` are deliberately the ones the starter would use, so
-adopting it when a Boot 4 version ships means deleting the class and changing nothing else.
+The `langchain4j-ollama-spring-boot4-starter` targets Spring Boot 4 and configures the `ChatModel` from
+properties. This track uses it, so LangChain4j requires no hand written wiring on either runtime. The earliest
+versions of this module predated the adoption of that starter and declared the bean in a 19 line
+`ChatModelConfig` class. Chapter 2 of the book describes the current state.
 
 ### Three names for the same two settings
 
@@ -304,16 +289,16 @@ service class.** That is worth stating plainly, because it is the strongest argu
 libraries are substitutable for this use case — and the reason the conformance suite can be blind
 to which stack it is testing.
 
-### Quarkus starts 2.6× faster, and is the smallest module
+### Quarkus starts fastest, and is the smallest module
 
-0.66 s against 1.74 s and 2.69 s, and 39 lines of production Java against 48 and 66. It is also the
-only track with a native-image profile already wired in, inherited from its stack parent — though
-native was not attempted here.
+Quarkus starts in 0.66 s against 1.74 s for Spring AI, and its module counts 39 lines of production Java
+against 48 and 47. It is also the only track with a native image profile already wired in, inherited from its
+stack parent, although native compilation was not attempted here.
 
-Some of the Boot/LangChain4j startup gap is likely self-inflicted: `ChatModelConfig` constructs the
-`OllamaChatModel` eagerly at context refresh, which builds an HTTP client, whereas Spring AI's
-`ChatClient.Builder` defers more. That explanation is plausible but **unverified** — it would need
-profiling to claim properly.
+The startup figure of 2.69 s previously published for LangChain4j on Spring Boot was measured on the version
+that declared the `ChatModel` in `ChatModelConfig`. It describes code that this module no longer contains, and
+it is withdrawn pending a new measurement with the Spring Boot 4 starter, following the procedure described
+above. See [`ERRATA.md`](../../ERRATA.md), entry E5.
 
 ### One porting trap
 

@@ -47,12 +47,14 @@ verified against the pinned versions (Spring AI 2.0.0, LangChain4j 1.17.2, Quark
 
 | | Spring AI 2.0.0 | LangChain4j (Boot & Quarkus) |
 |---|---|---|
-| persistent memory | **native**: `VectorStoreChatMemoryAdvisor` over a `VectorStore` | **none shipped** — only `InMemoryChatMemoryStore` exists |
+| persistent memory | semantic recall: `VectorStoreChatMemoryAdvisor` over a `VectorStore` | durable `ChatMemoryStore` implementations (Cassandra, Coherence, Oracle, Tablestore, Cosmos DB, and Redis, MongoDB, SQL, Neo4j, Hazelcast in `langchain4j-community`). Similarity recall and a Qdrant store are custom code |
 | how it works | each turn is embedded and stored; the next call retrieves the most **similar** earlier turns (semantic top-K) | a hand-rolled `ChatMemoryStore` stores/reloads the **whole** message window verbatim |
 | extra dependency | `spring-ai-vector-store-advisor` (not transitive) | the raw Qdrant client, for the custom store |
 
-**Spring AI ships a vector-store memory advisor that semantically retrieves relevant past messages;
-LangChain4j ships no persistent memory at all, so we hand-roll one** — one Qdrant point per conversation,
+Spring AI ships a vector store memory advisor that retrieves the past messages most similar to the current
+turn. LangChain4j ships durable `ChatMemoryStore` implementations for many databases and leaves similarity
+recall and Qdrant storage to the application. Since every use case of this repository stores its vectors in
+Qdrant, the LangChain4j stacks implement a `ChatMemoryStore` over Qdrant, with one Qdrant point per conversation,
 the serialized message window in its payload, a one-dimension placeholder vector that is never searched.
 
 ## Two findings worth stating plainly
@@ -61,11 +63,14 @@ the serialized message window in its payload, a one-dimension placeholder vector
 `MessageChatMemoryAdvisor`, `PromptChatMemoryAdvisor` and `VectorStoreChatMemoryAdvisor`. In 2.0.0 the
 `Prompt…` variant has been removed; only the `Message…` (in-memory) and `VectorStore…` (persistent) advisors survive.
 
-**Quarkus `@RegisterAiService` did not auto-wire chat memory (1.12.2).** With no config, with
-`quarkus.langchain4j.chat-memory.*` set, and even with an explicit `@Produces ChatMemoryProvider` bean, the
-assistant answered from an empty memory. Building the AI service **by hand** with
-`AiServices.builder(...).chatMemoryProvider(...)` — the same shape as the Spring Boot stack — works reliably,
-so all three stacks wire the provider themselves; there is no free "auto-memory" here.
+Quarkus chat memory follows the CDI scope of the AI service (1.12.2). A `@RegisterAiService` interface is
+`@RequestScoped` by default, so its automatic memory lasts for a single HTTP request, and the second turn of a
+conversation starts from an empty memory. This scope explains the empty memory that was observed while the use
+case was written. The documented configuration combines an `@ApplicationScoped` AI service with a `@MemoryId`
+parameter, as described at <https://docs.quarkiverse.io/quarkus-langchain4j/dev/messages-and-memory.html>. The
+Quarkus stacks currently build their AI service with `AiServices.builder(...).chatMemoryProvider(...)`, the
+same construction as the Spring Boot stacks. Their migration to the declarative configuration is pending
+verification against the conformance suite. See [`ERRATA.md`](../../ERRATA.md), entries E1 and E4.
 
 ## The conformance suite
 

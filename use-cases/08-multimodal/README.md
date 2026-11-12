@@ -25,7 +25,9 @@ the chapter.
 
 ### Findings
 
-- **Text-to-speech is Spring-AI-only.** LangChain4j ships no speech-synthesis model (verified across
+- **Text-to-speech is Spring-AI-only at the pinned LangChain4j 1.17.2.** LangChain4j 1.18.0 introduces
+  `TextToSpeechModel` and `OpenAiTextToSpeechModel` (see [`ERRATA.md`](../../ERRATA.md), entry D1). Version
+  1.17.2 ships no speech-synthesis model (verified across
   `langchain4j-core`, `langchain4j-open-ai` and `langchain4j-azure-open-ai`: the only audio *model* is
   `AudioTranscriptionModel`, which goes the other way, audio → text). So `/speak` exists only on the
   Spring AI stack; the other two stacks omit the endpoint.

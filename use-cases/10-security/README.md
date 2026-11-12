@@ -64,7 +64,8 @@ The corpus is three owner-tagged files: `public.txt` (Reykjavik, Lumen, codename
   service is told to propagate the resulting exception with a rethrowing `toolExecutionErrorHandler` (its
   default, like Spring AI's, otherwise feeds a tool error back to the model and answers 200). Also on Boot a
   `@PreAuthorize` on a `@Tool` cannot be used at all: Spring wraps the bean in a CGLIB proxy whose methods no
-  longer carry `@Tool`, so the tool is not found. Spring AI, by contrast, tolerates a `@PreAuthorize` `@Tool`
+  longer carry `@Tool`, so the tool is not found. LangChain4j 1.20.0 discovers `@Tool` methods on proxied
+  beans and removes this restriction (see [`ERRATA.md`](../../ERRATA.md), entry D2). Spring AI, by contrast, tolerates a `@PreAuthorize` `@Tool`
   and just needs a `DefaultToolExecutionExceptionProcessor` with `alwaysThrow(true)` so the denial propagates.
 - **Moderation forces a cloud call.** No stack ships a local moderation model, so moderation uses OpenAI
   (Spring AI's `OpenAiModerationModel`, LangChain4j's on the other two). It is active only when

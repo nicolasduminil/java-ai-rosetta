@@ -31,8 +31,12 @@ offline, free.
   embedding and vector-store observations once actuator supplies an `ObservationRegistry` and the Prometheus
   registry a `MeterRegistry`. Quarkus-LangChain4j auto-registers a `MetricsChatModelListener` the moment
   `quarkus-micrometer` is on the classpath.
-- **LangChain4j on Boot has nothing built in.** Its core ships no Micrometer or OpenTelemetry module, so the
-  `TokenUsageChatModelListener` here is hand-written: it reads `chatResponse().tokenUsage()` and records a
+- LangChain4j on Boot requires the application to register the metrics listener. The
+  `langchain4j-micrometer-metrics` module provides `MicrometerMetricsChatModelListener`, which records
+  `gen_ai.client.operation.duration` and `gen_ai.client.token.usage`. Spring Boot offers no auto-configuration
+  for it, so the application declares it as a bean. This stack illustrates the underlying `ChatModelListener`
+  extension point with a hand-written `TokenUsageChatModelListener` instead (see
+  [`ERRATA.md`](../../ERRATA.md), entry E2): it reads `chatResponse().tokenUsage()` and records a
   `gen_ai.client.token.usage` counter plus a `gen_ai.client.operation` timer into the `MeterRegistry`. It
   deliberately uses the same metric names the other two emit, so the same dashboard and the same test work
   across all three. The striking part is that the *same* LangChain4j library is auto-instrumented by the

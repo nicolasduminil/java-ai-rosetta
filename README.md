@@ -19,6 +19,12 @@ diff.
 | `langchain4j-quarkus` | LangChain4j (Quarkiverse extension) | Quarkus |
 | `jakarta-agentic` | Jakarta Agentic AI | *deferred — see below* |
 
+## Book errata
+
+The book that this repository accompanies is published on Leanpub and Amazon. Corrections to the published edition,
+and the library changes released since publication, are listed in [`ERRATA.md`](ERRATA.md). The use case
+READMEs reference the relevant entries.
+
 ## Version matrix
 
 All versions verified against Maven Central on 2026-08-10 and declared once in the root
@@ -95,7 +101,8 @@ is itself worth teaching, and because a later bump may resurrect it.
     │                      #   and Spring AI / LangChain4j-Boot / LangChain4j-Quarkus clients discover & call it
     ├── 08-multimodal/     # audio & images via OpenAI (nested common + three stacks): transcribe, describe an
     │                      #   image (vision) and generate an image on all three; speak (TTS) is Spring-AI-only,
-    │                      #   as LangChain4j ships no speech-synthesis model — the first OpenAI use case
+    │                      #   as LangChain4j 1.17.2 ships no speech-synthesis model (1.18.0 adds one, see
+    │                      #   ERRATA.md) — the first OpenAI use case
     ├── 09-observability/  # observing AI operations (nested common + three stacks): a small RAG workload on
     │                      #   local Ollama, instrumented with actuator/Prometheus metrics, token counts and a
     │                      #   Grafana dashboard; Spring AI & Quarkus emit gen_ai.* metrics built-in, LangChain4j

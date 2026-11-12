@@ -30,13 +30,15 @@ orchestration idiom, especially for the concurrent fan-out.
 ### Findings
 
 - **Agents are orchestration you write, not a framework feature.** Spring AI 2.0.0 has no agent/workflow API
-  at all (the `*Workflow` classes in its docs are sample code, not library types). quarkus-langchain4j 1.12.2
-  has none either. So all four patterns are plain Java over the frameworks' building blocks: a model call,
+  at all (the `*Workflow` classes in its docs are sample code, not library types). This use case relies on
+  the stable core APIs of each stack, so all four patterns are plain Java over the frameworks' building blocks: a model call,
   structured-output classification, and the tool-calling loop.
 - **LangChain4j does have a first-class agentic module, but it is beta.** `dev.langchain4j:langchain4j-agentic`
   (aligned to core as `1.17.2-beta27`) offers `AgenticServices.sequenceBuilder`/`parallelBuilder`/
-  `conditionalBuilder`/`supervisorBuilder`/`plannerBuilder`. It has no GA release and no Quarkus/CDI
-  integration, so this use case keeps to the stable, hand-composed approach and covers the module in the
+  `conditionalBuilder`/`supervisorBuilder`/`plannerBuilder`. Quarkus integrates it through the
+  `quarkus-langchain4j-agentic` extension, available in quarkus-langchain4j 1.12.2 (see
+  [`ERRATA.md`](../../ERRATA.md), entry E3). Since the module is still beta, this use case keeps to the
+  stable, hand-composed approach and covers the module in the
   chapter's forward-looking close, alongside the emerging Jakarta Agentic AI standard.
 - **The concurrency model is the real per-stack delta.** The two Boot stacks fan out with imperative Java
   concurrency (a virtual-thread `Executor`; `CompletableFuture`). Quarkus is reactive: each blocking analysis
