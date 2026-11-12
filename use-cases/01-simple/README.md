@@ -220,15 +220,15 @@ is what actually ships.
 | Dependencies declared in the build file | 5 | 3 | 3 | 3 |
 | Resolved runtime jars | — | 106 | **49** | 142 |
 | Conformance glue (LOC) | n/a | 25 | 23 | 36 |
-| Startup, median (JVM mode) | — | 1.74 s | pending (see below) | **0.66 s** |
+| Startup, median (JVM mode) | — | 1.75 s | 1.68 s | **0.73 s** |
 | Native image | n/a | not attempted | not attempted | profile present, not attempted |
 
 The shared `01-simple-common` module adds 14 lines of production Java (the two records and the
 interface) and 83 of conformance test — 51 for the contract, 32 for the Ollama fixture — paid once
 for all three stacks.
 
-**How startup was measured.** Median of 7 runs each for the Boot tracks and 3 for Quarkus, JVM mode,
-on one machine, against an already-running Ollama container so that only application boot is inside
+**How startup was measured.** Median of 7 runs per track on 2026-11-12, JVM mode, using the startup time
+each framework logs itself, on one machine, against an already-running Ollama container so that only application boot is inside
 the window. This matters: the figures the conformance suite logs are 30–40 s, because the container
 start and model pull happen *inside* the measured startup. Those numbers are meaningless as a
 comparison and are not the ones above.
@@ -291,14 +291,13 @@ to which stack it is testing.
 
 ### Quarkus starts fastest, and is the smallest module
 
-Quarkus starts in 0.66 s against 1.74 s for Spring AI, and its module counts 39 lines of production Java
-against 48 and 47. It is also the only track with a native image profile already wired in, inherited from its
+Quarkus starts in 0.73 s against 1.75 s for Spring AI and 1.68 s for LangChain4j on Spring Boot, and its
+module counts 39 lines of production Java against 48 and 47. It is also the only track with a native image profile already wired in, inherited from its
 stack parent, although native compilation was not attempted here.
 
-The startup figure of 2.69 s previously published for LangChain4j on Spring Boot was measured on the version
-that declared the `ChatModel` in `ChatModelConfig`. It describes code that this module no longer contains, and
-it is withdrawn pending a new measurement with the Spring Boot 4 starter, following the procedure described
-above. See [`ERRATA.md`](../../ERRATA.md), entry E5.
+The figure of 2.69 s previously published for LangChain4j on Spring Boot was measured on the version that
+declared the `ChatModel` in `ChatModelConfig`. With the Spring Boot 4 starter, the two Spring Boot tracks start
+in comparable times. See [`ERRATA.md`](../../ERRATA.md), entry E5.
 
 ### One porting trap
 

@@ -56,13 +56,17 @@ correctly. The documentation is available at
 Published text: the note and the summary explain that a `@RegisterAiService` interface is `@RequestScoped`
 by default, and that the in-memory Quarkus variant therefore requires `@ApplicationScoped`.
 
-Clarification: this explanation is correct, and it identifies the cause of the behavior observed while
-writing the use case. The repository README of use case 05 had reported that `@RegisterAiService` did not wire
-chat memory at all, and the Quarkus variants build their AI service manually as a consequence. According to
-the LangChain4j maintainer, an `@ApplicationScoped` AI service combined with a `@MemoryId` parameter makes the
-automatic memory work as documented at
-<https://docs.quarkiverse.io/quarkus-langchain4j/dev/messages-and-memory.html>. The repository will be updated
-once this configuration has been verified against the conformance suite.
+Clarification: this explanation is correct, and the code of the in-memory Quarkus variant applies it. The
+repository README of use case 05 contradicted the book, stating that `@RegisterAiService` did not wire chat
+memory at all. The README has been corrected. As the LangChain4j maintainer pointed out, an `@ApplicationScoped`
+AI service combined with a `@MemoryId` parameter makes the automatic memory work, as documented at
+<https://docs.quarkiverse.io/quarkus-langchain4j/dev/messages-and-memory.html>.
+
+Verification (2026-11-12, quarkus-langchain4j 1.12.2): the in-memory Quarkus variant passes the five
+conformance tests of use case 05 with `@ApplicationScoped`. With the annotation removed, the test
+"remembers a fact stated earlier in the same conversation" fails, because each request receives a new,
+empty memory. The persistent Quarkus variant builds its AI service with `AiServices.builder(...)` around the
+custom `QdrantChatMemoryStore`, as chapter 6 describes.
 
 ### E5. Chapter 2, table "Weight and startup of the three stacks for use case 01"
 
@@ -72,7 +76,18 @@ Correction: this figure was measured on an earlier version of the module, which 
 bean in a hand-written `ChatModelConfig` class. The published module relies on
 `langchain4j-ollama-spring-boot4-starter` instead, as the chapter describes. The figure therefore describes
 code that the book no longer presents, and it overstates the startup difference between the two Spring Boot
-stacks. A new measurement will be published here. The same figure appears in the companion article.
+stacks. The same figure appears in the companion article.
+
+New measurement (2026-11-12): median of seven runs per stack, JVM mode, on one machine, with Ollama already
+running, using the startup time that each framework reports itself.
+
+| | Spring AI | LangChain4j on Spring Boot | LangChain4j on Quarkus |
+|---|---|---|---|
+| Startup, JVM mode | 1.75 s | 1.68 s | 0.73 s |
+
+The two Spring Boot stacks start in comparable times, and Quarkus starts 2.3 to 2.4 times faster than either of them.
+The figures for Spring AI and Quarkus agree with the published ones (1.74 s and 0.66 s) within the variation
+expected between measurement sessions.
 
 ## Developments since publication
 

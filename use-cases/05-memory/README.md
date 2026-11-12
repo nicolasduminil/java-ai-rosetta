@@ -65,12 +65,13 @@ the serialized message window in its payload, a one-dimension placeholder vector
 
 Quarkus chat memory follows the CDI scope of the AI service (1.12.2). A `@RegisterAiService` interface is
 `@RequestScoped` by default, so its automatic memory lasts for a single HTTP request, and the second turn of a
-conversation starts from an empty memory. This scope explains the empty memory that was observed while the use
-case was written. The documented configuration combines an `@ApplicationScoped` AI service with a `@MemoryId`
-parameter, as described at <https://docs.quarkiverse.io/quarkus-langchain4j/dev/messages-and-memory.html>. The
-Quarkus stacks currently build their AI service with `AiServices.builder(...).chatMemoryProvider(...)`, the
-same construction as the Spring Boot stacks. Their migration to the declarative configuration is pending
-verification against the conformance suite. See [`ERRATA.md`](../../ERRATA.md), entries E1 and E4.
+conversation starts from an empty memory. The in-memory Quarkus stack therefore declares its `@RegisterAiService`
+interface `@ApplicationScoped` and names the conversation with a `@MemoryId` parameter, as described at
+<https://docs.quarkiverse.io/quarkus-langchain4j/dev/messages-and-memory.html>. The conformance suite confirms
+the role of the scope: with the annotation removed, the recall test fails, because each request receives a
+new, empty memory. The persistent Quarkus stack builds its AI service with
+`AiServices.builder(...).chatMemoryProvider(...)` around the custom `QdrantChatMemoryStore`, the same
+construction as the Spring Boot stacks. See [`ERRATA.md`](../../ERRATA.md), entries E1 and E4.
 
 ## The conformance suite
 
