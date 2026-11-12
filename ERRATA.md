@@ -36,11 +36,14 @@ Published text: the LangChain4j core ships no Micrometer integration, so the lis
 `gen_ai.*` meters on Spring Boot has to be written by hand.
 
 Correction: the `langchain4j-micrometer-metrics` module, available in 1.17.2, provides
-`MicrometerMetricsChatModelListener`. This listener records `gen_ai.client.operation.duration` and
-`gen_ai.client.token.usage`, which are the metric names that the chapter wires by hand. Spring Boot provides
-no auto-configuration for this module, so the application registers the listener as a bean. Writing the
-listener class itself is therefore unnecessary. The hand-written `TokenUsageChatModelListener` remains a correct
-illustration of the `ChatModelListener` extension point.
+`MicrometerMetricsChatModelListener`. Spring Boot provides no auto-configuration for this module, so the
+application registers the listener as a bean. In version 1.17.2 the listener records `gen_ai.client.token.usage`
+as a distribution summary for input and output tokens, and records no call duration. The timer
+`gen_ai.client.operation.duration` appears in later releases (it is present in 1.23.0 and absent in 1.20.2).
+The shipped listener therefore exposes series that differ from the counter and the timer that the Spring AI
+and Quarkus stacks expose. The hand-written `TokenUsageChatModelListener` produces those same series, which
+keeps one dashboard and one test valid for the three stacks, and it illustrates the `ChatModelListener`
+extension point on which the shipped listener is also built.
 
 ### E3. Chapter 13, section "Agents are something you write"
 
