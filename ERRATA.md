@@ -7,6 +7,10 @@ unless another version is named explicitly.
 
 Entries are located by chapter and section title, because the ebook and the paperback paginate differently.
 
+The Leanpub ebook updated on 2026-11-12 incorporates the corrections E1, E2, E3 and E5, and adds version notes
+for D1 and D2. Readers of the ebook obtain this update by downloading the book again from their Leanpub
+library. The Amazon paperback retains the original text.
+
 Dmytro Liubarskyi, initiator and maintainer of the LangChain4j project, reported the items listed here. I'd want to thank him for a careful and generous reading.
 
 ## Corrections
