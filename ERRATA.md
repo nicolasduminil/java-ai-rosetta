@@ -76,7 +76,7 @@ Correction: this figure was measured on an earlier version of the module, which 
 bean in a hand-written `ChatModelConfig` class. The published module relies on
 `langchain4j-ollama-spring-boot4-starter` instead, as the chapter describes. The figure therefore describes
 code that the book no longer presents, and it overstates the startup difference between the two Spring Boot
-stacks. The same figure appears in the companion article.
+stacks.
 
 New measurement (2026-11-12): median of seven runs per stack, JVM mode, on one machine, with Ollama already
 running, using the startup time that each framework reports itself.
